@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+p {
+    @apply my-6;
+}
+
+h1 {
+    @apply text-4xl font-semibold text-gray-900 my-6;
+}
+
+h2 {
+    @apply text-2xl font-semibold text-gray-900 my-6;
+}
+
+a {
+    @apply text-main underline underline-offset-4 decoration-2;
+}
+
+a:hover {
+    @apply opacity-75;
+}
