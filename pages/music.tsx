@@ -17,6 +17,10 @@ const Music = () => {
                     year="2016"
                     description="The Commemorative 25th Anniversary Album featuring 13 original compositions by the Choir's Former Musical Director Stephen Levey."
                 />
+                <Album name="Shabbaton Sings Reuth"
+                    image="/Reuth.jpeg"
+                    year="2011"
+                />
                 <Album name="Bilvavi"
                     image="/Bilvavi.jpeg"
                     year="2006"
@@ -26,10 +30,6 @@ const Music = () => {
                     image="/ShirChadash.gif"
                     year="2003"
                     description="The Shabbaton Choir plays to packed houses in concert; performing before thousands of people each year. Now you can bring the sound of the Shabbaton Choir into your living rooms. Recorded at studios in London this CD contains some of the Choir's best known concert repertoire and features soloists Lionel Rosenfeld and Shimon Craimer. The CD encapsulates the distinctive style of Jewish music as performed by the Shabbaton Choir. Many of the pieces are arranged by Stephen Glass and sung in the inimitable &quot;Shabbaton style&quot;. From the modern to the old; the soft to the loud, the devotional to the celebratory this CD has something for everyone."
-                />
-                <Album name="Shabbaton Sings Reuth"
-                    image="/Reuth.jpeg"
-                    year=""
                 />
                 <Album name="Selichot Live"
                     image="/SelichotLive.jpeg"
