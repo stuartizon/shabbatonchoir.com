@@ -4,7 +4,7 @@ import Album from "../components/album";
 const Music = () => {
     return (
         <Layout title="Music">
-            <div className="flex flex-wrap justify-evenly">
+            <div className="flex flex-wrap justify-evenly md:justify-between gap-x-4">
                 <Album
                     name="Mi Sheberach"
                     image="/MiSheberach.jpeg"
