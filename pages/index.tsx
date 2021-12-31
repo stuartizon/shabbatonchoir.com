@@ -1,3 +1,5 @@
+import { faPaypal } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { NextPage } from 'next'
 import Layout from '../components/layout'
 
@@ -11,13 +13,17 @@ const Home: NextPage = () => {
         The main aims of the Choir are to advance Judaism and in particular Jewish Prayer, through participation in synagogue service; singing at public performances, and in television and radio broadcasts, recordings and through other media.
       </p>
       <p className="my-6">
-        The Shabbaton Choir is a registered charity, registered in England and Wales under Number 1058256. To send a donation, please click on the button below:
+        The Shabbaton Choir is a registered charity, registered in England and Wales under Number 1058256. To send a donation, please click on the button below.
       </p>
-      <form action="https://www.paypal.com/donate" method="post" target="_top">
-        <input type="hidden" name="hosted_button_id" value="YLBM7K52ZWL7W" />
-        <input className="block mx-auto" type="image" src="https://www.paypal.com/en_GB/i/btn/btn_donate_LG.gif" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-        <img alt="" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1"></img>
-      </form>
+
+      <a href="https://www.paypal.com/uk/fundraiser/charity/2717196" className="no-underline" target="_blank" rel="noreferrer">
+        <div className="flex w-fit mx-auto items-center rounded-full my-2 bg-primary-500 hover:bg-primary-300 text-white px-4 py-2 text-sm">
+          <FontAwesomeIcon size="2x" icon={faPaypal} />
+          &ensp;
+          <span>Donate</span>
+        </div>
+      </a>
+
       <p className="my-12" />
     </Layout>
   );
