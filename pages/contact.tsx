@@ -1,19 +1,22 @@
 
-import type { NextPage } from 'next'
-import Layout from '../components/layout'
+import type { NextPage } from 'next';
+import Link from 'next/link';
+import Layout from '../components/layout';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComment, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const Contact: NextPage = () => {
     return (
         <Layout title="Contact">
-            <div className="flex flex-grow justify-around">
-                <div className="flex-1 rounded-md bg-gray-100 p-4 mb-6">
-                    <h3>Send us a message</h3>
-                    <form className="flex flex-col">
-                        <input className="rounded-md my-2 border-gray-300 shadow-sm focus:indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Email address" type="email" />
-                        <input className="rounded-md my-2 border-gray-300 shadow-sm focus:indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Subject" type="text" />
-                        <textarea className="rounded-md my-2 border-gray-300 shadow-sm focus:indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Message" />
-                        <button disabled className="rounded-full mx-auto my-2 bg-gray-400 text-gray-50 px-4 py-2 text-sm">Send message</button>
-                    </form>
+            To contact us, please:
+            <div className='flex flex-col md:flex-row mt-4 mb-16 justify-evenly gap-4'>
+                <div className='border-1 shadow-md p-6 text-center'>
+                    <div className='flex items-center justify-center gap-2 m-4'><FontAwesomeIcon size="2x" icon={faEnvelope} /> EMAIL US</div>
+                    <Link href="mailto:info@shabbatonchoir.com"><a target="_blank" rel="noreferrer">info@shabbatonchoir.com</a></Link>
+                </div>
+                <div className='border-1 shadow-md p-6 text-center'>
+                    <div className='flex items-center justify-center gap-2 m-4'><FontAwesomeIcon size="2x" icon={faComment} /> MESSAGE US</div>
+                    via <Link href="https://m.me/shabbatonchoir"><a target="_blank" rel="noreferrer">Facebook messenger</a></Link>
                 </div>
             </div>
         </Layout>
