@@ -1,6 +1,7 @@
 ## What and why
 
-<!-- One or two sentences. Link the issue. -->
+<!-- One or two sentences. Link the issue.
+     PR title must be gitmoji style (e.g. "✨ Add events page"), since it becomes the squash commit message. -->
 
 Closes #
 
@@ -14,6 +15,8 @@ Closes #
 
 ## Checklist
 
+- [ ] PR title is gitmoji style
+- [ ] Small, atomic gitmoji commits; tests written first where there's behaviour to test
 - [ ] Lint and build pass locally
 - [ ] Checked on the PR preview link
 - [ ] No personal contact details or secrets added (the repo is public)

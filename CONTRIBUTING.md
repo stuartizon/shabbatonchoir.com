@@ -26,9 +26,22 @@ yarn build
 
 > After the Astro port (#2), these commands will change. The README will have the current ones.
 
+## Commits
+
+- **Small and atomic.** One logical change per commit, and the build stays green. Multiple commits per PR are welcome.
+- **Test first.** For behaviour or logic, use red → green → refactor: commit a failing test, then the fix, then any tidy-up.
+- **Gitmoji style:** `<emoji> <imperative summary>`, for example:
+  - `✨ Add events page`
+  - `🐛 Fix mobile menu focus`
+  - `📝 Update README`
+
+  See `CLAUDE.md` for the common emoji, or https://gitmoji.dev for the full list.
+
 ## Pull requests
 
+- Never commit directly to `main`. Every change goes through a PR.
 - One issue per PR, with `Closes #N` in the description.
+- **The PR title must be gitmoji style.** PRs are squash-merged, so the title becomes the commit message on `main`.
 - Fill in the PR template.
 - For anything visual, add before/after screenshots at desktop and mobile widths.
 - Wait for CI to pass and check your change on the PR's preview link.
