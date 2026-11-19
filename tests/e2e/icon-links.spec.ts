@@ -71,3 +71,12 @@ test('the album streaming icons keep their 8px spacing', async ({ page }) => {
     expect(gap).toBeCloseTo(8, 0);
   }
 });
+
+// Twitter is now X, so link to x.com rather than relying on the twitter.com
+// redirect (#27).
+test('the footer X link points to x.com', async ({ page }) => {
+  await page.goto('/');
+  await expect(
+    page.getByRole('link', { name: 'Shabbaton Choir on X' }),
+  ).toHaveAttribute('href', 'https://x.com/shabbatonchoir');
+});
