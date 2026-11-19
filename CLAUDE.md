@@ -12,7 +12,7 @@ The client is the choir's committee. They supply content and must **visually sig
 
 ## Where things stand (Nov 2026)
 
-- **Current stack:** Astro 7 (static output to `dist/`), Tailwind 3 via PostCSS and Font Awesome 5 rendered to inline SVG at build time. ESLint, Prettier, `node:test` and Playwright for checks and tests. Content is hard-coded in `.astro` files under `src/pages/` and `src/components/`. Node 22 is pinned in `.nvmrc`.
+- **Current stack:** Astro 7 (static output to `dist/`), Tailwind 3 via PostCSS and Font Awesome 5 rendered to inline SVG at build time. ESLint, Prettier and Playwright for checks and tests. Content is hard-coded in `.astro` files under `src/pages/` and `src/components/`. Node 22 is pinned in `.nvmrc`.
 - **Planned:** content collections for albums (#3), Markdown for page text (#4), inline SVG icons (#5), Tailwind 4 (#44) and `astro:assets` for images (#14).
 - **Hosting:** production is on **Vercel and is frozen**. Its Ignored Build Step is set to "Don't build anything" (#38), so pushing to `main` does **not** change the live site.
 - **Target hosting:** Cloudflare Pages, as a Direct Upload project deployed by GitHub Actions with `wrangler pages deploy` (#7–#9).
