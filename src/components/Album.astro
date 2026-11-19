@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import Icon from './Icon.astro';
+import IconLink from './IconLink.astro';
 
 type Props = CollectionEntry<'albums'>['data'];
 
@@ -13,16 +13,25 @@ const { name, description, year, cover, spotify, apple, amazon } = Astro.props;
     <div class="p-4">
       <div class="flex items-center justify-between">
         <div class="font-semibold text-xs">{year}</div>
-        <div class="flex gap-x-2">
-          <a href={spotify} target="_blank" rel="noreferrer">
-            <Icon class="text-gray-600" name="spotify" />
-          </a>
-          <a href={apple} target="_blank" rel="noreferrer">
-            <Icon class="text-gray-600" name="apple-music" />
-          </a>
-          <a href={amazon} target="_blank" rel="noreferrer">
-            <Icon class="text-gray-600" name="amazon" />
-          </a>
+        <div class="flex -my-2 -mr-1">
+          <IconLink
+            href={spotify}
+            label={`Listen to ${name} on Spotify`}
+            name="spotify"
+            class="px-1 py-[13px]"
+          />
+          <IconLink
+            href={apple}
+            label={`Listen to ${name} on Apple Music`}
+            name="apple-music"
+            class="px-1 py-[13px]"
+          />
+          <IconLink
+            href={amazon}
+            label={`Listen to ${name} on Amazon Music`}
+            name="amazon"
+            class="px-1 py-[13px]"
+          />
         </div>
       </div>
       <h2 class="font-bold my-4">{name}</h2>

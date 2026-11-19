@@ -7,7 +7,6 @@ import { PAGES } from './pages';
 const KNOWN_VIOLATIONS = {
   'html-has-lang': '#18',
   'empty-heading': '#17',
-  'link-name': '#22',
   // The mobile and desktop headers are both banners on small screens.
   'landmark-no-duplicate-banner': '#21',
   'landmark-unique': '#21',

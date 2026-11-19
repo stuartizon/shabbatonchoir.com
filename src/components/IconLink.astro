@@ -1,0 +1,40 @@
+---
+// A link that shows only an icon, opening in a new tab. The label is its
+// accessible name, since the icon itself is hidden from screen readers.
+// Pass padding in class to size the tap target, and ringOffset to set how
+// far the keyboard focus ring sits from the icon.
+import type { IconName } from '../icons';
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  label: string;
+  name: IconName;
+  size?: '2x';
+  class?: string;
+  ringOffset?: string;
+}
+
+const {
+  href,
+  label,
+  name,
+  size,
+  class: className,
+  ringOffset = 'group-focus-visible:outline-offset-[3px]',
+} = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noreferrer"
+  aria-label={label}
+  class:list={['group flex focus-visible:outline-none', className]}
+>
+  <Icon
+    size={size}
+    class={`text-gray-600 rounded group-focus-visible:outline group-focus-visible:outline-2 group-focus-visible:outline-primary-500 ${ringOffset}`}
+    name={name}
+  />
+</a>
