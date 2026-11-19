@@ -12,8 +12,8 @@ The client is the choir's committee. They supply content and must **visually sig
 
 ## Where things stand (Nov 2026)
 
-- **Current stack:** Next.js 12 (Pages Router), React 17, Tailwind 3 and Font Awesome 5. Content is hard-coded in JSX under `pages/` and `components/`.
-- **Planned stack:** Astro, using content collections for albums, Markdown for page text and `astro:assets` for images (#2–#5).
+- **Current stack:** Astro 7 (static output to `dist/`), Tailwind 3 via PostCSS and Font Awesome 5 rendered to inline SVG at build time. Content is hard-coded in `.astro` files under `src/pages/` and `src/components/`. Node 22 is pinned in `.nvmrc`.
+- **Planned:** content collections for albums (#3), Markdown for page text (#4), inline SVG icons (#5), Tailwind 4 (#44) and `astro:assets` for images (#14).
 - **Hosting:** production is on **Vercel and is frozen**. Its Ignored Build Step is set to "Don't build anything" (#38), so pushing to `main` does **not** change the live site.
 - **Target hosting:** Cloudflare Pages, as a Direct Upload project deployed by GitHub Actions with `wrangler pages deploy` (#7–#9).
 - **Domain, DNS and email:** all stay at **Squarespace**. The cut-over (#10) changes only the `www` CNAME. Do not touch nameservers, MX records or email forwarding. Moving those is a separate, later job (#39).
@@ -73,7 +73,7 @@ Nothing reaches production without client sign-off. Never add an automatic produ
   - Labelled icon links.
   - Images that are resized, compressed and given dimensions and alt text.
 - **British English** in copy and docs.
-- Run lint and build locally before pushing (`yarn lint`, `yarn build`). After the Astro port this becomes `npm run check && npm run build`, and the README will be updated.
+- Run the checks and build locally before pushing: `npm run check && npm run build`.
 
 ## Privacy: this repo is PUBLIC
 
