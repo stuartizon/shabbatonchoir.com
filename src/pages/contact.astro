@@ -1,5 +1,4 @@
 ---
-import { faComment, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import Icon from '../components/Icon.astro';
 import Layout from '../layouts/Layout.astro';
 ---
@@ -9,7 +8,7 @@ import Layout from '../layouts/Layout.astro';
   <div class="flex flex-col md:flex-row mt-4 mb-16 justify-evenly gap-4">
     <div class="border-1 shadow-md p-6 text-center">
       <div class="flex items-center justify-center gap-2 m-4">
-        <Icon size="2x" icon={faEnvelope} /> EMAIL US
+        <Icon size="2x" name="envelope" /> EMAIL US
       </div>
       <a href="mailto:info@shabbatonchoir.com" target="_blank" rel="noreferrer">
         info@shabbatonchoir.com
@@ -17,7 +16,7 @@ import Layout from '../layouts/Layout.astro';
     </div>
     <div class="border-1 shadow-md p-6 text-center">
       <div class="flex items-center justify-center gap-2 m-4">
-        <Icon size="2x" icon={faComment} /> MESSAGE US
+        <Icon size="2x" name="chat" /> MESSAGE US
       </div>
       via{' '}
       <a href="https://m.me/shabbatonchoir" target="_blank" rel="noreferrer">
