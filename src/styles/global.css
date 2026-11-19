@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 p {
-    @apply my-6;
+  @apply my-6;
 }
 
 h1 {
-    @apply text-4xl font-semibold text-gray-900 my-6;
+  @apply text-4xl font-semibold text-gray-900 my-6;
 }
 
 h2 {
-    @apply text-2xl font-semibold text-gray-900 my-6;
+  @apply text-2xl font-semibold text-gray-900 my-6;
 }
 
 a {
-    @apply text-primary-500 underline underline-offset-4 decoration-2;
+  @apply text-primary-500 underline underline-offset-4 decoration-2;
 }
 
 a:hover {
-    @apply opacity-75;
+  @apply opacity-75;
 }

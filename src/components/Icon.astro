@@ -1,7 +1,10 @@
 ---
 // Renders a Font Awesome icon as inline SVG at build time, with no
 // client-side JavaScript. Replaced by hand-written SVG icons in #5.
-import { icon as faIcon, type IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import {
+  icon as faIcon,
+  type IconDefinition,
+} from '@fortawesome/fontawesome-svg-core';
 
 interface Props {
   icon: IconDefinition;
@@ -10,7 +13,10 @@ interface Props {
 }
 
 const { icon, size, class: className } = Astro.props;
-const classes = [size && `fa-${size}`, ...(className ? className.split(' ') : [])].filter(Boolean) as string[];
+const classes = [
+  size && `fa-${size}`,
+  ...(className ? className.split(' ') : []),
+].filter(Boolean) as string[];
 const svg = faIcon(icon, { classes }).html.join('');
 ---
 

@@ -1,5 +1,9 @@
 ---
-import { faAmazon, faItunesNote, faSpotify } from '@fortawesome/free-brands-svg-icons';
+import {
+  faAmazon,
+  faItunesNote,
+  faSpotify,
+} from '@fortawesome/free-brands-svg-icons';
 import Icon from './Icon.astro';
 
 interface Props {
@@ -12,11 +16,12 @@ interface Props {
   spotifyLink: string;
 }
 
-const { name, description, year, image, amazonLink, appleLink, spotifyLink } = Astro.props;
+const { name, description, year, image, amazonLink, appleLink, spotifyLink } =
+  Astro.props;
 ---
 
 <div class="bg-white rounded-lg overflow-hidden w-80 mb-8">
-  <div class=" h-full w-full bg-gray-50 rounded-b-lg">
+  <div class="h-full w-full bg-gray-50 rounded-b-lg">
     <img src={image} alt={name} class="w-full max-h-72" />
     <div class="p-4">
       <div class="flex items-center justify-between">

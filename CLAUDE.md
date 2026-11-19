@@ -12,7 +12,7 @@ The client is the choir's committee. They supply content and must **visually sig
 
 ## Where things stand (Nov 2026)
 
-- **Current stack:** Astro 7 (static output to `dist/`), Tailwind 3 via PostCSS and Font Awesome 5 rendered to inline SVG at build time. Content is hard-coded in `.astro` files under `src/pages/` and `src/components/`. Node 22 is pinned in `.nvmrc`.
+- **Current stack:** Astro 7 (static output to `dist/`), Tailwind 3 via PostCSS and Font Awesome 5 rendered to inline SVG at build time. ESLint, Prettier and Playwright for checks and tests. Content is hard-coded in `.astro` files under `src/pages/` and `src/components/`. Node 22 is pinned in `.nvmrc`.
 - **Planned:** content collections for albums (#3), Markdown for page text (#4), inline SVG icons (#5), Tailwind 4 (#44) and `astro:assets` for images (#14).
 - **Hosting:** production is on **Vercel and is frozen**. Its Ignored Build Step is set to "Don't build anything" (#38), so pushing to `main` does **not** change the live site.
 - **Target hosting:** Cloudflare Pages, as a Direct Upload project deployed by GitHub Actions with `wrangler pages deploy` (#7–#9).
@@ -23,7 +23,7 @@ The roadmap and phase order are in issue **#1**. Work through it in phase order 
 ## Release flow
 
 1. Open a PR. CI checks run and a Cloudflare preview URL is posted.
-2. Merge to `main`, which auto-deploys to **staging**.
+2. Merge to `main`. The checks run again and, if they pass, it auto-deploys to **staging**.
 3. The client reviews staging and approves.
 4. Stuart runs the manual **"Deploy to production"** workflow for a chosen commit.
 
@@ -31,7 +31,7 @@ Nothing reaches production without client sign-off. Never add an automatic produ
 
 ## Ways of working
 
-- **Pull requests only.** Branch from `main` and open a PR. Never commit or push directly to `main`. A ruleset on `main` enforces this (#6), and so will a local pre-push hook (#41).
+- **Pull requests only.** Branch from `main` and open a PR. Never commit or push directly to `main`. A ruleset on `main` enforces this (#6).
 - **Descriptive branch names:** a short, lowercase, hyphenated slug describing the work, for example `astro-port`, `mobile-menu`, `events-page` or `client-content`.
   - Don't add a type prefix or issue number. The PR links the issue.
   - Keep it to 28 characters or fewer. The branch name becomes the PR preview address (`mobile-menu.shabbatonchoir.pages.dev`), and Cloudflare truncates longer names.
@@ -39,8 +39,8 @@ Nothing reaches production without client sign-off. Never add an automatic produ
   - This applies to AI sessions too: create a descriptive branch for the work instead of using an auto-generated session branch name.
 - **One issue per PR.** Keep PRs small, link the issue (`Closes #N`), and fill in the PR template.
 - **Small, atomic commits.** Each commit should do one thing and leave the build green. Several commits on a PR is fine and encouraged, because it makes review easier. Don't mix refactors, formatting and behaviour changes in one commit.
-- **TDD, red → green → refactor.** For anything with behaviour or logic, write a failing test first (commit it), make it pass with the simplest change (commit), then refactor with the tests green (commit). The test tooling arrives with #41. Until then, say in the PR how the change was verified. Pure content or copy changes don't need a new test, but must not break the existing ones.
-- **Gitmoji commit messages.** Format: `<emoji> <imperative summary>`, e.g. `✨ Add events page`. Use the Unicode emoji, not the `:code:`. Keep the summary to 72 characters or fewer, and add a body explaining *why* when it isn't obvious. Common ones:
+- **TDD, red → green → refactor.** For anything with behaviour or logic, write a failing test first (commit it), make it pass with the simplest change (commit), then refactor with the tests green (commit). Playwright browser tests (smoke, axe accessibility and link checks against the built site) live in `tests/e2e/`. Pure content or copy changes don't need a new test, but must not break the existing ones.
+- **Gitmoji commit messages.** Format: `<emoji> <imperative summary>`, e.g. `✨ Add events page`. Use the Unicode emoji, not the `:code:`. Keep the summary to 72 characters or fewer, and add a body explaining _why_ when it isn't obvious. Common ones:
   - ✨ new feature
   - 🐛 bug fix
   - ♻️ refactor
@@ -61,6 +61,7 @@ Nothing reaches production without client sign-off. Never add an automatic produ
   - 🙈 .gitignore
 
   Full list: https://gitmoji.dev
+
 - **Squash merge only.** PRs are merged with "Squash and merge", so `main` gets one commit per PR. The **PR title becomes that commit's message**, so write PR titles in gitmoji style too, e.g. `♻️ Port site from Next.js to Astro (#2)`. The individual commits stay visible on the PR for review.
 - **Visual changes** need before/after screenshots at desktop and mobile widths in the PR, so Stuart and the client can review without running the site.
 - **Content** comes from the client. Don't invent or "improve" copy, names, dates or facts. If something looks wrong or inconsistent, flag it on the issue with the `needs client` label rather than guessing. Issue #28 tracks the current batch of client content.
@@ -73,7 +74,8 @@ Nothing reaches production without client sign-off. Never add an automatic produ
   - Labelled icon links.
   - Images that are resized, compressed and given dimensions and alt text.
 - **British English** in copy and docs.
-- Run the checks and build locally before pushing: `npm run check && npm run build`.
+- **Checks and hooks.** `npm install` sets up git hooks: pre-commit formats and lints staged files, and pre-push runs `lint`, `format:check` and `check`. CI runs those plus the build and `npm test` on every PR. Commit, branch and PR title conventions aren't checked automatically, so follow them by habit. Run `npm test` before pushing anything visual. Bypass the hooks with `--no-verify` only in an emergency.
+- **Known accessibility failures** are listed in `tests/e2e/accessibility.spec.ts` with the issue that fixes each. Remove the entry in the PR that fixes it.
 
 ## Privacy: this repo is PUBLIC
 
