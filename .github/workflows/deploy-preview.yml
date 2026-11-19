@@ -1,6 +1,6 @@
 # Deploys each pull request to its own Cloudflare Pages preview
 # (<branch-alias>.<project>.pages.dev, where Cloudflare slugifies the git
-# branch name, e.g. feat/2-astro-port -> feat-2-astro-port). The job's `environment` makes GitHub
+# branch name, e.g. astro-port -> astro-port.<project>.pages.dev). The job's `environment` makes GitHub
 # record a deployment, so the PR shows a "View deployment" button.
 name: Deploy PR preview
 

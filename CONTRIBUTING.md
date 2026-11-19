@@ -11,7 +11,7 @@ This site is maintained by Stuart, with Claude doing much of the implementation.
 ## Workflow
 
 1. **Pick an issue** from the roadmap, in phase order. If it's labelled `needs client`, check the answer is on the issue first.
-2. **Branch** from an up-to-date `main`, using a descriptive name such as `fix/21-mobile-menu` (see `CLAUDE.md`). The branch name becomes the preview address.
+2. **Branch** from an up-to-date `main`, using a short descriptive slug such as `mobile-menu` (see `CLAUDE.md`). The branch name becomes the preview address.
 3. **Work in small commits**, test-first where there's behaviour to test. Use gitmoji messages (see `CLAUDE.md`).
 4. **Run the checks** before pushing. For now that's `yarn lint` and `yarn build`. After the Astro port (#2) and the tooling work (#41), the README will list the commands and a pre-push hook will run them.
 5. **Open a PR:**
