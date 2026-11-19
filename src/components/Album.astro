@@ -1,0 +1,40 @@
+---
+import { faAmazon, faItunesNote, faSpotify } from '@fortawesome/free-brands-svg-icons';
+import Icon from './Icon.astro';
+
+interface Props {
+  name: string;
+  description?: string;
+  year: string;
+  image: string;
+  amazonLink: string;
+  appleLink: string;
+  spotifyLink: string;
+}
+
+const { name, description, year, image, amazonLink, appleLink, spotifyLink } = Astro.props;
+---
+
+<div class="bg-white rounded-lg overflow-hidden w-80 mb-8">
+  <div class=" h-full w-full bg-gray-50 rounded-b-lg">
+    <img src={image} alt={name} class="w-full max-h-72" />
+    <div class="p-4">
+      <div class="flex items-center justify-between">
+        <div class="font-semibold text-xs">{year}</div>
+        <div class="flex gap-x-2">
+          <a href={spotifyLink} target="_blank" rel="noreferrer">
+            <Icon class="text-gray-600" icon={faSpotify} />
+          </a>
+          <a href={appleLink} target="_blank" rel="noreferrer">
+            <Icon class="text-gray-600" icon={faItunesNote} />
+          </a>
+          <a href={amazonLink} target="_blank" rel="noreferrer">
+            <Icon class="text-gray-600" icon={faAmazon} />
+          </a>
+        </div>
+      </div>
+      <h2 class="font-bold my-4">{name}</h2>
+      <p class="text-sm my-2">{description}</p>
+    </div>
+  </div>
+</div>
