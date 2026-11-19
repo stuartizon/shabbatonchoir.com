@@ -18,7 +18,7 @@ This site is maintained by Stuart, with Claude doing much of the implementation.
    - Give it a gitmoji title, because that becomes the commit on `main`.
    - Add `Closes #N` and fill in the template.
    - Include screenshots for anything visual.
-6. **Review on the PR preview link**, then squash-merge. Merging deploys to **staging**, not to the live site.
+6. **Review on the PR preview link**, then squash-merge. Merging deploys to **staging** once the checks pass on `main`, not to the live site.
 
 ## Releasing
 

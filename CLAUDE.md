@@ -23,7 +23,7 @@ The roadmap and phase order are in issue **#1**. Work through it in phase order 
 ## Release flow
 
 1. Open a PR. CI checks run and a Cloudflare preview URL is posted.
-2. Merge to `main`, which auto-deploys to **staging**.
+2. Merge to `main`. The checks run again and, if they pass, it auto-deploys to **staging**.
 3. The client reviews staging and approves.
 4. Stuart runs the manual **"Deploy to production"** workflow for a chosen commit.
 
