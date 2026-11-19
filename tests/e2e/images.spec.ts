@@ -68,3 +68,35 @@ test.describe('home page hero', () => {
     ).toHaveCount(0);
   });
 });
+
+// A PNG's width and height are the two big-endian numbers at bytes 16-23.
+function pngSize(png: Buffer) {
+  return { width: png.readUInt32BE(16), height: png.readUInt32BE(20) };
+}
+
+test.describe('icons', () => {
+  test('the favicon is a 32px PNG', async ({ page }) => {
+    await page.goto('/');
+    const icon = page.locator('head link[rel="icon"]');
+    await expect(icon).toHaveAttribute('type', 'image/png');
+    await expect(icon).toHaveAttribute('sizes', '32x32');
+    const response = await page.request.get(
+      (await icon.getAttribute('href')) ?? '',
+    );
+    expect(response.ok()).toBe(true);
+    expect(pngSize(await response.body())).toEqual({ width: 32, height: 32 });
+  });
+
+  test('the Apple touch icon is a 180px PNG', async ({ page }) => {
+    await page.goto('/');
+    const icon = page.locator('head link[rel="apple-touch-icon"]');
+    const response = await page.request.get(
+      (await icon.getAttribute('href')) ?? '',
+    );
+    expect(response.ok()).toBe(true);
+    expect(pngSize(await response.body())).toEqual({
+      width: 180,
+      height: 180,
+    });
+  });
+});
