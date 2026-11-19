@@ -26,7 +26,13 @@ const isHome = /^\/(index\.html)?$/.test(Astro.url.pathname);
   </head>
   <body>
     <div>
-      {isHome ? <Hero mode="desktop"><HeaderDesktop /></Hero> : <HeaderDesktop />}
+      {isHome ? (
+        <Hero mode="desktop">
+          <HeaderDesktop />
+        </Hero>
+      ) : (
+        <HeaderDesktop />
+      )}
       <HeaderMobile />
       <div class="overflow-hidden">
         <Navigation />

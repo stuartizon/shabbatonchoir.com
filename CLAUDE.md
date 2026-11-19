@@ -40,7 +40,7 @@ Nothing reaches production without client sign-off. Never add an automatic produ
 - **One issue per PR.** Keep PRs small, link the issue (`Closes #N`), and fill in the PR template.
 - **Small, atomic commits.** Each commit should do one thing and leave the build green. Several commits on a PR is fine and encouraged, because it makes review easier. Don't mix refactors, formatting and behaviour changes in one commit.
 - **TDD, red → green → refactor.** For anything with behaviour or logic, write a failing test first (commit it), make it pass with the simplest change (commit), then refactor with the tests green (commit). The test tooling arrives with #41. Until then, say in the PR how the change was verified. Pure content or copy changes don't need a new test, but must not break the existing ones.
-- **Gitmoji commit messages.** Format: `<emoji> <imperative summary>`, e.g. `✨ Add events page`. Use the Unicode emoji, not the `:code:`. Keep the summary to 72 characters or fewer, and add a body explaining *why* when it isn't obvious. Common ones:
+- **Gitmoji commit messages.** Format: `<emoji> <imperative summary>`, e.g. `✨ Add events page`. Use the Unicode emoji, not the `:code:`. Keep the summary to 72 characters or fewer, and add a body explaining _why_ when it isn't obvious. Common ones:
   - ✨ new feature
   - 🐛 bug fix
   - ♻️ refactor
@@ -61,6 +61,7 @@ Nothing reaches production without client sign-off. Never add an automatic produ
   - 🙈 .gitignore
 
   Full list: https://gitmoji.dev
+
 - **Squash merge only.** PRs are merged with "Squash and merge", so `main` gets one commit per PR. The **PR title becomes that commit's message**, so write PR titles in gitmoji style too, e.g. `♻️ Port site from Next.js to Astro (#2)`. The individual commits stay visible on the PR for review.
 - **Visual changes** need before/after screenshots at desktop and mobile widths in the PR, so Stuart and the client can review without running the site.
 - **Content** comes from the client. Don't invent or "improve" copy, names, dates or facts. If something looks wrong or inconsistent, flag it on the issue with the `needs client` label rather than guessing. Issue #28 tracks the current batch of client content.

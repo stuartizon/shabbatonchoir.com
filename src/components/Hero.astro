@@ -6,13 +6,22 @@ interface Props {
 const { mode } = Astro.props;
 ---
 
-<div class:list={['hero bg-auto w-screen', { 'md:hidden h-40': mode === 'mobile', 'hidden h-screen md:block': mode === 'desktop' }]}>
+<div
+  class:list={[
+    'hero bg-auto w-screen',
+    {
+      'md:hidden h-40': mode === 'mobile',
+      'hidden h-screen md:block': mode === 'desktop',
+    },
+  ]}
+>
   <slot />
 </div>
 
 <style>
   .hero {
-    background: linear-gradient(rgba(90, 90, 90, 1), rgba(0, 0, 0, 1)), url(/hero.jpeg);
+    background:
+      linear-gradient(rgba(90, 90, 90, 1), rgba(0, 0, 0, 1)), url(/hero.jpeg);
     @apply bg-cover bg-center bg-blend-screen;
   }
 </style>
