@@ -10,9 +10,14 @@ Use Node 22 (`nvm use` picks it up from `.nvmrc`), then:
 npm install
 npm run dev      # local dev server at http://localhost:4321
 npm run check    # type-check the Astro files
+npm run lint     # ESLint, including accessibility rules
+npm run format   # format everything with Prettier
+npm test         # unit tests, then build and run the Playwright tests
 npm run build    # static site in dist/
 npm run preview  # serve dist/ locally
 ```
+
+The first time, install the browser for the Playwright tests with `npx playwright install chromium`. `npm install` also sets up git hooks that check formatting, lint, types and commit messages.
 
 Pages live in `src/pages/`, shared components in `src/components/` and the page shell in `src/layouts/Layout.astro`. Images and other static files are in `public/`.
 

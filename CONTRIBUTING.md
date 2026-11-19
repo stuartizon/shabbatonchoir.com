@@ -13,7 +13,7 @@ This site is maintained by Stuart, with Claude doing much of the implementation.
 1. **Pick an issue** from the roadmap, in phase order. If it's labelled `needs client`, check the answer is on the issue first.
 2. **Branch** from an up-to-date `main`, using a short descriptive slug such as `mobile-menu` (see `CLAUDE.md`). The branch name becomes the preview address.
 3. **Work in small commits**, test-first where there's behaviour to test. Use gitmoji messages (see `CLAUDE.md`).
-4. **Run the checks** before pushing. For now that's `npm run check` and `npm run build`. After the tooling work (#41), a pre-push hook will run them.
+4. **Run the checks** before pushing. The pre-push hook runs lint, the format check, the type check and the unit tests. Run `npm test` too for anything visual, since it builds the site and runs the browser tests. CI runs everything on the PR.
 5. **Open a PR:**
    - Give it a gitmoji title, because that becomes the commit on `main`.
    - Add `Closes #N` and fill in the template.
