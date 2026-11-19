@@ -10,7 +10,7 @@ async function expectIcons(scope: Locator, names: string[], size: number) {
   for (const [i, name] of names.entries()) {
     const icon = icons(scope).nth(i);
     await expect(icon).toHaveAttribute('data-icon', name);
-    // Icons are decorative: the links around them get names in #22.
+    // Icons are decorative: the links around them carry the names.
     await expect(icon).toHaveAttribute('aria-hidden', 'true');
     const box = await icon.boundingBox();
     expect(box?.height).toBe(size);
