@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Context and ways of working for anyone (human or AI) picking up work on this repo. Read this before starting any issue.
+Context and conventions for working on this repo, which is maintained by Stuart with Claude. Read this before starting any issue. For the step-by-step workflow, see `CONTRIBUTING.md`.
 
 ## What this is
 
@@ -25,7 +25,7 @@ The roadmap and phase order are in issue **#1**. Work through it in phase order 
 1. Open a PR. CI checks run and a Cloudflare preview URL is posted.
 2. Merge to `main`, which auto-deploys to **staging**.
 3. The client reviews staging and approves.
-4. A maintainer runs the manual **"Deploy to production"** workflow for a chosen commit.
+4. Stuart runs the manual **"Deploy to production"** workflow for a chosen commit.
 
 Nothing reaches production without client sign-off. Never add an automatic production deploy.
 
@@ -57,7 +57,7 @@ Nothing reaches production without client sign-off. Never add an automatic produ
 
   Full list: https://gitmoji.dev
 - **Squash merge only.** PRs are merged with "Squash and merge", so `main` gets one commit per PR. The **PR title becomes that commit's message**, so write PR titles in gitmoji style too, e.g. `♻️ Port site from Next.js to Astro (#2)`. The individual commits stay visible on the PR for review.
-- **Visual changes** need before/after screenshots at desktop and mobile widths in the PR, so the client and maintainer can review without running the site.
+- **Visual changes** need before/after screenshots at desktop and mobile widths in the PR, so Stuart and the client can review without running the site.
 - **Content** comes from the client. Don't invent or "improve" copy, names, dates or facts. If something looks wrong or inconsistent, flag it on the issue with the `needs client` label rather than guessing. Issue #28 tracks the current batch of client content.
 - **Keep it static and simple.** No servers, databases, client-side frameworks or tracking unless an issue explicitly calls for them. Prefer zero or minimal JavaScript.
 - **Accessibility and performance are requirements, not extras:**
