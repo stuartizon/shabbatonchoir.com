@@ -1,15 +1,20 @@
-# Deploys each pull request to its own Cloudflare Pages preview
-# (<branch-alias>.<project>.pages.dev, where Cloudflare slugifies the git
-# branch name, e.g. astro-port -> astro-port.<project>.pages.dev). The job's `environment` makes GitHub
-# record a deployment, so the PR shows a "View deployment" button.
-name: Deploy PR preview
+# Runs the checks on each pull request and deploys it to its own Cloudflare
+# Pages preview (<branch-alias>.<project>.pages.dev, where Cloudflare
+# slugifies the git branch name, e.g. astro-port ->
+# astro-port.<project>.pages.dev).
+#
+# The preview deploys alongside the checks rather than after them: a broken
+# preview is only ever seen by us, and can help show what a test is
+# complaining about. The checks are required in the main ruleset, so a PR
+# can't merge until they pass.
+name: PR
 
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 concurrency:
-  group: deploy-preview-${{ github.event.number }}
+  group: pr-${{ github.event.number }}
   cancel-in-progress: true
 
 permissions:
@@ -19,10 +24,17 @@ env:
   PAGES_PROJECT: shabbatonchoir
 
 jobs:
-  deploy:
+  checks:
+    name: Checks
+    uses: ./.github/workflows/checks.yml
+
+  preview:
+    name: Deploy preview
     # Secrets aren't available to PRs from forks.
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    # The environment makes GitHub record a deployment, so the PR shows a
+    # "View deployment" button.
     environment:
       name: preview
       url: ${{ steps.deploy.outputs.pages-deployment-alias-url || steps.deploy.outputs.deployment-url }}

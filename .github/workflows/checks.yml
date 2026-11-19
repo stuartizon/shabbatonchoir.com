@@ -1,14 +1,9 @@
-# Runs on every pull request. Mark both jobs as required status checks in
-# the main ruleset, so a PR can't merge until they pass.
-name: CI
+# Lint, format, type check, build and browser tests. pr.yml and main.yml
+# both call this, so the checks are defined once.
+name: Checks
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-
-concurrency:
-  group: ci-${{ github.event.number }}
-  cancel-in-progress: true
+  workflow_call:
 
 permissions:
   contents: read
