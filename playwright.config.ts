@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// Browser tests run against the built site (npm run build first), served
-// by astro preview. CI runs them; the pre-push hook doesn't, to stay quick.
+// Browser tests run against the built site (npm test builds it first),
+// served by astro preview. CI runs them; the pre-push hook doesn't, to stay quick.
 const PORT = 4322;
 
 export default defineConfig({

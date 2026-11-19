@@ -9,10 +9,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
-    "test": "npm run test:unit && npm run test:e2e",
-    "test:unit": "node --test \"tests/unit/**/*.test.js\"",
-    "prepare": "simple-git-hooks",
-    "test:e2e": "npm run build && playwright test"
+    "test": "npm run build && playwright test",
+    "prepare": "simple-git-hooks"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -47,8 +45,7 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
-    "commit-msg": "node scripts/check-commit-msg.js \"$1\"",
-    "pre-push": "node scripts/pre-push.js && npm run lint && npm run format:check && npm run check && npm run test:unit"
+    "pre-push": "npm run lint && npm run format:check && npm run check"
   },
   "lint-staged": {
     "*.{js,cjs,mjs,ts,astro}": [

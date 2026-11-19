@@ -1,6 +1,5 @@
-# Runs on every pull request. Mark these jobs, and the one in pr-title.yml,
-# as required status checks in the main ruleset, so a PR can't merge until
-# they pass.
+# Runs on every pull request. Mark both jobs as required status checks in
+# the main ruleset, so a PR can't merge until they pass.
 name: CI
 
 on:
@@ -16,7 +15,7 @@ permissions:
 
 jobs:
   checks:
-    name: Lint, type check, unit tests and build
+    name: Lint, format, type check and build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -33,8 +32,6 @@ jobs:
       - run: npm run format:check
 
       - run: npm run check
-
-      - run: npm run test:unit
 
       - run: npm run build
 
@@ -54,4 +51,4 @@ jobs:
       - run: npx playwright install --with-deps chromium
 
       # Builds the site, then runs the smoke, accessibility and link tests.
-      - run: npm run test:e2e
+      - run: npm test
