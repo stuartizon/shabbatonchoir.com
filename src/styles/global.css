@@ -1,7 +1,5 @@
 @import 'tailwindcss';
 
-@plugin '@tailwindcss/forms';
-
 @theme {
   /* Tailwind 3's default font stack, which Tailwind 4 changed. */
   --font-sans:
