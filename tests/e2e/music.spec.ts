@@ -38,6 +38,24 @@ for (const { name, year, hasDescription } of ALBUMS) {
       expect(width).toBeGreaterThan(0);
     });
 
+    // Covers show at 320px wide, so they're served at no more than twice
+    // that for retina screens, in a modern format, and only when needed (#14).
+    test('serves its cover small, modern and lazily', async ({ page }) => {
+      const cover = album(page).getByRole('img', { name, exact: true });
+      await cover.scrollIntoViewIfNeeded();
+      await expect(cover).toHaveAttribute('loading', 'lazy');
+      await expect(cover).toHaveAttribute('width', /^\d+$/);
+      await expect(cover).toHaveAttribute('height', /^\d+$/);
+      const { src, naturalWidth } = await cover.evaluate(
+        (img: HTMLImageElement) => ({
+          src: img.currentSrc,
+          naturalWidth: img.naturalWidth,
+        }),
+      );
+      expect(new URL(src).pathname).toMatch(/\.(avif|webp)$/);
+      expect(naturalWidth).toBeLessThanOrEqual(640);
+    });
+
     test('links to Spotify, Apple Music and Amazon', async ({ page }) => {
       const hrefs = await album(page)
         .locator('a')
