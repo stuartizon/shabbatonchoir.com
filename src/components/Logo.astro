@@ -1,3 +1,15 @@
+---
+// The logo sits inline on the text baseline (not Tailwind's default block,
+// middle-aligned img), as the old next/image wrapper did. The gap below it
+// keeps the header spacing the same as the live site.
+---
+
 <a class="hover:opacity-100" href="/">
-  <img src="/logo.svg" alt="Shabbaton Choir" width="205" height="59" />
+  <img
+    class="inline align-baseline"
+    src="/logo.svg"
+    alt="Shabbaton Choir"
+    width="205"
+    height="59"
+  />
 </a>
