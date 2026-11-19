@@ -13,24 +13,24 @@ const { name, description, year, cover, spotify, apple, amazon } = Astro.props;
     <div class="p-4">
       <div class="flex items-center justify-between">
         <div class="font-semibold text-xs">{year}</div>
-        <div class="flex -my-2 -mr-[13px]">
+        <div class="flex -my-2 -mr-1">
           <IconLink
             href={spotify}
             label={`Listen to ${name} on Spotify`}
             name="spotify"
-            class="p-[13px]"
+            class="px-1 py-[13px]"
           />
           <IconLink
             href={apple}
             label={`Listen to ${name} on Apple Music`}
             name="apple-music"
-            class="p-[13px]"
+            class="px-1 py-[13px]"
           />
           <IconLink
             href={amazon}
             label={`Listen to ${name} on Amazon Music`}
             name="amazon"
-            class="p-[13px]"
+            class="px-1 py-[13px]"
           />
         </div>
       </div>
