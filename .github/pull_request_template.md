@@ -21,4 +21,5 @@ Closes #
 - [ ] Checked on the PR preview link
 - [ ] No personal contact details or secrets added (the repo is public)
 - [ ] Content matches what the client supplied (or questions raised on the issue)
+- [ ] Responsive: checked at mobile (~375px), tablet (~768px) and desktop (~1280px), no horizontal scroll
 - [ ] Accessible: semantic headings, alt text, keyboard-operable

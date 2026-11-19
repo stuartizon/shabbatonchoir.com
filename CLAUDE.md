@@ -60,6 +60,7 @@ Nothing reaches production without client sign-off. Never add an automatic produ
 - **Visual changes** need before/after screenshots at desktop and mobile widths in the PR, so Stuart and the client can review without running the site.
 - **Content** comes from the client. Don't invent or "improve" copy, names, dates or facts. If something looks wrong or inconsistent, flag it on the issue with the `needs client` label rather than guessing. Issue #28 tracks the current batch of client content.
 - **Keep it static and simple.** No servers, databases, client-side frameworks or tracking unless an issue explicitly calls for them. Prefer zero or minimal JavaScript.
+- **Responsive, mobile-first.** Many visitors arrive on phones from social links, so every page must work well from 320px up to wide desktop. Build mobile-first with Tailwind breakpoints, and check at about 375px, 768px and 1280px. Avoid horizontal scrolling and fixed-width layouts, keep tap targets at least 44px, and avoid hover-only interactions.
 - **Accessibility and performance are requirements, not extras:**
   - Semantic HTML, with one `h1` per page.
   - `lang="en-GB"`.
