@@ -8,4 +8,9 @@ export default defineConfig({
     format: 'file',
   },
   trailingSlash: 'never',
+  markdown: {
+    // Keep quotes and apostrophes exactly as the client wrote them, rather
+    // than turning straight quotes into curly ones.
+    smartypants: false,
+  },
 });
