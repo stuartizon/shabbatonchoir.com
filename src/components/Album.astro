@@ -1,4 +1,5 @@
 ---
+import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import IconLink from './IconLink.astro';
 
@@ -9,7 +10,15 @@ const { name, description, year, cover, spotify, apple, amazon } = Astro.props;
 
 <div class="bg-white rounded-lg overflow-hidden w-80 mb-8">
   <div class="h-full w-full bg-gray-50 rounded-b-lg">
-    <img src={cover.src} alt={name} class="w-full max-h-72" />
+    <Picture
+      src={cover}
+      alt={name}
+      width={640}
+      widths={[320, 640]}
+      sizes="320px"
+      formats={['avif', 'webp']}
+      class="w-full max-h-72"
+    />
     <div class="p-4">
       <div class="flex items-center justify-between">
         <div class="font-semibold text-xs">{year}</div>

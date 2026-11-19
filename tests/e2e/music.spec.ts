@@ -31,11 +31,12 @@ for (const { name, year, hasDescription } of ALBUMS) {
 
     test('shows its cover', async ({ page }) => {
       const cover = album(page).getByRole('img', { name, exact: true });
+      // Covers load lazily, so bring each one into view first.
+      await cover.scrollIntoViewIfNeeded();
       await expect(cover).toBeVisible();
-      const width = await cover.evaluate(
-        (img: HTMLImageElement) => img.naturalWidth,
-      );
-      expect(width).toBeGreaterThan(0);
+      await expect
+        .poll(() => cover.evaluate((img: HTMLImageElement) => img.naturalWidth))
+        .toBeGreaterThan(0);
     });
 
     // Covers show at 320px wide, so they're served at no more than twice
