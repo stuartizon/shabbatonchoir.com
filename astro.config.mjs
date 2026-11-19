@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
@@ -8,6 +9,9 @@ export default defineConfig({
     format: 'file',
   },
   trailingSlash: 'never',
+  vite: {
+    plugins: [tailwindcss()],
+  },
   markdown: {
     // Keep quotes and apostrophes exactly as the client wrote them, rather
     // than turning straight quotes into curly ones.
