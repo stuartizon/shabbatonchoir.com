@@ -1,62 +1,47 @@
 ---
-import Icon from './Icon.astro';
+import type { IconName } from '../icons';
+import IconLink from './IconLink.astro';
+
+const LINKS: { service: string; name: IconName; href: string }[] = [
+  {
+    service: 'Facebook',
+    name: 'facebook',
+    href: 'https://www.facebook.com/shabbatonchoir',
+  },
+  { service: 'X', name: 'x', href: 'https://twitter.com/shabbatonchoir' },
+  {
+    service: 'YouTube',
+    name: 'youtube',
+    href: 'https://www.youtube.com/user/ShabbatonChoir',
+  },
+  {
+    service: 'Spotify',
+    name: 'spotify',
+    href: 'https://open.spotify.com/artist/3UZxQiOiQL8bgl4Zc4R9vk',
+  },
+  {
+    service: 'Apple Music',
+    name: 'apple-music',
+    href: 'https://music.apple.com/gb/artist/shabbaton-choir/449897420',
+  },
+  {
+    service: 'Amazon Music',
+    name: 'amazon',
+    href: 'https://music.amazon.co.uk/artists/B005CSNERG/shabbaton-choir',
+  },
+];
 ---
 
 <footer class="pt-16 md:pt-0">
   <div class="fixed md:static bottom-0 w-screen flex bg-gray-100 justify-center gap-4 min-[375px]:gap-6 sm:gap-8 p-6">
-    <a
-      href="https://www.facebook.com/shabbatonchoir"
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Shabbaton Choir on Facebook"
-      class="flex -m-1.5 p-1.5 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-500"
-    >
-      <Icon size="2x" class="text-gray-600" name="facebook" />
-    </a>
-    <a
-      href="https://twitter.com/shabbatonchoir"
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Shabbaton Choir on X"
-      class="flex -m-1.5 p-1.5 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-500"
-    >
-      <Icon size="2x" class="text-gray-600" name="x" />
-    </a>
-    <a
-      href="https://www.youtube.com/user/ShabbatonChoir"
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Shabbaton Choir on YouTube"
-      class="flex -m-1.5 p-1.5 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-500"
-    >
-      <Icon size="2x" class="text-gray-600" name="youtube" />
-    </a>
-    <a
-      href="https://open.spotify.com/artist/3UZxQiOiQL8bgl4Zc4R9vk"
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Shabbaton Choir on Spotify"
-      class="flex -m-1.5 p-1.5 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-500"
-    >
-      <Icon size="2x" class="text-gray-600" name="spotify" />
-    </a>
-    <a
-      href="https://music.apple.com/gb/artist/shabbaton-choir/449897420"
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Shabbaton Choir on Apple Music"
-      class="flex -m-1.5 p-1.5 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-500"
-    >
-      <Icon size="2x" class="text-gray-600" name="apple-music" />
-    </a>
-    <a
-      href="https://music.amazon.co.uk/artists/B005CSNERG/shabbaton-choir"
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Shabbaton Choir on Amazon Music"
-      class="flex -m-1.5 p-1.5 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-500"
-    >
-      <Icon size="2x" class="text-gray-600" name="amazon" />
-    </a>
+    {LINKS.map(({ service, name, href }) => (
+      <IconLink
+        href={href}
+        label={`Shabbaton Choir on ${service}`}
+        name={name}
+        size="2x"
+        class="-m-1.5 p-1.5"
+      />
+    ))}
   </div>
 </footer>
