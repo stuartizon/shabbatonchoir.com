@@ -32,6 +32,11 @@ Nothing reaches production without client sign-off. Never add an automatic produ
 ## Ways of working
 
 - **Pull requests only.** Branch from `main` and open a PR. Never commit or push directly to `main`. A ruleset on `main` enforces this (#6), and so will a local pre-push hook (#41).
+- **Descriptive branch names:** a short, lowercase, hyphenated slug describing the work, for example `astro-port`, `mobile-menu`, `events-page` or `client-content`.
+  - Don't add a type prefix or issue number. The PR links the issue.
+  - Keep it to 28 characters or fewer. The branch name becomes the PR preview address (`mobile-menu.shabbatonchoir.pages.dev`), and Cloudflare truncates longer names.
+  - Never use `main` or `staging`. Those aliases are reserved for the release flow.
+  - This applies to AI sessions too: create a descriptive branch for the work instead of using an auto-generated session branch name.
 - **One issue per PR.** Keep PRs small, link the issue (`Closes #N`), and fill in the PR template.
 - **Small, atomic commits.** Each commit should do one thing and leave the build green. Several commits on a PR is fine and encouraged, because it makes review easier. Don't mix refactors, formatting and behaviour changes in one commit.
 - **TDD, red → green → refactor.** For anything with behaviour or logic, write a failing test first (commit it), make it pass with the simplest change (commit), then refactor with the tests green (commit). The test tooling arrives with #41. Until then, say in the PR how the change was verified. Pure content or copy changes don't need a new test, but must not break the existing ones.

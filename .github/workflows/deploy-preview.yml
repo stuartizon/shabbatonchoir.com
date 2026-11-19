@@ -1,0 +1,56 @@
+# Deploys each pull request to its own Cloudflare Pages preview
+# (<branch-alias>.<project>.pages.dev, where Cloudflare slugifies the git
+# branch name, e.g. astro-port -> astro-port.<project>.pages.dev). The job's `environment` makes GitHub
+# record a deployment, so the PR shows a "View deployment" button.
+name: Deploy PR preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: deploy-preview-${{ github.event.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  PAGES_PROJECT: shabbatonchoir
+
+jobs:
+  deploy:
+    # Secrets aren't available to PRs from forks.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    environment:
+      name: preview
+      url: ${{ steps.deploy.outputs.pages-deployment-alias-url || steps.deploy.outputs.deployment-url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn export
+
+      - name: Create the Pages project if it doesn't exist yet
+        run: npx --yes wrangler@4 pages project create "$PAGES_PROJECT" --production-branch=main || true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Deploy preview
+        id: deploy
+        uses: cloudflare/wrangler-action@v4
+        # wrangler-action runs the command without a shell, and git branch
+        # names can't contain spaces, so interpolating head_ref is safe here.
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4"
+          command: pages deploy out --project-name=${{ env.PAGES_PROJECT }} --branch=${{ github.head_ref }} --commit-hash=${{ github.event.pull_request.head.sha }} --commit-dirty=true
