@@ -1,9 +1,4 @@
 ---
-import {
-  faAmazon,
-  faItunesNote,
-  faSpotify,
-} from '@fortawesome/free-brands-svg-icons';
 import type { CollectionEntry } from 'astro:content';
 import Icon from './Icon.astro';
 
@@ -20,13 +15,13 @@ const { name, description, year, cover, spotify, apple, amazon } = Astro.props;
         <div class="font-semibold text-xs">{year}</div>
         <div class="flex gap-x-2">
           <a href={spotify} target="_blank" rel="noreferrer">
-            <Icon class="text-gray-600" icon={faSpotify} />
+            <Icon class="text-gray-600" name="spotify" />
           </a>
           <a href={apple} target="_blank" rel="noreferrer">
-            <Icon class="text-gray-600" icon={faItunesNote} />
+            <Icon class="text-gray-600" name="apple-music" />
           </a>
           <a href={amazon} target="_blank" rel="noreferrer">
-            <Icon class="text-gray-600" icon={faAmazon} />
+            <Icon class="text-gray-600" name="amazon" />
           </a>
         </div>
       </div>

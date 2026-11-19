@@ -1,58 +1,50 @@
 ---
-import {
-  faAmazon,
-  faFacebook,
-  faTwitter,
-  faYoutube,
-  faSpotify,
-  faItunesNote,
-} from '@fortawesome/free-brands-svg-icons';
 import Icon from './Icon.astro';
 ---
 
 <footer class="pt-16 md:pt-0">
-  <div class="fixed md:static bottom-0 w-screen flex bg-gray-100 justify-center gap-4 p-6">
+  <div class="fixed md:static bottom-0 w-screen flex bg-gray-100 justify-center gap-4 min-[375px]:gap-6 sm:gap-8 p-6">
     <a
       href="https://www.facebook.com/shabbatonchoir"
       target="_blank"
       rel="noreferrer"
     >
-      <Icon size="2x" class="text-gray-600" icon={faFacebook} />
+      <Icon size="2x" class="text-gray-600" name="facebook" />
     </a>
     <a
       href="https://twitter.com/shabbatonchoir"
       target="_blank"
       rel="noreferrer"
     >
-      <Icon size="2x" class="text-gray-600" icon={faTwitter} />
+      <Icon size="2x" class="text-gray-600" name="x" />
     </a>
     <a
       href="https://www.youtube.com/user/ShabbatonChoir"
       target="_blank"
       rel="noreferrer"
     >
-      <Icon size="2x" class="text-gray-600" icon={faYoutube} />
+      <Icon size="2x" class="text-gray-600" name="youtube" />
     </a>
     <a
       href="https://open.spotify.com/artist/3UZxQiOiQL8bgl4Zc4R9vk"
       target="_blank"
       rel="noreferrer"
     >
-      <Icon size="2x" class="text-gray-600" icon={faSpotify} />
+      <Icon size="2x" class="text-gray-600" name="spotify" />
     </a>
     <a
       href="https://music.apple.com/gb/artist/shabbaton-choir/449897420"
       target="_blank"
       rel="noreferrer"
     >
-      <Icon size="2x" class="text-gray-600" icon={faItunesNote} />
+      <Icon size="2x" class="text-gray-600" name="apple-music" />
     </a>
     <a
       href="https://music.amazon.co.uk/artists/B005CSNERG/shabbaton-choir"
       target="_blank"
       rel="noreferrer"
     >
-      <Icon size="2x" class="text-gray-600" icon={faAmazon} />
+      <Icon size="2x" class="text-gray-600" name="amazon" />
     </a>
   </div>
 </footer>
