@@ -17,7 +17,7 @@ Closes #
 
 - [ ] PR title is gitmoji style
 - [ ] Small, atomic gitmoji commits; tests written first where there's behaviour to test
-- [ ] `npm test` passes locally (the pre-push hook covers lint, format, types and unit tests)
+- [ ] `npm test` passes locally (the pre-push hook covers lint, format and types)
 - [ ] Checked on the PR preview link
 - [ ] No personal contact details or secrets added (the repo is public)
 - [ ] Content matches what the client supplied (or questions raised on the issue)
