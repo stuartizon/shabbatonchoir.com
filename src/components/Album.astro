@@ -4,36 +4,28 @@ import {
   faItunesNote,
   faSpotify,
 } from '@fortawesome/free-brands-svg-icons';
+import type { CollectionEntry } from 'astro:content';
 import Icon from './Icon.astro';
 
-interface Props {
-  name: string;
-  description?: string;
-  year: string;
-  image: string;
-  amazonLink: string;
-  appleLink: string;
-  spotifyLink: string;
-}
+type Props = CollectionEntry<'albums'>['data'];
 
-const { name, description, year, image, amazonLink, appleLink, spotifyLink } =
-  Astro.props;
+const { name, description, year, cover, spotify, apple, amazon } = Astro.props;
 ---
 
 <div class="bg-white rounded-lg overflow-hidden w-80 mb-8">
   <div class="h-full w-full bg-gray-50 rounded-b-lg">
-    <img src={image} alt={name} class="w-full max-h-72" />
+    <img src={cover.src} alt={name} class="w-full max-h-72" />
     <div class="p-4">
       <div class="flex items-center justify-between">
         <div class="font-semibold text-xs">{year}</div>
         <div class="flex gap-x-2">
-          <a href={spotifyLink} target="_blank" rel="noreferrer">
+          <a href={spotify} target="_blank" rel="noreferrer">
             <Icon class="text-gray-600" icon={faSpotify} />
           </a>
-          <a href={appleLink} target="_blank" rel="noreferrer">
+          <a href={apple} target="_blank" rel="noreferrer">
             <Icon class="text-gray-600" icon={faItunesNote} />
           </a>
-          <a href={amazonLink} target="_blank" rel="noreferrer">
+          <a href={amazon} target="_blank" rel="noreferrer">
             <Icon class="text-gray-600" icon={faAmazon} />
           </a>
         </div>
