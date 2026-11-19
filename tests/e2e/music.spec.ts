@@ -47,6 +47,9 @@ for (const { name, year, hasDescription } of ALBUMS) {
       await expect(cover).toHaveAttribute('loading', 'lazy');
       await expect(cover).toHaveAttribute('width', /^\d+$/);
       await expect(cover).toHaveAttribute('height', /^\d+$/);
+      await expect
+        .poll(() => cover.evaluate((img: HTMLImageElement) => img.naturalWidth))
+        .toBeGreaterThan(0);
       const { src, naturalWidth } = await cover.evaluate(
         (img: HTMLImageElement) => ({
           src: img.currentSrc,
