@@ -30,11 +30,11 @@ const {
   target="_blank"
   rel="noreferrer"
   aria-label={label}
-  class:list={['group flex focus-visible:outline-none', className]}
+  class:list={['group flex focus-visible:outline-hidden', className]}
 >
   <Icon
     size={size}
-    class={`text-gray-600 rounded group-focus-visible:outline group-focus-visible:outline-2 group-focus-visible:outline-primary-500 ${ringOffset}`}
+    class={`text-gray-600 rounded-sm group-focus-visible:outline-solid group-focus-visible:outline-2 group-focus-visible:outline-primary-500 ${ringOffset}`}
     name={name}
   />
 </a>

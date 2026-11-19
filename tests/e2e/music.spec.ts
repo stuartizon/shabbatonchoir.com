@@ -56,5 +56,12 @@ for (const { name, year, hasDescription } of ALBUMS) {
       const text = (await album(page).locator('p').textContent()) ?? '';
       expect(text.trim().length > 0).toBe(hasDescription);
     });
+
+    // The site's own heading and paragraph styles must not override the
+    // utility classes that tighten the album's spacing (#44).
+    test('keeps its tight title and description spacing', async ({ page }) => {
+      await expect(album(page).locator('h2')).toHaveCSS('margin-top', '16px');
+      await expect(album(page).locator('p')).toHaveCSS('margin-top', '8px');
+    });
   });
 }
