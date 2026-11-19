@@ -12,8 +12,8 @@ The client is the choir's committee. They supply content and must **visually sig
 
 ## Where things stand (Nov 2026)
 
-- **Current stack:** Astro 7 (static output to `dist/`), Tailwind 3 via PostCSS and Font Awesome 5 rendered to inline SVG at build time. ESLint, Prettier and Playwright for checks and tests. Content lives in `src/content/`: one YAML file per album (with its cover beside it) in `albums/`, and the Home, History and Leadership text as Markdown in `pages/`. The schemas are in `src/content.config.ts`. Contact is still hard-coded in `src/pages/contact.astro`. Node 22 is pinned in `.nvmrc`.
-- **Planned:** inline SVG icons (#5), Tailwind 4 (#44) and `astro:assets` for images (#14).
+- **Current stack:** Astro 7 (static output to `dist/`), Tailwind 3 via PostCSS, and inline SVG icons (Simple Icons and Heroicons path data in `src/icons.ts`, rendered by `src/components/Icon.astro`). ESLint, Prettier and Playwright for checks and tests. Content lives in `src/content/`: one YAML file per album (with its cover beside it) in `albums/`, and the Home, History and Leadership text as Markdown in `pages/`. The schemas are in `src/content.config.ts`. Contact is still hard-coded in `src/pages/contact.astro`. Node 22 is pinned in `.nvmrc`.
+- **Planned:** Tailwind 4 (#44) and `astro:assets` for images (#14).
 - **Hosting:** production is on **Vercel and is frozen**. Its Ignored Build Step is set to "Don't build anything" (#38), so pushing to `main` does **not** change the live site.
 - **Target hosting:** Cloudflare Pages, as a Direct Upload project deployed by GitHub Actions with `wrangler pages deploy` (#7–#9).
 - **Domain, DNS and email:** all stay at **Squarespace**. The cut-over (#10) changes only the `www` CNAME. Do not touch nameservers, MX records or email forwarding. Moving those is a separate, later job (#39).
