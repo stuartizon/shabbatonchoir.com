@@ -46,6 +46,6 @@ tests/e2e/              # Playwright tests
 
 - **Preview:** each pull request is deployed to `https://<branch>.shabbatonchoir.pages.dev`.
 - **Staging:** each merge to `main` that passes the checks is deployed to https://staging.shabbatonchoir.pages.dev.
-- **Production:** deployed by hand with a "Deploy to production" workflow, once the committee has signed off on staging. This workflow is still to come (#9).
+- **Production:** deployed by hand with the "Deploy to production" workflow, once the committee has signed off on staging. Until the cut-over it lives at https://shabbatonchoir.pages.dev.
 
 See `CONTRIBUTING.md` for the workflow and `CLAUDE.md` for project context and conventions.

@@ -24,7 +24,7 @@ This site is maintained by Stuart, with Claude doing much of the implementation.
 
 1. Share the staging link with the committee and get their OK (by email or WhatsApp is fine).
 2. Note the approval on the issue or PR.
-3. Run the **"Deploy to production"** workflow for the approved commit (#9).
+3. Run the **"Deploy to production"** workflow for the approved commit. Leaving the commit blank deploys whatever is on staging. To roll back, run it again with an earlier commit.
 
 Until the cut-over (#10), production is the frozen Vercel deployment and none of this reaches it.
 
