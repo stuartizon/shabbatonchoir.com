@@ -32,17 +32,15 @@ const LINKS: { service: string; name: IconName; href: string }[] = [
 ];
 ---
 
-<footer>
-  <div class="flex bg-gray-100 justify-center gap-4 min-[375px]:gap-6 sm:gap-8 p-6">
-    {LINKS.map(({ service, name, href }) => (
-      <IconLink
-        href={href}
-        label={`Shabbaton Choir on ${service}`}
-        name={name}
-        size="2x"
-        class="-m-1.5 p-1.5"
-        ringOffset="group-focus-visible:outline-offset-[6px]"
-      />
-    ))}
-  </div>
+<footer class="flex bg-gray-100 justify-center gap-4 min-[375px]:gap-6 sm:gap-8 p-6">
+  {LINKS.map(({ service, name, href }) => (
+    <IconLink
+      href={href}
+      label={`Shabbaton Choir on ${service}`}
+      name={name}
+      size="2x"
+      class="-m-1.5 p-1.5"
+      ringOffset="group-focus-visible:outline-offset-[6px]"
+    />
+  ))}
 </footer>
