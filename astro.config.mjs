@@ -14,6 +14,12 @@ export default defineConfig({
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      // Never inline scripts into the page, so the content security policy
+      // can allow scripts from the site's own origin only, without hashes
+      // that would need updating whenever a script changes.
+      assetsInlineLimit: 0,
+    },
   },
   markdown: {
     // Keep quotes and apostrophes exactly as the client wrote them, rather
