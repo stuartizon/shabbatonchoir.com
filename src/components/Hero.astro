@@ -12,7 +12,7 @@ const { mode } = Astro.props;
 <div
   data-hero
   class:list={[
-    'relative isolate w-screen',
+    'relative isolate w-full',
     {
       'md:hidden h-40': mode === 'mobile',
       'hidden h-screen md:block': mode === 'desktop',
