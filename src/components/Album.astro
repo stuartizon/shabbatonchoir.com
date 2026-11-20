@@ -1,6 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { splitHebrew } from '../hebrew';
 import IconLink from './IconLink.astro';
 
 type Props = CollectionEntry<'albums'>['data'];
@@ -44,7 +45,17 @@ const { name, description, year, cover, spotify, apple, amazon } = Astro.props;
         </div>
       </div>
       <h2 class="font-bold my-4">{name}</h2>
-      <p class="text-sm my-2">{description}</p>
+      <p class="text-sm my-2">
+        {splitHebrew(description ?? '').map(({ text, hebrew }) =>
+          hebrew ? (
+            <span lang="he" dir="rtl">
+              {text}
+            </span>
+          ) : (
+            text
+          ),
+        )}
+      </p>
     </div>
   </div>
 </div>
