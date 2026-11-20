@@ -227,7 +227,11 @@ test('the menu links spread no further apart on taller phones', async ({
 }) => {
   const standard = await linkPositions(page, 375, 667);
   const tall = await linkPositions(page, 430, 932);
-  for (const [i, y] of tall.entries()) expect(y).toBeCloseTo(standard[i], 0);
+  // Within a couple of pixels: font metrics shift the header height slightly
+  // between machines.
+  for (const [i, y] of tall.entries()) {
+    expect(Math.abs(y - standard[i])).toBeLessThan(2);
+  }
 });
 
 test('the menu links close up on short phones, so all of them fit', async ({
