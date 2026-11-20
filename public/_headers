@@ -5,8 +5,17 @@
 # addresses and any custom domain pointed at them) is a copy, so noindex is
 # the default and the www rule removes it. New non-production domains need
 # no changes here.
+#
+# The other headers are basic hardening (#11). The site loads everything
+# from its own origin, so the content security policy allows only 'self'.
+# Inline style attributes are allowed because the 404 page uses them. To
+# add an embed (YouTube, Spotify), allow its origin in frame-src.
 /*
   X-Robots-Tag: noindex
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: accelerometer=(), browsing-topics=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+  Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 
 https://www.shabbatonchoir.com/*
   ! X-Robots-Tag
