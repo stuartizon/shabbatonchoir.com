@@ -32,8 +32,8 @@ const LINKS: { service: string; name: IconName; href: string }[] = [
 ];
 ---
 
-<footer class="pt-16 md:pt-0">
-  <div class="fixed md:static bottom-0 w-full flex bg-gray-100 justify-center gap-4 min-[375px]:gap-6 sm:gap-8 p-6">
+<footer>
+  <div class="flex bg-gray-100 justify-center gap-4 min-[375px]:gap-6 sm:gap-8 p-6">
     {LINKS.map(({ service, name, href }) => (
       <IconLink
         href={href}
