@@ -1,0 +1,111 @@
+# Deploys a chosen commit to Cloudflare Pages *production*, by hand, once
+# the client has signed off on staging. Leave the commit blank to ship
+# whatever is on staging now, so production gets exactly what was reviewed.
+#
+# The job runs in the "production" GitHub environment, which needs Stuart's
+# approval before it starts. Each release is tagged release-YYYY-MM-DD-N.
+#
+# To roll back, run this workflow again with an earlier commit (the release
+# tags list what has been live), or use "Rollback" on an earlier production
+# deployment in the Cloudflare Pages dashboard.
+name: Deploy to production
+
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: Commit to deploy (leave blank for the commit on staging)
+        required: false
+        type: string
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+permissions:
+  # To push the release tag.
+  contents: write
+  # To find the commit on staging.
+  deployments: read
+
+env:
+  PAGES_PROJECT: shabbatonchoir
+
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://${{ env.PAGES_PROJECT }}.pages.dev
+    steps:
+      # Use the newest staging deployment that succeeded, rather than the tip
+      # of main, which may not have passed its checks yet.
+      - name: Choose the commit
+        id: commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_SHA: ${{ inputs.sha }}
+        run: |
+          sha="$INPUT_SHA"
+          if [ -z "$sha" ]; then
+            for id in $(gh api "repos/$GITHUB_REPOSITORY/deployments?environment=staging&per_page=20" --jq '.[].id'); do
+              state=$(gh api "repos/$GITHUB_REPOSITORY/deployments/$id/statuses?per_page=1" --jq '.[0].state')
+              if [ "$state" = success ]; then
+                sha=$(gh api "repos/$GITHUB_REPOSITORY/deployments/$id" --jq '.sha')
+                break
+              fi
+            done
+          fi
+          if [ -z "$sha" ]; then
+            echo "::error::No successful staging deployment found. Enter a commit instead."
+            exit 1
+          fi
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.commit.outputs.sha }}
+          # Full history and tags, to check the commit is on main and to
+          # number the release tag.
+          fetch-depth: 0
+
+      # Only ship commits that have been merged, never an unreviewed branch.
+      - name: Check the commit is on main
+        id: check
+        run: |
+          sha=$(git rev-parse --verify "HEAD^{commit}")
+          if ! git merge-base --is-ancestor "$sha" origin/main; then
+            echo "::error::$sha is not on main."
+            exit 1
+          fi
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - name: Deploy to production
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: '4'
+          # main is the Pages project's production branch.
+          command: pages deploy dist --project-name=${{ env.PAGES_PROJECT }} --branch=main --commit-hash=${{ steps.check.outputs.sha }} --commit-dirty=true
+
+      - name: Tag the release
+        env:
+          SHA: ${{ steps.check.outputs.sha }}
+        run: |
+          prefix="release-$(date -u +%F)"
+          n=$(( $(git tag --list "$prefix-*" | wc -l) + 1 ))
+          tag="$prefix-$n"
+          git tag "$tag" "$SHA"
+          git push origin "refs/tags/$tag"
+          echo "Released $SHA as $tag" >> "$GITHUB_STEP_SUMMARY"
