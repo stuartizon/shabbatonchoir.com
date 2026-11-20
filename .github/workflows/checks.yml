@@ -43,7 +43,9 @@ jobs:
 
       - run: npm ci
 
-      - run: npx playwright install --with-deps chromium
+      # The tests run headless, so only the headless shell is needed, not
+      # the full Chrome build.
+      - run: npx playwright install --with-deps --only-shell chromium
 
       # Builds the site, then runs the smoke, accessibility and link tests.
       - run: npm test
