@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
-import { NAV_LINKS, isCurrent } from './nav';
+import { NAV_LINKS } from './nav';
 ---
 
 <!--
@@ -51,10 +51,7 @@ import { NAV_LINKS, isCurrent } from './nav';
         <li>
           <a
             href={href}
-            aria-current={
-              isCurrent(href, Astro.url.pathname) ? 'page' : undefined
-            }
-            class="block px-6 py-3 text-xl font-medium uppercase tracking-wide no-underline aria-[current=page]:underline"
+            class="block px-6 py-3 text-xl font-medium uppercase tracking-wide no-underline"
           >
             {label}
           </a>
