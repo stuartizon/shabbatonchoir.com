@@ -46,7 +46,11 @@ import { NAV_LINKS } from './nav';
     hidden
     class="absolute inset-x-0 top-full h-[calc(100dvh-100%)] overflow-y-auto overscroll-contain bg-white transition-discrete motion-safe:transition-[translate,display] motion-safe:duration-300 motion-safe:ease-out starting:translate-x-full [&[hidden]]:translate-x-full"
   >
-    <ul class="flex min-h-full flex-col items-center justify-evenly gap-2 px-4 py-6">
+    <!--
+      The links spread down the menu, but no further apart than on a 375×667
+      phone, where the menu is 574px tall. Taller phones get space below.
+    -->
+    <ul class="flex h-full max-h-[35.875rem] min-h-fit flex-col items-center justify-evenly gap-2 px-4 py-6">
       {NAV_LINKS.map(({ href, label }) => (
         <li>
           <a
