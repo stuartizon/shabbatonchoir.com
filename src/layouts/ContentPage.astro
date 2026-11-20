@@ -6,21 +6,14 @@ import Layout from './Layout.astro';
 interface Props {
   /** The Markdown file's name, without .md. */
   id: string;
-  class?: string;
 }
 
-const { id, class: className } = Astro.props;
+const { id } = Astro.props;
 const page = await getEntry('pages', id);
 if (!page) throw new Error(`No page text in src/content/pages/${id}.md`);
 const { Content } = await render(page);
 ---
 
 <Layout title={page.data.title} description={page.data.description}>
-  {className ? (
-    <div class={className}>
-      <Content />
-    </div>
-  ) : (
-    <Content />
-  )}
+  <Content />
 </Layout>

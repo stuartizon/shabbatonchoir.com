@@ -1,5 +1,5 @@
 ---
-# The home page has no heading yet (#17).
+# No title: the home page is just "Shabbaton Choir".
 description: The Shabbaton Choir is a London Jewish choir and registered charity whose harmonies bring out the mood and meaning of prayer in synagogue services and concerts.
 ---
 

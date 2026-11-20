@@ -9,7 +9,10 @@ import { HERO_SIZES, HERO_WIDTHS, heroImage } from '../components/hero';
 import Navigation from '../components/Navigation.astro';
 
 interface Props {
-  /** The page's name, shown as its heading and in its <title>. */
+  /**
+   * The page's name, shown as its heading and in its <title>. Without one,
+   * the page is titled "Shabbaton Choir" and its heading is visually hidden.
+   */
   title?: string;
   /** What search results show under the title: 140 to 160 characters. */
   description: string;
@@ -85,8 +88,16 @@ const heroPreload =
         <Navigation />
         {isHome && <Hero mode="mobile" />}
         <main>
-          <div class="mx-auto px-4 max-w-prose text-gray-600 text-lg">
-            <h1>{title}</h1>
+          <div
+            class:list={[
+              'mx-auto px-4 max-w-prose text-gray-600 text-lg',
+              // The home page's h1 is hidden, so keep a gap below the hero.
+              isHome && 'pt-6',
+            ]}
+          >
+            <h1 class:list={[!title && 'sr-only']}>
+              {title ?? 'Shabbaton Choir'}
+            </h1>
             <slot />
           </div>
         </main>
