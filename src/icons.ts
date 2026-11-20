@@ -2,7 +2,7 @@
 //
 // Sources, copied in by hand so there is no icon package or runtime:
 // - Brand marks: Simple Icons 16.38.0 (https://simpleicons.org), CC0.
-// - UI icons (menu, envelope, chat): Heroicons 2.2.0 solid 24px
+// - UI icons (envelope, chat): Heroicons 2.2.0 solid 24px
 //   (https://heroicons.com), MIT, (c) Tailwind Labs.
 // - Amazon: Simple Icons has no Amazon marks, so this is the Amazon logo
 //   from Wikimedia Commons (File:Amazon_icon.svg), made one colour.
@@ -63,15 +63,6 @@ export const ICONS = {
       },
       {
         d: 'm221.503 210.324c-105.235 50.083-170.545 8.18-212.352-17.271-2.587-1.604-6.984.375-3.169 4.757 13.928 16.888 59.573 57.593 119.153 57.593 59.621 0 95.09-32.532 99.527-38.207 4.407-5.627 1.294-8.731-3.16-6.872zm29.555-16.322c-2.826-3.68-17.184-4.366-26.22-3.256-9.05 1.078-22.634 6.609-21.453 9.93.606 1.244 1.843.686 8.06.127 6.234-.622 23.698-2.826 27.337 1.931 3.656 4.79-5.57 27.608-7.255 31.288-1.628 3.68.622 4.629 3.68 2.178 3.016-2.45 8.476-8.795 12.14-17.774 3.639-9.028 5.858-21.622 3.71-24.424z',
-      },
-    ],
-  },
-  menu: {
-    viewBox: '0 0 24 24',
-    paths: [
-      {
-        d: 'M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z',
-        evenodd: true,
       },
     ],
   },
