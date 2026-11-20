@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { PAGES } from './pages';
 
-// Security and caching headers (#11). Cloudflare Pages reads them from
+// Security and caching headers. Cloudflare Pages reads them from
 // _headers when it serves the site, but astro preview doesn't, so these tests
 // read the file itself, and the browser tests add the policy to each page
 // as Cloudflare would.

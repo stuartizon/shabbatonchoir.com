@@ -17,7 +17,7 @@ export default defineConfig({
     build: {
       // Never inline scripts into the page, so the content security policy
       // can allow scripts from the site's own origin only, without hashes
-      // that would need updating whenever a script changes (#11).
+      // that would need updating whenever a script changes.
       assetsInlineLimit: 0,
     },
   },

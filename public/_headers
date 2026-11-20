@@ -6,7 +6,7 @@
 # the default and the www rule removes it. New non-production domains need
 # no changes here.
 #
-# The other headers are basic hardening (#11). The site loads everything
+# The other headers are basic hardening. The site loads everything
 # from its own origin, so the content security policy allows only 'self'.
 # Inline style attributes are allowed because the 404 page uses them. To
 # add an embed (YouTube, Spotify), allow its origin in frame-src.
