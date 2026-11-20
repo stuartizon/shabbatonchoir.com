@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { PAGES } from './pages';
 
-// What search engines are told to crawl (#19).
+// What search engines are told to crawl.
 
 const SITEMAP_INDEX = 'https://www.shabbatonchoir.com/sitemap-index.xml';
 

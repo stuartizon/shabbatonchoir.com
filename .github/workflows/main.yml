@@ -1,7 +1,7 @@
 # Runs the checks on every push to main and, only if they pass, deploys to
 # the Cloudflare Pages *staging* alias (staging.<project>.pages.dev), so
 # the client only ever reviews a tested build. Production is deployed
-# separately and manually (#9) after the client signs off on staging.
+# separately and manually after the client signs off on staging.
 name: Main
 
 on:

@@ -75,6 +75,7 @@ Nothing reaches production without client sign-off. Never add an automatic produ
   - Images that are resized, compressed and given dimensions and alt text.
 - **British English** in copy and docs.
 - **Checks and hooks.** `npm install` sets up git hooks: pre-commit formats and lints staged files, and pre-push runs `lint`, `format:check` and `check`. CI runs those plus the build and `npm test` on every PR. Commit, branch and PR title conventions aren't checked automatically, so follow them by habit. Run `npm test` before pushing anything visual. Bypass the hooks with `--no-verify` only in an emergency.
+- **No issue or PR numbers in code.** Comments say what and why in plain words. Link issues in PRs and commit messages instead. The exceptions are notes about unfinished work and the known accessibility failures list below.
 - **Known accessibility failures** are listed in `tests/e2e/accessibility.spec.ts` with the issue that fixes each. Remove the entry in the PR that fixes it.
 
 ## Privacy: this repo is PUBLIC

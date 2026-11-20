@@ -8,7 +8,7 @@ export interface TextPart {
 }
 
 // Splits plain text into its English and Hebrew runs, so the Hebrew can be
-// marked up with lang="he" for screen readers and search engines (#18).
+// marked up with lang="he" for screen readers and search engines.
 export function splitHebrew(text: string): TextPart[] {
   const parts: TextPart[] = [];
   let last = 0;

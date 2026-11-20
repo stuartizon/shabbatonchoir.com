@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { PAGES } from './pages';
 
-// What search results and browser tabs show for each page (#15).
+// What search results and browser tabs show for each page.
 
 for (const { path, title, canonical } of PAGES) {
   test.describe(`page ${path}`, () => {
@@ -44,7 +44,7 @@ test('no two pages share a title or description', async ({ page }) => {
   expect(descriptions.size).toBe(PAGES.length);
 });
 
-// What WhatsApp, Facebook and X show when someone shares a page (#16).
+// What WhatsApp, Facebook and X show when someone shares a page.
 
 const SHARE_IMAGE = 'https://www.shabbatonchoir.com/share.jpg';
 
