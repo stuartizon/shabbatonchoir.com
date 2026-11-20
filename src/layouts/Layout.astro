@@ -83,7 +83,9 @@ const heroPreload =
     )}
   </head>
   <body>
-    <div>
+    <!-- At least as tall as the window, so on short pages the footer sits at
+    the bottom of the screen. dvh follows phone browsers' toolbars. -->
+    <div class="flex min-h-dvh flex-col">
       {isHome ? (
         <Hero mode="desktop">
           <HeaderDesktop />
@@ -93,7 +95,7 @@ const heroPreload =
       )}
       <HeaderMobile />
       {isHome && <Hero mode="mobile" />}
-      <main>
+      <main class="flex-1">
         <div
           class:list={[
             'mx-auto px-4 max-w-prose text-gray-600 text-lg',
