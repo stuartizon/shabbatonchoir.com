@@ -127,3 +127,37 @@ for (const { name, href } of [
     expect(box?.height).toBeGreaterThanOrEqual(TAP_TARGET);
   });
 }
+
+test.describe('on a phone, where the Facebook line wraps', () => {
+  test.use({ viewport: { width: 320, height: 640 } });
+
+  test('each Follow us icon is centred on the first line of its text', async ({
+    page,
+  }) => {
+    await page.goto('/contact');
+    for (const name of [
+      'Become a fan of the Shabbaton Choir on Facebook',
+      'Follow the Shabbaton Choir on X',
+    ]) {
+      const link = page.locator('main').getByRole('link', { name });
+      const { icon, firstLine, lines } = await link.evaluate((el) => {
+        const svg = el.querySelector('svg')!.getBoundingClientRect();
+        const text = [...el.childNodes].find(
+          (node) =>
+            node.nodeType === Node.TEXT_NODE && node.textContent!.trim(),
+        )!;
+        const range = document.createRange();
+        range.selectNodeContents(text);
+        const rects = [...range.getClientRects()];
+        const tops = new Set(rects.map((rect) => Math.round(rect.top)));
+        return {
+          icon: svg.top + svg.height / 2,
+          firstLine: rects[0].top + rects[0].height / 2,
+          lines: tops.size,
+        };
+      });
+      if (name.includes('Facebook')) expect(lines).toBeGreaterThan(1);
+      expect(Math.abs(icon - firstLine), name).toBeLessThanOrEqual(1);
+    }
+  });
+});
