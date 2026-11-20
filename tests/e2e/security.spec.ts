@@ -57,6 +57,16 @@ test('the content security policy blocks framing and plugins', () => {
   expect(policy).toContain("base-uri 'self'");
 });
 
+test('every response keeps other sites out of its browsing context', () => {
+  expect(everyPage()['cross-origin-opener-policy']).toBe('same-origin');
+});
+
+test('the content security policy requires Trusted Types for scripts', () => {
+  expect(everyPage()['content-security-policy']).toContain(
+    "require-trusted-types-for 'script'",
+  );
+});
+
 test('hashed build assets are cached for a year', () => {
   expect(headersFor('/_astro/*')['cache-control']).toBe(
     'public, max-age=31536000, immutable',
@@ -64,7 +74,7 @@ test('hashed build assets are cached for a year', () => {
 });
 
 // Serve every document with the policy from _headers and record anything it
-// blocks: scripts, styles, fonts, images or frames.
+// blocks: scripts, styles, fonts, images, frames or unsafe DOM writes.
 async function withPolicy(page: Page) {
   const policy = everyPage()['content-security-policy'];
   expect(policy).toBeTruthy();
@@ -81,9 +91,13 @@ async function withPolicy(page: Page) {
 
   const blocked: string[] = [];
   page.on('console', (message) => {
-    if (message.type() === 'error' && /Content Security/i.test(message.text()))
+    if (
+      message.type() === 'error' &&
+      /Content Security|Trusted/i.test(message.text())
+    )
       blocked.push(message.text());
   });
+  page.on('pageerror', (error) => blocked.push(error.message));
   return blocked;
 }
 
