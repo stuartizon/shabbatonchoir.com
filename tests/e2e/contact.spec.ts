@@ -10,7 +10,6 @@ const EMAIL_OPTIONS = [
     heading: 'Mailing list and bookings',
     address: 'chairman@shabbatonchoir.com',
   },
-  { heading: 'General enquiries', address: 'info@shabbatonchoir.com' },
 ];
 
 test('the page shows the client’s contact text', async ({ page }) => {
@@ -100,6 +99,13 @@ test('the page no longer offers Facebook Messenger', async ({ page }) => {
   await page.goto('/contact');
   await expect(page.locator('main a[href*="m.me"]')).toHaveCount(0);
   await expect(page.locator('main')).not.toContainText('Messenger');
+});
+
+test('the page no longer offers a general enquiries address', async ({
+  page,
+}) => {
+  await page.goto('/contact');
+  await expect(page.locator('main')).not.toContainText('info@');
 });
 
 for (const { name, href } of [

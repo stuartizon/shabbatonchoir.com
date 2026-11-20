@@ -40,7 +40,7 @@ test('the contact page shows email, Facebook and X icons', async ({ page }) => {
   await page.goto('/contact');
   await expectIcons(
     page.locator('main'),
-    ['envelope', 'envelope', 'envelope', 'facebook', 'x'],
+    ['envelope', 'envelope', 'facebook', 'x'],
     20,
   );
 });
