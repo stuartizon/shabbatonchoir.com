@@ -1,19 +1,125 @@
 ---
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
+import { NAV_LINKS } from './nav';
 ---
 
-<header class="md:hidden">
-  <div class="md:container md:px-10 pt-4 mx-auto md:flex md:justify-between md:items-center">
+<!--
+  On small screens the header stays at the top of the screen, and its button
+  opens a menu that fills the rest of it. The menu is hidden until opened.
+-->
+<header
+  data-mobile-header
+  class="md:hidden sticky top-0 z-20 overflow-x-clip bg-white motion-safe:transition-shadow data-scrolled:shadow-md"
+>
+  <div class="pt-4">
     <div class="flex items-center justify-between mx-4">
       <Logo />
-      <div class="md:hidden text-primary-500 flex items-center">
-        <div class="mx-2">MENU</div>
-        <span data-menu-toggle class="contents">
-          <Icon size="2x" class="text-primary-500" name="menu" />
-        </span>
-      </div>
+      <!--
+        Icon-only, but named "Menu" for screen readers, which also announce
+        whether it is expanded. The bars fade into a cross while it's open.
+      -->
+      <button
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Menu"
+        class="group -mr-1.5 grid size-11 cursor-pointer place-items-center text-primary-500"
+      >
+        <Icon
+          name="menu"
+          size="2x"
+          class="[grid-area:1/1] motion-safe:transition-opacity motion-safe:duration-300 group-aria-expanded:opacity-0"
+        />
+        <Icon
+          name="close"
+          size="2x"
+          class="[grid-area:1/1] opacity-0 motion-safe:transition-opacity motion-safe:duration-300 group-aria-expanded:opacity-100"
+        />
+      </button>
     </div>
     <div class="bg-linear-to-t/srgb from-gray-100 h-3"></div>
   </div>
+  <nav
+    id="mobile-menu"
+    aria-label="Main"
+    hidden
+    class="absolute inset-x-0 top-full h-[calc(100dvh-100%)] overflow-y-auto overscroll-contain bg-white transition-discrete motion-safe:transition-[translate,display] motion-safe:duration-300 motion-safe:ease-out starting:translate-x-full [&[hidden]]:translate-x-full"
+  >
+    <!--
+      The links spread down the menu, but no further apart than on a 375×667
+      phone, where the menu is 574px tall. Taller phones get space below.
+    -->
+    <ul class="flex h-full max-h-[35.875rem] min-h-fit flex-col items-center justify-evenly gap-2 px-4 py-6">
+      {NAV_LINKS.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class="block px-6 py-3 text-xl font-medium uppercase tracking-wide no-underline"
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
 </header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-mobile-header]')!;
+  const button = header.querySelector<HTMLButtonElement>('[aria-controls]')!;
+  const menu = document.getElementById(button.getAttribute('aria-controls')!)!;
+  const desktop = matchMedia('(min-width: 48rem)');
+
+  const isOpen = () => button.getAttribute('aria-expanded') === 'true';
+
+  // While open, the page behind can't scroll, and everything outside the
+  // header is inert: it can't be tapped, focused or read out.
+  function setOpen(open: boolean) {
+    button.setAttribute('aria-expanded', String(open));
+    menu.hidden = !open;
+    document.documentElement.classList.toggle('overflow-hidden', open);
+    for (const element of header.parentElement!.children) {
+      if (element !== header) (element as HTMLElement).inert = open;
+    }
+  }
+
+  button.addEventListener('click', () => setOpen(!isOpen()));
+
+  document.addEventListener('keydown', (event) => {
+    if (!isOpen()) return;
+    if (event.key === 'Escape') {
+      setOpen(false);
+      button.focus();
+    }
+    // Keep Tab going round the header's links and button.
+    if (event.key === 'Tab') {
+      const focusable = [
+        ...header.querySelectorAll<HTMLElement>('a[href], button'),
+      ];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (event.shiftKey ? active === first : active === last) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      }
+    }
+  });
+
+  // Close as the page is left, rather than on click, so the menu doesn't
+  // vanish before the next page arrives. Coming back finds it closed.
+  window.addEventListener('pagehide', () => setOpen(false));
+
+  // The menu belongs to small screens. If the window widens, close it, so
+  // the desktop page isn't left locked.
+  desktop.addEventListener('change', ({ matches }) => {
+    if (matches) setOpen(false);
+  });
+
+  // Show the header's shadow once the page has scrolled under it.
+  const showShadow = () =>
+    header.toggleAttribute('data-scrolled', window.scrollY > 0);
+  window.addEventListener('scroll', showShadow, { passive: true });
+  showShadow();
+</script>

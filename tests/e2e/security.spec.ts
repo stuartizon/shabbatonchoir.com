@@ -125,8 +125,8 @@ test('the mobile menu still opens under the content security policy', async ({
   await withPolicy(page);
   await page.setViewportSize({ width: 375, height: 800 });
   await page.goto('/');
-  const menu = page.locator('[data-menu]');
-  await expect(menu).toHaveClass(/translate-x-full/);
-  await page.locator('[data-menu-toggle]').click();
-  await expect(menu).toHaveClass(/translate-x-0/);
+  await page.getByRole('button', { name: 'Menu', exact: true }).click();
+  await expect(
+    page.getByRole('navigation', { name: 'Main', exact: true }),
+  ).toBeVisible();
 });

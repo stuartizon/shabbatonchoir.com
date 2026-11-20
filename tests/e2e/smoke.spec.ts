@@ -31,10 +31,12 @@ test.describe('navigation', () => {
       isMobile,
     }) => {
       await page.goto('/');
-      // The off-screen mobile menu is still in the page on desktop, and its
-      // toggle is an unlabelled icon. #21 rebuilds it.
-      if (isMobile) await page.locator('[data-menu-toggle]').click();
-      const menu = page.getByRole(isMobile ? 'navigation' : 'banner');
+      if (isMobile) {
+        await page.getByRole('button', { name: 'Menu', exact: true }).click();
+      }
+      const menu = isMobile
+        ? page.getByRole('navigation', { name: 'Main', exact: true })
+        : page.getByRole('banner');
       await menu.getByRole('link', { name: heading, exact: true }).click();
       await expect(page).toHaveURL(path);
       await expect(page.locator('h1')).toHaveText(heading);

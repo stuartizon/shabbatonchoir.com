@@ -6,7 +6,6 @@ import HeaderDesktop from '../components/HeaderDesktop.astro';
 import HeaderMobile from '../components/HeaderMobile.astro';
 import Hero from '../components/Hero.astro';
 import { HERO_SIZES, HERO_WIDTHS, heroImage } from '../components/hero';
-import Navigation from '../components/Navigation.astro';
 
 interface Props {
   /**
@@ -93,7 +92,6 @@ const heroPreload =
         <HeaderDesktop />
       )}
       <HeaderMobile />
-      <Navigation />
       {isHome && <Hero mode="mobile" />}
       <main>
         <div
