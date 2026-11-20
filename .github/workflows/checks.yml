@@ -43,9 +43,30 @@ jobs:
 
       - run: npm ci
 
+      # Cache the browser download, keyed on the installed Playwright version
+      # so an upgrade fetches the matching browser.
+      - name: Get Playwright version
+        id: playwright
+        run: echo "version=$(npx playwright --version | cut -d' ' -f2)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+
       # The tests run headless, so only the headless shell is needed, not
       # the full Chrome build.
-      - run: npx playwright install --with-deps --only-shell chromium
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps --only-shell chromium
+
+      # The system packages the browser needs live outside the cache, so
+      # install them on a cache hit too.
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
 
       # Builds the site, then runs the smoke, accessibility and link tests.
       - run: npm test
