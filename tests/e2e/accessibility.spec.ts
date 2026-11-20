@@ -8,9 +8,6 @@ const KNOWN_VIOLATIONS = {
   // The mobile and desktop headers are both banners on small screens.
   'landmark-no-duplicate-banner': '#21',
   'landmark-unique': '#21',
-  // The plain 404 page has no main landmark.
-  'landmark-one-main': '#46',
-  region: '#46',
 };
 
 for (const { path } of [...PAGES, { path: '/no-such-page' }]) {

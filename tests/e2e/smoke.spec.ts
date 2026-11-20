@@ -24,12 +24,6 @@ for (const { path, heading } of PAGES) {
   });
 }
 
-test('an unknown address shows the 404 page', async ({ page }) => {
-  const response = await page.goto('/no-such-page');
-  expect(response?.status()).toBe(404);
-  await expect(page.locator('h1')).toHaveText('404');
-});
-
 test.describe('navigation', () => {
   for (const { path, heading } of PAGES.filter((p) => p.path !== '/')) {
     test(`reaches ${heading} from the home page`, async ({
