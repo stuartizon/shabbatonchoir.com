@@ -205,17 +205,41 @@ test('the menu appears without sliding if reduced motion is asked for', async ({
   await expect(menu(page)).toBeVisible();
 });
 
-test('the menu links spread down the screen', async ({ page }) => {
-  for (const height of [667, 932]) {
-    await page.setViewportSize({ width: 375, height });
-    await open(page);
-    const menuBox = (await menu(page).boundingBox())!;
-    const links = menu(page).getByRole('link');
-    const first = (await links.first().boundingBox())!;
-    const last = (await links.last().boundingBox())!;
-    const span = last.y + last.height - first.y;
-    expect(span / menuBox.height).toBeGreaterThan(0.65);
+// Where the menu links sit, from the top of the menu.
+async function linkPositions(page: Page, width: number, height: number) {
+  await page.setViewportSize({ width, height });
+  await open(page);
+  const menuTop = (await menu(page).boundingBox())!.y;
+  const links = await menu(page).getByRole('link').all();
+  return Promise.all(
+    links.map(async (link) => (await link.boundingBox())!.y - menuTop),
+  );
+}
+
+test('the menu links spread down a phone-sized screen', async ({ page }) => {
+  const positions = await linkPositions(page, 375, 667);
+  const menuHeight = (await menu(page).boundingBox())!.height;
+  expect(positions.at(-1)! / menuHeight).toBeGreaterThan(0.65);
+});
+
+test('the menu links spread no further apart on taller phones', async ({
+  page,
+}) => {
+  const standard = await linkPositions(page, 375, 667);
+  const tall = await linkPositions(page, 430, 932);
+  for (const [i, y] of tall.entries()) expect(y).toBeCloseTo(standard[i], 0);
+});
+
+test('the menu links close up on short phones, so all of them fit', async ({
+  page,
+}) => {
+  await linkPositions(page, 320, 568);
+  for (const link of await menu(page).getByRole('link').all()) {
+    await expect(link).toBeInViewport({ ratio: 1 });
   }
+  expect(
+    await menu(page).evaluate((nav) => nav.scrollHeight - nav.clientHeight),
+  ).toBe(0);
 });
 
 test('the menu works with only a keyboard', async ({ page }) => {
