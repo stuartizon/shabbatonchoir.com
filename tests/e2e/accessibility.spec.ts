@@ -5,7 +5,6 @@ import { PAGES } from './pages';
 // Known problems, each with the issue that fixes it. Remove a rule from
 // this list in the PR that fixes it, so the check guards it from then on.
 const KNOWN_VIOLATIONS = {
-  'html-has-lang': '#18',
   // The mobile and desktop headers are both banners on small screens.
   'landmark-no-duplicate-banner': '#21',
   'landmark-unique': '#21',
