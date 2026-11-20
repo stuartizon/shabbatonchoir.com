@@ -41,10 +41,14 @@ test('the contact page shows email and message icons', async ({ page }) => {
   await expectIcons(page.locator('main'), ['envelope', 'chat'], 36);
 });
 
-test('the mobile menu toggle shows a menu icon', async ({ page, isMobile }) => {
-  test.skip(!isMobile, 'The menu toggle only shows on small screens.');
+test('the mobile menu button shows a menu icon', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'The menu button only shows on small screens.');
   await page.goto('/');
-  await expectIcons(page.locator('[data-menu-toggle]'), ['menu'], 32);
+  await expectIcons(
+    page.getByRole('button', { name: 'Menu', exact: true }),
+    ['menu'],
+    32,
+  );
 });
 
 for (const { path } of PAGES) {
