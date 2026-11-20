@@ -16,11 +16,8 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-// The home page has no name of its own, so it gets the choir's name and a
-// tagline instead.
-const pageTitle = title
-  ? `${title} · Shabbaton Choir`
-  : 'Shabbaton Choir · Jewish choral music from London';
+// The home page has no name of its own, so it is just the choir's name.
+const pageTitle = title ? `${title} · Shabbaton Choir` : 'Shabbaton Choir';
 // Point search engines at the live site, with the clean URLs the site uses
 // (/music, not /music.html).
 const canonical = new URL(

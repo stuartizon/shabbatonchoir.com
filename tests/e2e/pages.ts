@@ -5,7 +5,7 @@ export const PAGES = [
   {
     path: '/',
     heading: '',
-    title: 'Shabbaton Choir · Jewish choral music from London',
+    title: 'Shabbaton Choir',
     canonical: 'https://www.shabbatonchoir.com/',
   },
   {
