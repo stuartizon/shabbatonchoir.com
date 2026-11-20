@@ -73,9 +73,27 @@ test('the email buttons fill the width of the card on phones', async ({
       .filter({ has: page.getByRole('heading', { name: heading }) });
     const cardBox = (await card.boundingBox())!;
     const linkBox = (await card.getByRole('link').boundingBox())!;
-    // The card has 24px of padding each side, plus its 1px border.
-    expect(linkBox.width).toBeCloseTo(cardBox.width - 50, 0);
+    const padding = await card.evaluate((el) =>
+      parseFloat(getComputedStyle(el).paddingLeft),
+    );
+    // The card's padding each side, plus its 1px border.
+    expect(linkBox.width).toBeCloseTo(cardBox.width - 2 * (padding + 1), 0);
   }
+});
+
+test.describe('on the narrowest phones', () => {
+  test.use({ viewport: { width: 320, height: 640 } });
+
+  test('the email addresses fit inside their buttons', async ({ page }) => {
+    await page.goto('/contact');
+    for (const { address } of EMAIL_OPTIONS) {
+      const link = page.getByRole('link', { name: `Email ${address}` });
+      const fits = await link.evaluate(
+        (el) => el.scrollWidth <= el.clientWidth,
+      );
+      expect(fits, address).toBe(true);
+    }
+  });
 });
 
 test('the page no longer offers Facebook Messenger', async ({ page }) => {
