@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { PAGES } from './pages';
 
 // Screen readers and search engines need to know what language each page,
-// and each foreign phrase in it, is written in (#18).
+// and each foreign phrase in it, is written in.
 
 for (const { path } of [...PAGES, { path: '/no-such-page' }]) {
   test(`${path} is in British English`, async ({ page }) => {

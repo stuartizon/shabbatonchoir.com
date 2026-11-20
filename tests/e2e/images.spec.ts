@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { PAGES } from './pages';
 
 // Images used to be nearly all of the page weight: a 4.4 MB hero and covers
-// of up to 2.7 MB (#14). Keep first loads light, on phones and desktops.
+// of up to 2.7 MB. Keep first loads light, on phones and desktops.
 const IMAGE_BUDGET = 500 * 1024;
 const IMAGE_FILE = /\.(avif|webp|jpe?g|png|gif|svg)$/;
 

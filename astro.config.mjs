@@ -10,7 +10,7 @@ export default defineConfig({
     format: 'file',
   },
   trailingSlash: 'never',
-  // Lists every page at its www address in /sitemap-index.xml (#19).
+  // Lists every page at its www address in /sitemap-index.xml.
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],

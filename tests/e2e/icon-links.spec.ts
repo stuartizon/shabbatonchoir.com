@@ -1,6 +1,6 @@
 import { expect, test, type Locator } from '@playwright/test';
 
-// Links that show only an icon (#22). Each needs an accessible name, a tap
+// Links that show only an icon. Each needs an accessible name, a tap
 // target big enough to hit, and a visible focus ring around its icon.
 // Targets are 44×44px where there's room. The album icons sit close
 // together, so theirs are 44px tall but only as wide as WCAG's 24px minimum
@@ -73,7 +73,7 @@ test('the album streaming icons keep their 8px spacing', async ({ page }) => {
 });
 
 // Twitter is now X, so link to x.com rather than relying on the twitter.com
-// redirect (#27).
+// redirect.
 test('the footer X link points to x.com', async ({ page }) => {
   await page.goto('/');
   await expect(

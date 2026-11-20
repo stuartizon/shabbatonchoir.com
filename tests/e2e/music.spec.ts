@@ -40,7 +40,7 @@ for (const { name, year, hasDescription } of ALBUMS) {
     });
 
     // Covers show at 320px wide, so they're served at no more than twice
-    // that for retina screens, in a modern format, and only when needed (#14).
+    // that for retina screens, in a modern format, and only when needed.
     test('serves its cover small, modern and lazily', async ({ page }) => {
       const cover = album(page).getByRole('img', { name, exact: true });
       await cover.scrollIntoViewIfNeeded();
@@ -80,7 +80,7 @@ for (const { name, year, hasDescription } of ALBUMS) {
     });
 
     // The site's own heading and paragraph styles must not override the
-    // utility classes that tighten the album's spacing (#44).
+    // utility classes that tighten the album's spacing.
     test('keeps its tight title and description spacing', async ({ page }) => {
       await expect(album(page).locator('h2')).toHaveCSS('margin-top', '16px');
       await expect(album(page).locator('p')).toHaveCSS('margin-top', '8px');

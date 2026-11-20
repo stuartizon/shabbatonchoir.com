@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 // The live (Next.js) site used Tailwind 3.0.7's font stack. San Francisco, the
 // system font on Apple devices, has no Hebrew letters, so Hebrew text falls
 // back down the stack: to Helvetica Neue or Arial on the live site. Without
-// them it falls through to the generic sans-serif, a different font (#54).
+// them it falls through to the generic sans-serif, a different font.
 // Screenshots on Linux can't show this, so check the stack itself.
 const LIVE_SITE_STACK = [
   'ui-sans-serif',
