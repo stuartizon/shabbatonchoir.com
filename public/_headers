@@ -1,16 +1,12 @@
 # Cloudflare Pages response headers.
 #
-# Keep every copy of the site except www.shabbatonchoir.com out of search
-# results. The first rule covers the production deployment's own address
-# (shabbatonchoir.pages.dev); the second covers branch aliases such as
-# staging and PR previews, which Cloudflare also marks noindex itself.
-https://:project.pages.dev/*
+# Only www.shabbatonchoir.com should appear in search results. Every other
+# address that serves this site (staging, PR previews, the pages.dev
+# addresses and any custom domain pointed at them) is a copy, so noindex is
+# the default and the www rule removes it. New non-production domains need
+# no changes here.
+/*
   X-Robots-Tag: noindex
 
-https://:alias.:project.pages.dev/*
-  X-Robots-Tag: noindex
-
-# Custom domains for non-production builds. Cloudflare only adds noindex on
-# pages.dev, so add a rule here for each one.
-https://staging.shabbatonchoir.com/*
-  X-Robots-Tag: noindex
+https://www.shabbatonchoir.com/*
+  ! X-Robots-Tag
