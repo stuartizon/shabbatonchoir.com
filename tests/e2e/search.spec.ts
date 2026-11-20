@@ -39,15 +39,16 @@ test('the sitemap lists every page at its canonical address', async ({
 
 // Cloudflare reads _headers when it serves the site. The *.pages.dev
 // addresses (staging, PR previews and the production deployment's own
-// address) are copies of the site, so they must not be indexed; only the
-// custom domain should be.
-test('pages.dev addresses are marked noindex', async ({ request }) => {
+// address) and the staging custom domain are copies of the site, so they
+// must not be indexed; only www should be.
+test('non-production addresses are marked noindex', async ({ request }) => {
   const response = await request.get('/_headers');
   expect(response.ok()).toBe(true);
   const headers = await response.text();
   for (const host of [
     'https://:project.pages.dev/*',
     'https://:alias.:project.pages.dev/*',
+    'https://staging.shabbatonchoir.com/*',
   ]) {
     expect(headers).toMatch(
       new RegExp(
