@@ -1,0 +1,12 @@
+# Cloudflare Pages response headers.
+#
+# Only www.shabbatonchoir.com should appear in search results. Every other
+# address that serves this site (staging, PR previews, the pages.dev
+# addresses and any custom domain pointed at them) is a copy, so noindex is
+# the default and the www rule removes it. New non-production domains need
+# no changes here.
+/*
+  X-Robots-Tag: noindex
+
+https://www.shabbatonchoir.com/*
+  ! X-Robots-Tag
