@@ -37,24 +37,16 @@ test('the sitemap lists every page at its canonical address', async ({
   expect(pages.sort()).toEqual(PAGES.map(({ canonical }) => canonical).sort());
 });
 
-// Cloudflare reads _headers when it serves the site. The *.pages.dev
-// addresses (staging, PR previews and the production deployment's own
-// address) and the staging custom domain are copies of the site, so they
-// must not be indexed; only www should be.
-test('non-production addresses are marked noindex', async ({ request }) => {
+// Cloudflare reads _headers when it serves the site. Every address except
+// www (staging, PR previews, pages.dev and any custom domain added for
+// them) is a copy of the site, so it must not be indexed. Rather than list
+// each one, noindex is the default and only www removes it.
+test('only www is indexable', async ({ request }) => {
   const response = await request.get('/_headers');
   expect(response.ok()).toBe(true);
   const headers = await response.text();
-  for (const host of [
-    'https://:project.pages.dev/*',
-    'https://:alias.:project.pages.dev/*',
-    'https://staging.shabbatonchoir.com/*',
-  ]) {
-    expect(headers).toMatch(
-      new RegExp(
-        `^${host.replace(/[.*]/g, '\\$&')}\\n\\s+X-Robots-Tag: noindex$`,
-        'm',
-      ),
-    );
-  }
+  expect(headers).toMatch(/^\/\*\n\s+X-Robots-Tag: noindex$/m);
+  expect(headers).toMatch(
+    /^https:\/\/www\.shabbatonchoir\.com\/\*\n\s+! X-Robots-Tag$/m,
+  );
 });
