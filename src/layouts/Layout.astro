@@ -84,24 +84,22 @@ const heroPreload =
         <HeaderDesktop />
       )}
       <HeaderMobile />
-      <div class="overflow-hidden">
-        <Navigation />
-        {isHome && <Hero mode="mobile" />}
-        <main>
-          <div
-            class:list={[
-              'mx-auto px-4 max-w-prose text-gray-600 text-lg',
-              // The home page's h1 is hidden, so keep a gap below the hero.
-              isHome && 'pt-6',
-            ]}
-          >
-            <h1 class:list={[!title && 'sr-only']}>
-              {title ?? 'Shabbaton Choir'}
-            </h1>
-            <slot />
-          </div>
-        </main>
-      </div>
+      <Navigation />
+      {isHome && <Hero mode="mobile" />}
+      <main>
+        <div
+          class:list={[
+            'mx-auto px-4 max-w-prose text-gray-600 text-lg',
+            // The home page's h1 is hidden, so keep a gap below the hero.
+            isHome && 'pt-6',
+          ]}
+        >
+          <h1 class:list={[!title && 'sr-only']}>
+            {title ?? 'Shabbaton Choir'}
+          </h1>
+          <slot />
+        </div>
+      </main>
       <Footer />
     </div>
   </body>
