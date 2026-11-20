@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import Logo from './Logo.astro';
 import { NAV_LINKS, isCurrent } from './nav';
 ---
@@ -9,56 +10,32 @@ import { NAV_LINKS, isCurrent } from './nav';
 -->
 <header
   data-mobile-header
-  class="md:hidden sticky top-0 z-20 bg-white motion-safe:transition-shadow data-scrolled:shadow-md"
+  class="md:hidden sticky top-0 z-20 overflow-x-clip bg-white motion-safe:transition-shadow data-scrolled:shadow-md"
 >
   <div class="pt-4">
     <div class="flex items-center justify-between mx-4">
       <Logo />
+      <!--
+        Icon-only, but named "Menu" for screen readers, which also announce
+        whether it is expanded. The bars fade into a cross while it's open.
+      -->
       <button
         type="button"
         aria-expanded="false"
         aria-controls="mobile-menu"
-        class="group -mr-2 flex min-h-11 cursor-pointer items-center px-2 text-primary-500"
+        aria-label="Menu"
+        class="group -mr-1.5 grid size-11 cursor-pointer place-items-center text-primary-500"
       >
-        <span class="mx-2 uppercase">Menu</span>
-        <!-- Three bars that turn into a cross while the menu is open. -->
-        <svg
-          data-icon="menu"
-          aria-hidden="true"
-          focusable="false"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          class="h-[1em] w-[1em] overflow-visible text-[2em]"
-        >
-          <line
-            data-line="top"
-            x1="3.75"
-            y1="6.75"
-            x2="20.25"
-            y2="6.75"
-            class="origin-center transform-fill motion-safe:transition motion-safe:duration-300 group-aria-expanded:translate-y-[5.25px] group-aria-expanded:rotate-45"
-          ></line>
-          <line
-            data-line="middle"
-            x1="3.75"
-            y1="12"
-            x2="20.25"
-            y2="12"
-            class="motion-safe:transition motion-safe:duration-300 group-aria-expanded:opacity-0"
-          ></line>
-          <line
-            data-line="bottom"
-            x1="3.75"
-            y1="17.25"
-            x2="20.25"
-            y2="17.25"
-            class="origin-center transform-fill motion-safe:transition motion-safe:duration-300 group-aria-expanded:-translate-y-[5.25px] group-aria-expanded:-rotate-45"
-          ></line>
-        </svg>
+        <Icon
+          name="menu"
+          size="2x"
+          class="[grid-area:1/1] motion-safe:transition-opacity motion-safe:duration-300 group-aria-expanded:opacity-0"
+        />
+        <Icon
+          name="close"
+          size="2x"
+          class="[grid-area:1/1] opacity-0 motion-safe:transition-opacity motion-safe:duration-300 group-aria-expanded:opacity-100"
+        />
       </button>
     </div>
     <div class="bg-linear-to-t/srgb from-gray-100 h-3"></div>
@@ -67,9 +44,9 @@ import { NAV_LINKS, isCurrent } from './nav';
     id="mobile-menu"
     aria-label="Main"
     hidden
-    class="absolute inset-x-0 top-full h-[calc(100dvh-100%)] overflow-y-auto overscroll-contain bg-white motion-safe:transition-opacity motion-safe:duration-200 starting:opacity-0"
+    class="absolute inset-x-0 top-full h-[calc(100dvh-100%)] overflow-y-auto overscroll-contain bg-white transition-discrete motion-safe:transition-[translate,display] motion-safe:duration-300 motion-safe:ease-out starting:translate-x-full [&[hidden]]:translate-x-full"
   >
-    <ul class="flex flex-col items-center gap-2 px-4 py-8">
+    <ul class="flex min-h-full flex-col items-center justify-evenly gap-2 px-4 py-6">
       {NAV_LINKS.map(({ href, label }) => (
         <li>
           <a
