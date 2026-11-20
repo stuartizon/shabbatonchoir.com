@@ -57,6 +57,12 @@ test('the content security policy blocks framing and plugins', () => {
   expect(policy).toContain("base-uri 'self'");
 });
 
+test('the content security policy allows no inline styles', () => {
+  expect(everyPage()['content-security-policy']).not.toContain(
+    "'unsafe-inline'",
+  );
+});
+
 test('every response keeps other sites out of its browsing context', () => {
   expect(everyPage()['cross-origin-opener-policy']).toBe('same-origin');
 });
