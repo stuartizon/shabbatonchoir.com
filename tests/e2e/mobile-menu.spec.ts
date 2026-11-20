@@ -123,12 +123,19 @@ test('the menu links are large enough to tap', async ({ page }) => {
   }
 });
 
-test('the menu marks the current page', async ({ page }) => {
+test('the menu links all look the same, whichever page is open', async ({
+  page,
+}) => {
   await open(page, '/leadership');
-  await expect(menu(page).locator('[aria-current="page"]')).toHaveText(
-    'Leadership',
-  );
-  await expect(menu(page).locator('[aria-current]')).toHaveCount(1);
+  const styles = await menu(page)
+    .getByRole('link')
+    .evaluateAll((links) =>
+      links.map((link) => {
+        const style = getComputedStyle(link);
+        return [style.textDecorationLine, style.color, style.fontWeight];
+      }),
+    );
+  expect(new Set(styles.map((style) => style.join())).size).toBe(1);
 });
 
 test('the menu button shows only an icon, but is still named Menu', async ({
