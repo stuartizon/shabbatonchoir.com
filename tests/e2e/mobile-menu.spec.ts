@@ -13,10 +13,22 @@ const button = (page: Page) =>
 const menu = (page: Page) =>
   page.getByRole('navigation', { name: 'Main', exact: true });
 
+// Wait for the menu to finish sliding in or out.
+const waitForMenu = (page: Page) =>
+  page.evaluate(() =>
+    Promise.all(
+      document
+        .getElementById('mobile-menu')!
+        .getAnimations()
+        .map((animation) => animation.finished),
+    ),
+  );
+
 async function open(page: Page, path = '/music') {
   await page.goto(path);
   await button(page).click();
   await expect(menu(page)).toBeVisible();
+  await waitForMenu(page);
 }
 
 test('the menu button is a labelled button that controls the menu', async ({
@@ -119,28 +131,84 @@ test('the menu marks the current page', async ({ page }) => {
   await expect(menu(page).locator('[aria-current]')).toHaveCount(1);
 });
 
-test('the menu icon turns into a close icon while the menu is open', async ({
+test('the menu button shows only an icon, but is still named Menu', async ({
   page,
 }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/music');
-  const middle = button(page).locator('[data-line="middle"]');
-  const top = button(page).locator('[data-line="top"]');
-  await expect(middle).toHaveCSS('opacity', '1');
-  await expect(top).toHaveCSS('rotate', 'none');
-  await button(page).click();
-  await expect(middle).toHaveCSS('opacity', '0');
-  await expect(top).toHaveCSS('rotate', '45deg');
+  expect((await button(page).innerText()).trim()).toBe('');
+  const box = (await button(page).boundingBox())!;
+  expect(box.width).toBeGreaterThanOrEqual(44);
+  expect(box.height).toBeGreaterThanOrEqual(44);
 });
 
-test('the icon animates, unless reduced motion is asked for', async ({
+test('the menu icon fades into a close icon while the menu is open', async ({
   page,
 }) => {
-  const top = () => button(page).locator('[data-line="top"]');
-  await page.goto('/music');
-  await expect(top()).not.toHaveCSS('transition-duration', '0s');
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect(top()).toHaveCSS('transition-duration', '0s');
+  await page.goto('/music');
+  const bars = button(page).locator('[data-icon="menu"]');
+  const cross = button(page).locator('[data-icon="close"]');
+  await expect(bars).toHaveCSS('opacity', '1');
+  await expect(cross).toHaveCSS('opacity', '0');
+  await button(page).click();
+  await expect(bars).toHaveCSS('opacity', '0');
+  await expect(cross).toHaveCSS('opacity', '1');
+});
+
+test('the icons fade, unless reduced motion is asked for', async ({ page }) => {
+  const icons = () => button(page).locator('svg');
+  await page.goto('/music');
+  for (const icon of await icons().all()) {
+    await expect(icon).toHaveCSS('transition-property', 'opacity');
+    await expect(icon).not.toHaveCSS('transition-duration', '0s');
+  }
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const icon of await icons().all()) {
+    await expect(icon).toHaveCSS('transition-duration', '0s');
+  }
+});
+
+// The CSS transitions running on the menu as it opens or closes.
+const slides = (page: Page) =>
+  page.evaluate(() =>
+    document
+      .getElementById('mobile-menu')!
+      .getAnimations()
+      .map((animation) => (animation as CSSTransition).transitionProperty),
+  );
+
+test('the menu slides in from the side, and back out', async ({ page }) => {
+  await page.goto('/music');
+  await button(page).click();
+  expect(await slides(page)).toContain('translate');
+  await waitForMenu(page);
+  await button(page).click();
+  expect(await slides(page)).toContain('translate');
+  await waitForMenu(page);
+  await expect(menu(page)).toBeHidden();
+});
+
+test('the menu appears without sliding if reduced motion is asked for', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/music');
+  await button(page).click();
+  expect(await slides(page)).toEqual([]);
+  await expect(menu(page)).toBeVisible();
+});
+
+test('the menu links spread down the screen', async ({ page }) => {
+  for (const height of [667, 932]) {
+    await page.setViewportSize({ width: 375, height });
+    await open(page);
+    const menuBox = (await menu(page).boundingBox())!;
+    const links = menu(page).getByRole('link');
+    const first = (await links.first().boundingBox())!;
+    const last = (await links.last().boundingBox())!;
+    const span = last.y + last.height - first.y;
+    expect(span / menuBox.height).toBeGreaterThan(0.65);
+  }
 });
 
 test('the menu works with only a keyboard', async ({ page }) => {
