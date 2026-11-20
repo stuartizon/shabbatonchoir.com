@@ -1,3 +1,4 @@
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
@@ -9,6 +10,8 @@ export default defineConfig({
     format: 'file',
   },
   trailingSlash: 'never',
+  // Lists every page at its www address in /sitemap-index.xml (#19).
+  integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
   },
