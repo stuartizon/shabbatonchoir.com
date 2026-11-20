@@ -1,5 +1,6 @@
 ---
 title: Leadership
+description: Meet the musicians who lead the Shabbaton Choir, its Musical Director and Conductor Laureate, whose arrangements bring out the mood and meaning of the prayers.
 ---
 
 ## Musical Director

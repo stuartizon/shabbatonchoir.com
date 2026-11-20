@@ -8,7 +8,10 @@ const albums = (await getCollection('albums')).sort(
 );
 ---
 
-<Layout title="Music">
+<Layout
+  title="Music"
+  description="Listen to albums by the Shabbaton Choir, from Anim Z'mirot to Selichot Live, on Spotify, Apple Music and Amazon Music: modern Jewish choral music for prayer."
+>
   <div class="flex flex-wrap justify-evenly md:justify-between gap-x-4">
     {albums.map(({ data }) => (
       <Album {...data} />

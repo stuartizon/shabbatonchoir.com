@@ -19,13 +19,13 @@ const albums = defineCollection({
 });
 
 // The body text of the Home, History and Leadership pages, one Markdown
-// file each in src/content/pages. Front matter sets the page heading, and
-// will set the meta description once pages have their own (#15).
+// file each in src/content/pages. Front matter sets the page heading and the
+// meta description search results show.
 const pages = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/pages' }),
   schema: z.object({
     title: z.string().optional(),
-    description: z.string().optional(),
+    description: z.string(),
   }),
 });
 

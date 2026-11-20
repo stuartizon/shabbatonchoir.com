@@ -9,10 +9,24 @@ import { HERO_SIZES, HERO_WIDTHS, heroImage } from '../components/hero';
 import Navigation from '../components/Navigation.astro';
 
 interface Props {
+  /** The page's name, shown as its heading and in its <title>. */
   title?: string;
+  /** What search results show under the title: 140 to 160 characters. */
+  description: string;
 }
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
+// The home page has no name of its own, so it gets the choir's name and a
+// tagline instead.
+const pageTitle = title
+  ? `${title} · Shabbaton Choir`
+  : 'Shabbaton Choir · Jewish choral music from London';
+// Point search engines at the live site, with the clean URLs the site uses
+// (/music, not /music.html).
+const canonical = new URL(
+  Astro.url.pathname.replace(/(index)?\.html$/, ''),
+  Astro.site,
+);
 // With build.format 'file', the home page builds as /index.html.
 const isHome = /^\/(index\.html)?$/.test(Astro.url.pathname);
 // Preload the hero, the largest thing on the home page, in the format most
@@ -33,7 +47,9 @@ const heroPreload =
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shabbaton Choir</title>
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {heroPreload && (
