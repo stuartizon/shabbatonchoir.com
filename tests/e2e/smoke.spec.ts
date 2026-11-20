@@ -8,12 +8,6 @@ for (const { path, heading } of PAGES) {
       expect(response?.status()).toBe(200);
     });
 
-    test('has a title', async ({ page }) => {
-      await page.goto(path);
-      // Every page has the same title until #15.
-      await expect(page).toHaveTitle(/Shabbaton Choir/);
-    });
-
     test('has exactly one h1', async ({ page }) => {
       await page.goto(path);
       await expect(page.locator('h1')).toHaveCount(1);

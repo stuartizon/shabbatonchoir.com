@@ -1,5 +1,6 @@
 ---
 # The home page has no heading yet (#17).
+description: The Shabbaton Choir is a London Jewish choir and registered charity whose harmonies bring out the mood and meaning of prayer in synagogue services and concerts.
 ---
 
 The Shabbaton Choir was formed in 1990 out of the B'nei Brith Festival

@@ -15,7 +15,7 @@ if (!page) throw new Error(`No page text in src/content/pages/${id}.md`);
 const { Content } = await render(page);
 ---
 
-<Layout title={page.data.title}>
+<Layout title={page.data.title} description={page.data.description}>
   {className ? (
     <div class={className}>
       <Content />

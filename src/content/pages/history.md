@@ -1,5 +1,6 @@
 ---
 title: History
+description: "From the B'nai Brith Festival Singers' 1986 debut at the Wigmore Hall to Selichot services and Solidarity Through Song missions to Israel: the Choir's story."
 ---
 
 The Shabbaton Choir first took to the stage in 1986 at the Wigmore Hall,
