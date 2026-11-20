@@ -1,39 +1,10 @@
 ---
-import type { IconName } from '../icons';
 import IconLink from './IconLink.astro';
-
-const LINKS: { service: string; name: IconName; href: string }[] = [
-  {
-    service: 'Facebook',
-    name: 'facebook',
-    href: 'https://www.facebook.com/shabbatonchoir',
-  },
-  { service: 'X', name: 'x', href: 'https://x.com/shabbatonchoir' },
-  {
-    service: 'YouTube',
-    name: 'youtube',
-    href: 'https://www.youtube.com/user/ShabbatonChoir',
-  },
-  {
-    service: 'Spotify',
-    name: 'spotify',
-    href: 'https://open.spotify.com/artist/3UZxQiOiQL8bgl4Zc4R9vk',
-  },
-  {
-    service: 'Apple Music',
-    name: 'apple-music',
-    href: 'https://music.apple.com/gb/artist/shabbaton-choir/449897420',
-  },
-  {
-    service: 'Amazon Music',
-    name: 'amazon',
-    href: 'https://music.amazon.co.uk/artists/B005CSNERG/shabbaton-choir',
-  },
-];
+import { SOCIAL_LINKS } from './social';
 ---
 
 <footer class="flex bg-gray-100 justify-center gap-4 min-[375px]:gap-6 sm:gap-8 p-6">
-  {LINKS.map(({ service, name, href }) => (
+  {SOCIAL_LINKS.map(({ service, name, href }) => (
     <IconLink
       href={href}
       label={`Shabbaton Choir on ${service}`}

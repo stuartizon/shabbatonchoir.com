@@ -36,9 +36,13 @@ test('each album shows its streaming icons', async ({ page }) => {
   }
 });
 
-test('the contact page shows email and message icons', async ({ page }) => {
+test('the contact page shows email, Facebook and X icons', async ({ page }) => {
   await page.goto('/contact');
-  await expectIcons(page.locator('main'), ['envelope', 'chat'], 36);
+  await expectIcons(
+    page.locator('main'),
+    ['envelope', 'envelope', 'facebook', 'x'],
+    20,
+  );
 });
 
 test('the mobile menu button shows menu and close icons', async ({
