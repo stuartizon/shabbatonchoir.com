@@ -1,0 +1,12 @@
+# Cloudflare Pages response headers.
+#
+# Keep the *.pages.dev copies of the site out of search results, so only
+# www.shabbatonchoir.com is indexed. The first rule covers the production
+# deployment's own address (shabbatonchoir.pages.dev); the second covers
+# branch aliases such as staging and PR previews, which Cloudflare also marks
+# noindex itself.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:alias.:project.pages.dev/*
+  X-Robots-Tag: noindex
