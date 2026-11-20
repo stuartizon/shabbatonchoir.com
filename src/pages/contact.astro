@@ -68,9 +68,13 @@ const FOLLOW_LINKS = SOCIAL_LINKS.filter(
           href={href}
           target="_blank"
           rel="noreferrer"
-          class="-mx-2 flex min-h-11 items-center gap-3 rounded-md px-2 py-2 decoration-1 focus-visible:outline-2 focus-visible:outline-primary-500"
+          class="-mx-2 flex min-h-11 items-start gap-3 rounded-md px-2 py-2 decoration-1 focus-visible:outline-2 focus-visible:outline-primary-500"
         >
-          <Icon name={name} class="shrink-0 text-xl text-gray-600" />
+          {/* As tall as one line of text, so the icon centres on the first
+          line when the text wraps. */}
+          <span class="flex h-[1lh] shrink-0 items-center">
+            <Icon name={name} class="text-xl text-gray-600" />
+          </span>
           {FOLLOW_TEXT[service]}
         </a>
       </li>
