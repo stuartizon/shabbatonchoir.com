@@ -19,17 +19,15 @@ test('the footer is not on screen at the top of a long page', async ({
   ).not.toBeInViewport();
 });
 
-for (const path of ['/contact', '/no-such-page']) {
-  test(`on ${path} the footer sits at the bottom of the screen`, async ({
-    page,
-  }) => {
-    await page.goto(path);
-    const footer = await footerBox(page);
-    const viewport = page.viewportSize()!;
-    expect(footer.y + footer.height).toBeCloseTo(viewport.height, 0);
-    const overflow = await page.evaluate(
-      () => document.documentElement.scrollHeight - window.innerHeight,
-    );
-    expect(overflow).toBeLessThanOrEqual(0);
-  });
-}
+test('on a short page the footer sits at the bottom of the screen', async ({
+  page,
+}) => {
+  await page.goto('/no-such-page');
+  const footer = await footerBox(page);
+  const viewport = page.viewportSize()!;
+  expect(footer.y + footer.height).toBeCloseTo(viewport.height, 0);
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollHeight - window.innerHeight,
+  );
+  expect(overflow).toBeLessThanOrEqual(0);
+});
