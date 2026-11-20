@@ -1,9 +1,11 @@
 ---
+import { getImage } from 'astro:assets';
 import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import HeaderDesktop from '../components/HeaderDesktop.astro';
 import HeaderMobile from '../components/HeaderMobile.astro';
 import Hero from '../components/Hero.astro';
+import { HERO_SIZES, HERO_WIDTHS, heroImage } from '../components/hero';
 import Navigation from '../components/Navigation.astro';
 
 interface Props {
@@ -13,6 +15,17 @@ interface Props {
 const { title } = Astro.props;
 // With build.format 'file', the home page builds as /index.html.
 const isHome = /^\/(index\.html)?$/.test(Astro.url.pathname);
+// Preload the hero, the largest thing on the home page, in the format most
+// browsers pick. The options match the hero's AVIF source, so the URLs do too.
+const heroPreload =
+  isHome &&
+  (await getImage({
+    src: heroImage,
+    width: 2000,
+    widths: HERO_WIDTHS,
+    format: 'avif',
+    quality: 'high',
+  }));
 ---
 
 <!doctype html>
@@ -21,7 +34,18 @@ const isHome = /^\/(index\.html)?$/.test(Astro.url.pathname);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shabbaton Choir</title>
-    <link rel="icon" type="image/x-icon" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {heroPreload && (
+      <link
+        rel="preload"
+        as="image"
+        type="image/avif"
+        imagesrcset={heroPreload.srcSet.attribute}
+        imagesizes={HERO_SIZES}
+        fetchpriority="high"
+      />
+    )}
   </head>
   <body>
     <div>

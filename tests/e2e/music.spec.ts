@@ -31,11 +31,33 @@ for (const { name, year, hasDescription } of ALBUMS) {
 
     test('shows its cover', async ({ page }) => {
       const cover = album(page).getByRole('img', { name, exact: true });
+      // Covers load lazily, so bring each one into view first.
+      await cover.scrollIntoViewIfNeeded();
       await expect(cover).toBeVisible();
-      const width = await cover.evaluate(
-        (img: HTMLImageElement) => img.naturalWidth,
+      await expect
+        .poll(() => cover.evaluate((img: HTMLImageElement) => img.naturalWidth))
+        .toBeGreaterThan(0);
+    });
+
+    // Covers show at 320px wide, so they're served at no more than twice
+    // that for retina screens, in a modern format, and only when needed (#14).
+    test('serves its cover small, modern and lazily', async ({ page }) => {
+      const cover = album(page).getByRole('img', { name, exact: true });
+      await cover.scrollIntoViewIfNeeded();
+      await expect(cover).toHaveAttribute('loading', 'lazy');
+      await expect(cover).toHaveAttribute('width', /^\d+$/);
+      await expect(cover).toHaveAttribute('height', /^\d+$/);
+      await expect
+        .poll(() => cover.evaluate((img: HTMLImageElement) => img.naturalWidth))
+        .toBeGreaterThan(0);
+      const { src, naturalWidth } = await cover.evaluate(
+        (img: HTMLImageElement) => ({
+          src: img.currentSrc,
+          naturalWidth: img.naturalWidth,
+        }),
       );
-      expect(width).toBeGreaterThan(0);
+      expect(new URL(src).pathname).toMatch(/\.(avif|webp)$/);
+      expect(naturalWidth).toBeLessThanOrEqual(640);
     });
 
     test('links to Spotify, Apple Music and Amazon', async ({ page }) => {
