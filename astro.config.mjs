@@ -1,3 +1,4 @@
+import { satteri } from '@astrojs/markdown-satteri';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
@@ -22,8 +23,12 @@ export default defineConfig({
     },
   },
   markdown: {
-    // Keep quotes and apostrophes exactly as the client wrote them, rather
-    // than turning straight quotes into curly ones.
-    smartypants: false,
+    processor: satteri({
+      features: {
+        // Keep quotes and apostrophes exactly as the client wrote them,
+        // rather than turning straight quotes into curly ones.
+        smartPunctuation: false,
+      },
+    }),
   },
 });
