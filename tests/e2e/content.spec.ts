@@ -69,7 +69,13 @@ test('leadership page text', async ({ page }) => {
   );
   await expect(main).not.toContainText('Fingerhut');
   await expect(main).toContainText("Stephen's music on his website");
-  await expect(
-    main.getByRole('link', { name: 'https://www.stephenleveymusic.com' }),
-  ).toHaveAttribute('href', 'https://www.stephenleveymusic.com');
+  const leveyLink = main.getByRole('link', {
+    name: 'https://www.stephenleveymusic.com',
+  });
+  await expect(leveyLink).toHaveAttribute(
+    'href',
+    'https://www.stephenleveymusic.com',
+  );
+  await expect(leveyLink).toHaveAttribute('target', '_blank');
+  await expect(leveyLink).toHaveAttribute('rel', 'noreferrer');
 });
