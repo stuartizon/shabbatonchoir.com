@@ -5,7 +5,9 @@ import { expect, test } from '@playwright/test';
 
 test('home page text', async ({ page }) => {
   await page.goto('/');
-  const main = page.locator('main');
+  const main = page.locator('main section').filter({
+    has: page.getByRole('heading', { name: 'About the choir' }),
+  });
   await expect(main.locator('p')).toHaveCount(3);
   await expect(main.locator('p').first()).toContainText(
     "out of the B'nai Brith Festival Singers",
