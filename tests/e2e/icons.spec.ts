@@ -29,7 +29,7 @@ test('the footer shows the social and streaming icons', async ({ page }) => {
 
 test('each album shows its streaming icons', async ({ page }) => {
   await page.goto('/music');
-  const albums = page.locator('main h2').locator('..');
+  const albums = page.locator('main article');
   await expect(albums).toHaveCount(6);
   for (const album of await albums.all()) {
     await expectIcons(album, ['spotify', 'apple-music', 'amazon'], 18);
