@@ -39,8 +39,10 @@ test('leadership page text', async ({ page }) => {
     'Musical Director',
     'Conductor Laureate',
   ]);
-  await expect(main.locator('p')).toHaveCount(5);
-  await expect(main).toContainText('"Solidarity Through Song" mission');
+  await expect(main).toContainText(
+    'Harry joined the Shabbaton Choir as musical director in 2022',
+  );
+  await expect(main).not.toContainText('Fingerhut');
   await expect(main).toContainText("Stephen's music on his website");
   await expect(
     main.getByRole('link', { name: 'http://www.stephenleveymusic.com' }),
