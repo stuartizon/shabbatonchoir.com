@@ -69,6 +69,35 @@ test.describe('home page hero', () => {
   });
 });
 
+test.describe('Musical Director photo', () => {
+  const photo = (page: import('@playwright/test').Page) =>
+    page.locator('main img[alt="Harry Style"]');
+
+  test('is on the Leadership page with its size set', async ({ page }) => {
+    await page.goto('/leadership');
+    await expect(photo(page)).toHaveCount(1);
+    await expect(photo(page)).toHaveAttribute('width', /\d+/);
+    await expect(photo(page)).toHaveAttribute('height', /\d+/);
+  });
+
+  test('is served in a modern format at a sensible size', async ({ page }) => {
+    await page.goto('/leadership');
+    await photo(page).scrollIntoViewIfNeeded();
+    await expect
+      .poll(() => photo(page).evaluate((img: HTMLImageElement) => img.complete))
+      .toBe(true);
+    const { src, naturalWidth } = await photo(page).evaluate(
+      (img: HTMLImageElement) => ({
+        src: img.currentSrc,
+        naturalWidth: img.naturalWidth,
+      }),
+    );
+    expect(new URL(src).pathname).toMatch(/\.(avif|webp)$/);
+    expect(naturalWidth).toBeGreaterThan(0);
+    expect(naturalWidth).toBeLessThanOrEqual(800);
+  });
+});
+
 // A PNG's width and height are the two big-endian numbers at bytes 16-23.
 function pngSize(png: Buffer) {
   return { width: png.readUInt32BE(16), height: png.readUInt32BE(20) };
