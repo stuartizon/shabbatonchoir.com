@@ -1,32 +1,37 @@
 import { expect, test } from '@playwright/test';
 
-// The live (Next.js) site used Tailwind 3.0.7's font stack. San Francisco, the
-// system font on Apple devices, has no Hebrew letters, so Hebrew text falls
-// back down the stack: to Helvetica Neue or Arial on the live site. Without
-// them it falls through to the generic sans-serif, a different font.
-// Screenshots on Linux can't show this, so check the stack itself.
-const LIVE_SITE_STACK = [
-  'ui-sans-serif',
-  'system-ui',
-  '-apple-system',
-  'BlinkMacSystemFont',
-  '"Segoe UI"',
-  'Roboto',
-  '"Helvetica Neue"',
-  'Arial',
-  '"Noto Sans"',
-  'sans-serif',
-  '"Apple Color Emoji"',
-  '"Segoe UI Emoji"',
-  '"Segoe UI Symbol"',
-  '"Noto Color Emoji"',
-].join(', ');
+// Headings use Frank Ruhl Libre, served from the site itself. It covers
+// Hebrew as well as Latin, so Hebrew titles match the English beside them.
+// Body text stays in the system font.
 
-test('Hebrew text uses the live site font stack', async ({ page }) => {
+test('headings use Frank Ruhl Libre, loaded from the site', async ({
+  page,
+}) => {
   await page.goto('/music');
-  const hebrew = page.getByText('זצ׳ל').first();
-  const fontFamily = await hebrew.evaluate(
+  const heading = page.getByRole('heading', { level: 1 });
+  const fontFamily = await heading.evaluate(
     (element) => getComputedStyle(element).fontFamily,
   );
-  expect(fontFamily).toBe(LIVE_SITE_STACK);
+  expect(fontFamily).toMatch(/^'?"?Frank Ruhl Libre/);
+  await expect
+    .poll(() =>
+      page.evaluate(async () => {
+        await document.fonts.ready;
+        return [...document.fonts].some(
+          (font) =>
+            font.family.includes('Frank Ruhl Libre') &&
+            font.status === 'loaded',
+        );
+      }),
+    )
+    .toBe(true);
+});
+
+test('body text uses the system font', async ({ page }) => {
+  await page.goto('/music');
+  const text = page.locator('main p').first();
+  const fontFamily = await text.evaluate(
+    (element) => getComputedStyle(element).fontFamily,
+  );
+  expect(fontFamily).toMatch(/^ui-sans-serif, system-ui/);
 });
