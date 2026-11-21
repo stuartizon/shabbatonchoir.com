@@ -9,6 +9,8 @@ const albums = defineCollection({
   schema: ({ image }) =>
     z.object({
       name: z.string(),
+      // The title in Hebrew, where the cover has one.
+      hebrewName: z.string().optional(),
       year: z.number().int(),
       cover: image(),
       description: z.string().optional(),
