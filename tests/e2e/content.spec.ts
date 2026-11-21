@@ -30,20 +30,18 @@ test('history page text', async ({ page }) => {
   await page.goto('/history');
   const main = page.locator('main');
   await expect(main.locator('h2')).toHaveText([
-    'Founding',
     'Musical Directors',
     'Solidarity Through Song',
     'Tours and commemorations',
     '25th anniversary',
     'Recordings',
   ]);
-  await expect(main.locator('p')).toHaveCount(12);
+  await expect(main.locator('p')).toHaveCount(11);
   await expect(main.locator(':is(b, strong)')).toHaveText([
     'B’nai Brith Festival Singers',
     'Choral Midnight Selichot',
     'Shabbaton Choir',
     'Choral Shabbaton',
-    'raison d’être',
     '“Solidarity Through Song”',
   ]);
   await expect(main).toContainText('the "Nusach" - traditional');
@@ -51,6 +49,8 @@ test('history page text', async ({ page }) => {
   await expect(main).toContainText('Stephen Glass conducted a Choral Midnight');
   await expect(main).toContainText('and, since 2003, by Jonny Turgel.');
   await expect(main).not.toContainText('thirteen years');
+  // The "raison d'être" paragraph is on Home only.
+  await expect(main).not.toContainText('raison');
   await expect(main).toContainText(
     'The Choir is now under the baton of Harry Style',
   );
