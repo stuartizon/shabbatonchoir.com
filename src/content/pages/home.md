@@ -19,4 +19,5 @@ performances, and in television and radio broadcasts, recordings and through
 other media.
 
 The Shabbaton Choir is a registered charity, registered in England and Wales
-under number 1058256.
+under number
+[1058256](https://register-of-charities.charitycommission.gov.uk/charity-search/-/charity-details/1058256).
