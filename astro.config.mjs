@@ -3,6 +3,8 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
+import { externalLinks } from './src/external-links.ts';
+
 export default defineConfig({
   site: 'https://www.shabbatonchoir.com',
   build: {
@@ -24,6 +26,7 @@ export default defineConfig({
   },
   markdown: {
     processor: satteri({
+      hastPlugins: [externalLinks],
       features: {
         // Keep quotes and apostrophes exactly as the client wrote them,
         // rather than turning straight quotes into curly ones.

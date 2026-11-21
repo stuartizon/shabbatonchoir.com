@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* Code, not markup: its "filter" key would otherwise add a filter class. */
+@source not '../external-links.ts';
+
 @theme {
   /*
     Tailwind 3.0.7's default font stack, as on the live site. San Francisco has
