@@ -1,28 +1,17 @@
 ---
 import IconLink from './IconLink.astro';
-import { CHARITY_NUMBER, CHARITY_REGISTER_URL } from './charity';
 import { SOCIAL_LINKS } from './social';
 ---
 
-<footer class="flex flex-col items-center gap-4 bg-gray-100 p-6">
-  <div class="flex justify-center gap-4 min-[375px]:gap-6 sm:gap-8">
-    {SOCIAL_LINKS.map(({ service, name, href }) => (
-      <IconLink
-        href={href}
-        label={`Shabbaton Choir on ${service}`}
-        name={name}
-        size="2x"
-        class="-m-1.5 p-1.5"
-        ringOffset="group-focus-visible:outline-offset-[6px]"
-      />
-    ))}
-  </div>
-  <a
-    href={CHARITY_REGISTER_URL}
-    target="_blank"
-    rel="noreferrer"
-    class="inline-flex min-h-11 items-center rounded-sm text-sm text-gray-600 underline decoration-1 underline-offset-2 focus-visible:outline-2 focus-visible:outline-primary-500"
-  >
-    Registered charity number {CHARITY_NUMBER}
-  </a>
+<footer class="flex bg-gray-100 justify-center gap-4 min-[375px]:gap-6 sm:gap-8 p-6">
+  {SOCIAL_LINKS.map(({ service, name, href }) => (
+    <IconLink
+      href={href}
+      label={`Shabbaton Choir on ${service}`}
+      name={name}
+      size="2x"
+      class="-m-1.5 p-1.5"
+      ringOffset="group-focus-visible:outline-offset-[6px]"
+    />
+  ))}
 </footer>
