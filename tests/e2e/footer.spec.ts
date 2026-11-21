@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { PAGES } from './pages';
 
 // The social footer is an ordinary footer at the end of the page: it doesn't
 // stay on screen while scrolling. On pages shorter than the window it sits
@@ -31,3 +32,20 @@ test('on a short page the footer sits at the bottom of the screen', async ({
   );
   expect(overflow).toBeLessThanOrEqual(0);
 });
+
+const CHARITY_REGISTER =
+  'https://register-of-charities.charitycommission.gov.uk/charity-search/-/charity-details/1058256';
+
+for (const { path } of PAGES) {
+  test(`the footer on ${path} links the charity number to the register`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const link = page
+      .getByRole('contentinfo')
+      .getByRole('link', { name: 'Registered charity number 1058256' });
+    await expect(link).toHaveAttribute('href', CHARITY_REGISTER);
+    await expect(link).toHaveAttribute('target', '_blank');
+    await expect(link).toHaveAttribute('rel', 'noreferrer');
+  });
+}
