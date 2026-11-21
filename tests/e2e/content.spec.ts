@@ -8,7 +8,7 @@ test('home page text', async ({ page }) => {
   const main = page.locator('main');
   await expect(main.locator('p')).toHaveCount(3);
   await expect(main.locator('p').first()).toContainText(
-    "out of the B'nei Brith Festival Singers",
+    "out of the B'nai Brith Festival Singers",
   );
   await expect(main.locator('p').first()).toContainText(
     'The current Musical Director is Harry Style.',
