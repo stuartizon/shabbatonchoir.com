@@ -6,6 +6,7 @@ import HeaderDesktop from '../components/HeaderDesktop.astro';
 import HeaderMobile from '../components/HeaderMobile.astro';
 import Hero from '../components/Hero.astro';
 import { HERO_SIZES, HERO_WIDTHS, heroImage } from '../components/hero';
+import { toJsonLd } from '../structured-data';
 
 interface Props {
   /**
@@ -20,9 +21,11 @@ interface Props {
    * as for the 404 page.
    */
   noindex?: boolean;
+  /** JSON-LD describing the page's content to search engines. */
+  structuredData?: Record<string, unknown>[];
 }
 
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, structuredData } = Astro.props;
 // The home page has no name of its own, so it is just the choir's name.
 const pageTitle = title ? `${title} · Shabbaton Choir` : 'Shabbaton Choir';
 // Point search engines at the live site, with the clean URLs the site uses
@@ -79,6 +82,13 @@ const heroPreload =
         imagesrcset={heroPreload.srcSet.attribute}
         imagesizes={HERO_SIZES}
         fetchpriority="high"
+      />
+    )}
+    {structuredData && (
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={toJsonLd(structuredData)}
       />
     )}
   </head>
