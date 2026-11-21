@@ -1,5 +1,50 @@
 ---
-import ContentPage from '../layouts/ContentPage.astro';
+import { Picture } from 'astro:assets';
+import { getCollection, getEntry, render } from 'astro:content';
+import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
+import Layout from '../layouts/Layout.astro';
+
+const page = await getEntry('pages', 'leadership');
+if (!page) throw new Error('No page text in src/content/pages/leadership.md');
+
+const leaders = await Promise.all(
+  (await getCollection('leaders'))
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (leader) => ({ ...leader.data, ...(await render(leader)) })),
+);
 ---
 
-<ContentPage id="leadership" />
+<Layout title={page.data.title} description={page.data.description} wide cream>
+  <div class="mx-auto flex max-w-[65rem] flex-col gap-6 px-4 pt-10 pb-16 md:gap-8 md:px-10 md:pt-16 md:pb-20">
+    <h1 class="my-0">{page.data.title}</h1>
+    {leaders.map(({ name, role, portrait, Content }) => (
+      <article class="flex flex-col gap-6 rounded-[1.25rem] bg-white p-5 shadow-[0_1px_2px_rgb(15_33_96/0.06),0_12px_32px_-18px_rgb(15_33_96/0.25)] md:flex-row md:gap-9 md:p-8">
+        {portrait ? (
+          <Picture
+            src={portrait}
+            alt={name}
+            width={560}
+            widths={[280, 560]}
+            sizes="(min-width: 768px) 280px, calc(100vw - 72px)"
+            formats={['avif', 'webp']}
+            class="aspect-[28/34] w-full rounded-2xl object-cover md:w-70 md:shrink-0 md:self-start"
+          />
+        ) : (
+          <PhotoPlaceholder
+            label={`a portrait of ${name}`}
+            class="aspect-[28/34] w-full md:w-70 md:shrink-0 md:self-start"
+          />
+        )}
+        <div class="flex min-w-0 flex-1 flex-col">
+          <p class="my-0 text-[0.8125rem] font-bold tracking-[0.14em] text-gold-ink uppercase">
+            {role}
+          </p>
+          <h2 class="mt-3 mb-2 text-[1.875rem] md:text-[2.125rem]">{name}</h2>
+          <div class="text-[1.0625rem] leading-[1.7] [&_a]:[overflow-wrap:anywhere] [&_p]:my-0 [&_p]:mt-4">
+            <Content />
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</Layout>

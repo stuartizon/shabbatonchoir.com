@@ -27,7 +27,7 @@ interface Props {
    * it's a single column of text under the page's title.
    */
   wide?: boolean;
-  /** Cream behind the whole page, for pages that are mostly cards. */
+  /** Cream behind the page under the header, for pages of cards. */
   cream?: boolean;
 }
 
@@ -108,10 +108,10 @@ const heroPreload =
   <body>
     <!-- At least as tall as the window, so on short pages the footer sits at
     the bottom of the screen. dvh follows phone browsers' toolbars. -->
-    <div class:list={['flex min-h-dvh flex-col', cream && 'bg-cream']}>
+    <div class="flex min-h-dvh flex-col">
       <HeaderDesktop />
       <HeaderMobile />
-      <main class="flex-1">
+      <main class:list={['flex-1', cream && 'bg-cream']}>
         {wide ? (
           <slot />
         ) : (
