@@ -10,8 +10,19 @@ test('home page text', async ({ page }) => {
   await expect(main.locator('p').first()).toContainText(
     "out of the B'nei Brith Festival Singers",
   );
+  await expect(main.locator('p').first()).toContainText(
+    'The current Musical Director is Harry Style.',
+  );
+  await expect(main.locator('p').first()).toContainText(
+    'is the raison d’être of the Shabbaton Choir.',
+  );
+  await expect(main.locator(':is(b, strong)')).toHaveText([
+    'Harry Style',
+    'raison d’être',
+  ]);
+  await expect(main).not.toContainText('Fingerhut');
   await expect(main).toContainText(
-    'registered in England and Wales under Number 1058256.',
+    'registered in England and Wales under number 1058256.',
   );
 });
 
