@@ -1,6 +1,9 @@
+import { satteri } from '@astrojs/markdown-satteri';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
+
+import { externalLinks } from './src/external-links.ts';
 
 export default defineConfig({
   site: 'https://www.shabbatonchoir.com',
@@ -22,8 +25,13 @@ export default defineConfig({
     },
   },
   markdown: {
-    // Keep quotes and apostrophes exactly as the client wrote them, rather
-    // than turning straight quotes into curly ones.
-    smartypants: false,
+    processor: satteri({
+      hastPlugins: [externalLinks],
+      features: {
+        // Keep quotes and apostrophes exactly as the client wrote them,
+        // rather than turning straight quotes into curly ones.
+        smartPunctuation: false,
+      },
+    }),
   },
 });
