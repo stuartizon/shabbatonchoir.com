@@ -3,7 +3,7 @@
 description: The Shabbaton Choir is a London Jewish choir and registered charity whose harmonies bring out the mood and meaning of prayer in synagogue services and concerts.
 ---
 
-The Shabbaton Choir was formed in 1990 out of the B'nei Brith Festival
+The Shabbaton Choir was formed in 1990 out of the B'nai Brith Festival
 Singers (which itself was formed in 1986). Stephen Levey was conductor and
 Musical Director from 1991 to 2020 before becoming Conductor Laureate. The
 current Musical Director is **Harry Style**. The Choir’s innovative choral sound
