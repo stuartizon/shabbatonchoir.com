@@ -45,6 +45,7 @@ for (const { path } of PAGES) {
       .getByRole('contentinfo')
       .getByRole('link', { name: 'Safeguarding policy' });
     await expect(link).toBeVisible();
+    expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     const href = await link.getAttribute('href');
     expect(href).toBe('/safeguarding-policy.pdf');
     const response = await request.get(href!);
