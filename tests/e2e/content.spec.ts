@@ -24,6 +24,12 @@ test('home page text', async ({ page }) => {
   await expect(main).toContainText(
     'registered in England and Wales under number 1058256.',
   );
+  const charityLink = main.getByRole('link', { name: '1058256' });
+  await expect(charityLink).toHaveAttribute(
+    'href',
+    'https://register-of-charities.charitycommission.gov.uk/charity-search/-/charity-details/1058256',
+  );
+  await expect(charityLink).toHaveAttribute('target', '_blank');
 });
 
 test('history page text', async ({ page }) => {
