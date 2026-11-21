@@ -49,4 +49,4 @@ promoting the Choir to the Jewish community and more widely, within the UK,
 Israel and further afield. Stephen is Director of Music at Immanuel College
 in Bushey, Hertfordshire. You can read more about Stephen's music on
 his website
-[http://www.stephenleveymusic.com](http://www.stephenleveymusic.com)
+[https://www.stephenleveymusic.com](https://www.stephenleveymusic.com)
