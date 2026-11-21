@@ -6,7 +6,7 @@ import { expect, test } from '@playwright/test';
 test('home page text', async ({ page }) => {
   await page.goto('/');
   const main = page.locator('main');
-  await expect(main.locator('p')).toHaveCount(3);
+  await expect(main.locator('p')).toHaveCount(4);
   await expect(main.locator('p').first()).toContainText(
     "out of the B'nai Brith Festival Singers",
   );
@@ -30,6 +30,23 @@ test('home page text', async ({ page }) => {
     'https://register-of-charities.charitycommission.gov.uk/charity-search/-/charity-details/1058256',
   );
   await expect(charityLink).toHaveAttribute('target', '_blank');
+});
+
+// The client asked for a link to the safeguarding policy at the bottom of
+// the site. It is the last paragraph of Home.
+test('home page links to the safeguarding policy', async ({
+  page,
+  request,
+}) => {
+  await page.goto('/');
+  const link = page
+    .locator('main p')
+    .last()
+    .getByRole('link', { name: 'safeguarding policy' });
+  await expect(link).toHaveAttribute('href', '/safeguarding-policy.pdf');
+  const response = await request.get('/safeguarding-policy.pdf');
+  expect(response.ok()).toBe(true);
+  expect(response.headers()['content-type']).toContain('application/pdf');
 });
 
 test('history page text', async ({ page }) => {
