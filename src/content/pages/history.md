@@ -3,8 +3,6 @@ title: History
 description: "From the B'nai Brith Festival Singers' 1986 debut at the Wigmore Hall to Selichot services and Solidarity Through Song missions to Israel: the Choir's story."
 ---
 
-## Founding
-
 The Shabbaton Choir first took to the stage in 1986 at the Wigmore Hall,
 London under its founding name - the **B’nai Brith Festival Singers**. It
 was formed by a young and talented musician, Stephen Glass, who sought a
@@ -62,13 +60,6 @@ Levey’s successor, Benjamin Fingerhut, in 2022. Harry has led us in several
 innovative concerts, for the annual Yom Hashoah commemoration (now held in
 Victoria Park Gardens, next to the Houses of Parliament) and for the 80th
 Anniversary of the Liberation of Bergen Belsen in Germany.
-
-The Shabbaton Choir’s innovative choral sound has been heard in synagogue
-services and concerts throughout the United Kingdom and abroad. The
-harmonies and arrangements are written with the aim of bringing out clearly
-the mood and meaning of the words. The art of communicating and inspiring
-others through music, whether in concert or in prayer is the **raison
-d’être** of the Shabbaton Choir.
 
 ## Solidarity Through Song
 
