@@ -35,7 +35,7 @@ async function expectIconLinks(
 test('the footer icon links are named and easy to tap', async ({ page }) => {
   await page.goto('/');
   await expectIconLinks(
-    page.locator('footer a:has(svg)'),
+    page.locator('footer a'),
     ['Facebook', 'X', 'YouTube', 'Spotify', 'Apple Music', 'Amazon Music'].map(
       (service) => `Shabbaton Choir on ${service}`,
     ),

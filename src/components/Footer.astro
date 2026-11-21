@@ -3,24 +3,15 @@ import IconLink from './IconLink.astro';
 import { SOCIAL_LINKS } from './social';
 ---
 
-<footer class="flex flex-col items-center gap-4 bg-gray-100 p-6">
-  <div class="flex justify-center gap-4 min-[375px]:gap-6 sm:gap-8">
-    {SOCIAL_LINKS.map(({ service, name, href }) => (
-      <IconLink
-        href={href}
-        label={`Shabbaton Choir on ${service}`}
-        name={name}
-        size="2x"
-        class="-m-1.5 p-1.5"
-        ringOffset="group-focus-visible:outline-offset-[6px]"
-      />
-    ))}
-  </div>
-  <!-- The negative margin keeps the 44px tap target without adding space. -->
-  <a
-    href="/safeguarding-policy.pdf"
-    class="-my-3 inline-flex min-h-11 items-center text-sm text-gray-600"
-  >
-    Safeguarding policy
-  </a>
+<footer class="flex bg-gray-100 justify-center gap-4 min-[375px]:gap-6 sm:gap-8 p-6">
+  {SOCIAL_LINKS.map(({ service, name, href }) => (
+    <IconLink
+      href={href}
+      label={`Shabbaton Choir on ${service}`}
+      name={name}
+      size="2x"
+      class="-m-1.5 p-1.5"
+      ringOffset="group-focus-visible:outline-offset-[6px]"
+    />
+  ))}
 </footer>
