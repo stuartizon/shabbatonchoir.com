@@ -68,10 +68,15 @@ test('history page text', async ({ page }) => {
 test('leadership page text', async ({ page }) => {
   await page.goto('/leadership');
   const main = page.locator('main');
-  await expect(main.locator('h2')).toHaveText([
+  // Each leader's card has their name as its heading, under their role.
+  await expect(main.locator('h2')).toHaveText(['Harry Style', 'Stephen Levey']);
+  await expect(main.locator('article')).toHaveCount(2);
+  await expect(main.locator('article').first()).toContainText(
     'Musical Director',
+  );
+  await expect(main.locator('article').last()).toContainText(
     'Conductor Laureate',
-  ]);
+  );
   await expect(main).toContainText(
     'Harry joined the Shabbaton Choir as musical director in 2022',
   );
