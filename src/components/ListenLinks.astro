@@ -1,0 +1,73 @@
+---
+// Links to an album on each streaming service. "pills" shows each service's
+// icon and name; "icons" shows round icon buttons after a "Listen on"
+// label, which fit three to a row on the narrowest phones.
+import type { IconName } from '../icons';
+import Icon from './Icon.astro';
+
+interface Props {
+  name: string;
+  spotify: string;
+  apple: string;
+  amazon: string;
+  look: 'pills' | 'icons';
+  class?: string;
+}
+
+const { name, spotify, apple, amazon, look, class: className } = Astro.props;
+
+const SERVICES: {
+  service: string;
+  short: string;
+  icon: IconName;
+  href: string;
+}[] = [
+  { service: 'Spotify', short: 'Spotify', icon: 'spotify', href: spotify },
+  {
+    service: 'Apple Music',
+    short: 'Apple Music',
+    icon: 'apple-music',
+    href: apple,
+  },
+  { service: 'Amazon Music', short: 'Amazon', icon: 'amazon', href: amazon },
+];
+---
+
+{look === 'pills' ? (
+  <ul class:list={['flex flex-wrap gap-2', className]}>
+    {SERVICES.map(({ service, short, icon, href }) => (
+      <li>
+        <a
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Listen to ${name} on ${service}`}
+          class="flex min-h-11 items-center gap-2 rounded-full bg-primary-500 px-5 text-sm font-semibold whitespace-nowrap text-white no-underline hover:bg-navy hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+        >
+          <Icon name={icon} class="shrink-0" />
+          {short}
+        </a>
+      </li>
+    ))}
+  </ul>
+) : (
+  <div class:list={['flex items-center gap-2', className]}>
+    <span class="mr-1 text-sm font-semibold text-gray-600">Listen on</span>
+    <ul class="flex gap-2">
+      {SERVICES.map(({ service, icon, href }) => (
+        <li>
+          <a
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Listen to ${name} on ${service}`}
+            title={service}
+            class="grid size-11 place-items-center rounded-full bg-primary-50 text-lg text-primary-500 no-underline hover:bg-primary-100 hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+          >
+            <Icon name={icon} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}

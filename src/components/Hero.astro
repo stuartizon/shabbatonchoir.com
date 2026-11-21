@@ -1,46 +1,31 @@
 ---
 import { Picture } from 'astro:assets';
 import { HERO_SIZES, HERO_WIDTHS, heroImage } from './hero';
-
-interface Props {
-  mode: 'mobile' | 'desktop';
-}
-
-const { mode } = Astro.props;
 ---
 
-<div
-  data-hero
-  class:list={[
-    'relative isolate w-full',
-    {
-      'md:hidden h-40': mode === 'mobile',
-      'hidden h-screen md:block': mode === 'desktop',
-    },
-  ]}
->
-  <Picture
-    src={heroImage}
-    alt=""
-    width={2000}
-    widths={HERO_WIDTHS}
-    sizes={HERO_SIZES}
-    formats={['avif', 'webp']}
-    quality="high"
-    loading="eager"
-    fetchpriority="high"
-    class="absolute inset-0 -z-10 size-full object-cover object-center"
-  />
+<!--
+  A rounded photo across the top of the home page, fading to navy at the
+  bottom so the white text over it stays readable.
+-->
+<div class="px-3 pt-3 md:px-6 md:pt-0">
   <div
-    class="shade absolute inset-0 -z-10 mix-blend-screen"
-    aria-hidden="true"
-  ></div>
-  <slot />
+    data-hero
+    class="relative isolate mx-auto flex h-[28.75rem] max-w-[77rem] items-end overflow-hidden rounded-2xl md:h-[33.75rem] md:rounded-[1.25rem]"
+  >
+    <Picture
+      src={heroImage}
+      alt=""
+      width={2000}
+      widths={HERO_WIDTHS}
+      sizes={HERO_SIZES}
+      formats={['avif', 'webp']}
+      quality="high"
+      loading="eager"
+      fetchpriority="high"
+      class="absolute inset-0 -z-10 size-full object-cover object-center"
+    />
+    <div class="w-full bg-linear-to-t from-navy/90 to-navy/0 px-5 pt-16 pb-6 md:px-14 md:pt-24 md:pb-14">
+      <slot />
+    </div>
+  </div>
 </div>
-
-<style>
-  /* Screened over the photo, this lightens its top more than its bottom. */
-  .shade {
-    background: linear-gradient(rgba(90, 90, 90, 1), rgba(0, 0, 0, 1));
-  }
-</style>

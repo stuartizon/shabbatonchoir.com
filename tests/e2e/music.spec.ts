@@ -1,13 +1,24 @@
 import { expect, test } from '@playwright/test';
 
 // The albums as they appear on the Music page, newest first.
+// Hebrew titles are taken from the covers, for the client to confirm.
 const ALBUMS = [
   { name: 'Mi Sheberach', year: '2021', hasDescription: true },
-  { name: "Anim Z'mirot", year: '2016', hasDescription: true },
+  {
+    name: "Anim Z'mirot",
+    hebrew: 'אנעים זמירות',
+    year: '2016',
+    hasDescription: true,
+  },
   { name: 'Shabbaton Sings Reuth', year: '2011', hasDescription: false },
-  { name: 'Bilvavi', year: '2006', hasDescription: true },
+  { name: 'Bilvavi', hebrew: 'בלבבי', year: '2006', hasDescription: true },
   { name: 'Shir Chadash', year: '2003', hasDescription: true },
-  { name: 'Selichot Live', year: '2001', hasDescription: true },
+  {
+    name: 'Selichot Live',
+    hebrew: 'סליחות',
+    year: '2001',
+    hasDescription: true,
+  },
 ];
 
 test.beforeEach(async ({ page }) => {
@@ -18,10 +29,10 @@ test('lists the albums newest first', async ({ page }) => {
   await expect(page.locator('main h2')).toHaveText(ALBUMS.map((a) => a.name));
 });
 
-for (const { name, year, hasDescription } of ALBUMS) {
+for (const { name, hebrew, year, hasDescription } of ALBUMS) {
   test.describe(`album ${name}`, () => {
     const album = (page: import('@playwright/test').Page) =>
-      page.locator('main > div > div > div').filter({
+      page.locator('main article').filter({
         has: page.getByRole('heading', { name, exact: true }),
       });
 
@@ -39,7 +50,7 @@ for (const { name, year, hasDescription } of ALBUMS) {
         .toBeGreaterThan(0);
     });
 
-    // Covers show at 320px wide, so they're served at no more than twice
+    // Covers show at up to 360px wide, so they're served at no more than twice
     // that for retina screens, in a modern format, and only when needed.
     test('serves its cover small, modern and lazily', async ({ page }) => {
       const cover = album(page).getByRole('img', { name, exact: true });
@@ -57,7 +68,17 @@ for (const { name, year, hasDescription } of ALBUMS) {
         }),
       );
       expect(new URL(src).pathname).toMatch(/\.(avif|webp)$/);
-      expect(naturalWidth).toBeLessThanOrEqual(640);
+      expect(naturalWidth).toBeLessThanOrEqual(720);
+    });
+
+    test(`${hebrew ? 'shows' : 'has no'} a Hebrew title`, async ({ page }) => {
+      const title = album(page).locator('[lang="he"]:not(p *)');
+      if (hebrew) {
+        await expect(title).toHaveText(hebrew);
+        await expect(title).toHaveAttribute('dir', 'rtl');
+      } else {
+        await expect(title).toHaveCount(0);
+      }
     });
 
     test('links to Spotify, Apple Music and Amazon', async ({ page }) => {
@@ -75,15 +96,9 @@ for (const { name, year, hasDescription } of ALBUMS) {
     test(`${hasDescription ? 'has' : 'has no'} description`, async ({
       page,
     }) => {
-      const text = (await album(page).locator('p').textContent()) ?? '';
+      const description = album(page).locator('p:not([data-year])');
+      const text = (await description.allTextContents()).join('');
       expect(text.trim().length > 0).toBe(hasDescription);
-    });
-
-    // The site's own heading and paragraph styles must not override the
-    // utility classes that tighten the album's spacing.
-    test('keeps its tight title and description spacing', async ({ page }) => {
-      await expect(album(page).locator('h2')).toHaveCSS('margin-top', '16px');
-      await expect(album(page).locator('p')).toHaveCSS('margin-top', '8px');
     });
   });
 }

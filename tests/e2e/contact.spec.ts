@@ -50,11 +50,12 @@ for (const { heading, address } of EMAIL_OPTIONS) {
       .locator('main li')
       .filter({ has: page.getByRole('heading', { name: heading }) });
     const box = (await card.boundingBox())!;
-    // Just inside the card's top-left corner, well away from the button.
+    // Near the card's top-left corner, inside its rounding and well away
+    // from the button.
     const href = await page.evaluate(
       ([x, y]) =>
         document.elementFromPoint(x, y)?.closest('a')?.getAttribute('href'),
-      [box.x + 4, box.y + 4],
+      [box.x + 24, box.y + 24],
     );
     expect(href).toBe(`mailto:${address}`);
   });
@@ -70,13 +71,14 @@ test('the email buttons fill the width of the card on phones', async ({
     const card = page
       .locator('main li')
       .filter({ has: page.getByRole('heading', { name: heading }) });
-    const cardBox = (await card.boundingBox())!;
+    const body = card.locator('[data-card-body]');
+    const bodyBox = (await body.boundingBox())!;
     const linkBox = (await card.getByRole('link').boundingBox())!;
-    const padding = await card.evaluate((el) =>
+    const padding = await body.evaluate((el) =>
       parseFloat(getComputedStyle(el).paddingLeft),
     );
-    // The card's padding each side, plus its 1px border.
-    expect(linkBox.width).toBeCloseTo(cardBox.width - 2 * (padding + 1), 0);
+    // The width of the card's text, inside its padding.
+    expect(linkBox.width).toBeCloseTo(bodyBox.width - 2 * padding, 0);
   }
 });
 

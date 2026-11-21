@@ -1,0 +1,32 @@
+---
+// A striped box standing in for a photo the client hasn't supplied yet. It
+// says what the photo should show, so swapping one in is a quick job.
+interface Props {
+  /** What the photo will show, e.g. "a synagogue service". */
+  label: string;
+  class?: string;
+}
+
+const { label, class: className } = Astro.props;
+---
+
+<div
+  role="img"
+  aria-label={`Photo to come: ${label}`}
+  class:list={[
+    'placeholder flex items-center justify-center rounded-2xl border border-dashed border-primary-200 p-4 text-center text-sm font-semibold text-primary-400',
+    className,
+  ]}
+>
+  <span aria-hidden="true">Photo: {label}</span>
+</div>
+
+<style>
+  .placeholder {
+    background: repeating-linear-gradient(
+      135deg,
+      var(--color-primary-50) 0 12px,
+      #f3f5fb 12px 24px
+    );
+  }
+</style>

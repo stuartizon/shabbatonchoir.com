@@ -1,17 +1,33 @@
 ---
 import Logo from './Logo.astro';
-import { NAV_LINKS } from './nav';
+import { NAV_LINKS, isCurrent } from './nav';
 ---
 
 <header class="hidden md:block">
-  <div class="hidden md:flex container px-10 pt-4 mx-auto justify-between items-center">
+  <div class="mx-auto flex max-w-[75rem] items-center justify-between gap-6 px-10 py-5">
     <Logo />
-    <div class="flex space-y-4 px-2 py-6 uppercase text-center md:static md:flex-row md:space-x-10 md:space-y-0 md:border-0 md:w-fit">
-      {NAV_LINKS.map(({ href, label }) => (
-        <a class="text-sm font-medium" href={href}>
-          {label}
-        </a>
-      ))}
-    </div>
+    <nav aria-label="Main">
+      <ul class="flex gap-8 text-[0.9375rem] font-medium">
+        {NAV_LINKS.map(({ href, label }) => {
+          const current = isCurrent(href, Astro.url.pathname);
+          return (
+            <li>
+              <a
+                href={href}
+                aria-current={current ? 'page' : undefined}
+                class:list={[
+                  'block border-b-2 pt-2.5 pb-1 no-underline hover:text-primary-500',
+                  current
+                    ? 'border-primary-500 text-gray-900'
+                    : 'border-transparent text-gray-700',
+                ]}
+              >
+                {label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   </div>
 </header>

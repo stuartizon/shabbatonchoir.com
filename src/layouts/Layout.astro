@@ -4,7 +4,6 @@ import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import HeaderDesktop from '../components/HeaderDesktop.astro';
 import HeaderMobile from '../components/HeaderMobile.astro';
-import Hero from '../components/Hero.astro';
 import { HERO_SIZES, HERO_WIDTHS, heroImage } from '../components/hero';
 import { toJsonLd } from '../structured-data';
 
@@ -23,9 +22,23 @@ interface Props {
   noindex?: boolean;
   /** JSON-LD describing the page's content to search engines. */
   structuredData?: Record<string, unknown>[];
+  /**
+   * The page lays out its own heading and sections, full width. Otherwise
+   * it's a single column of text under the page's title.
+   */
+  wide?: boolean;
+  /** Cream behind the page under the header, for pages of cards. */
+  cream?: boolean;
 }
 
-const { title, description, noindex = false, structuredData } = Astro.props;
+const {
+  title,
+  description,
+  noindex = false,
+  structuredData,
+  wide = false,
+  cream = false,
+} = Astro.props;
 // The home page has no name of its own, so it is just the choir's name.
 const pageTitle = title ? `${title} · Shabbaton Choir` : 'Shabbaton Choir';
 // Point search engines at the live site, with the clean URLs the site uses
@@ -96,28 +109,19 @@ const heroPreload =
     <!-- At least as tall as the window, so on short pages the footer sits at
     the bottom of the screen. dvh follows phone browsers' toolbars. -->
     <div class="flex min-h-dvh flex-col">
-      {isHome ? (
-        <Hero mode="desktop">
-          <HeaderDesktop />
-        </Hero>
-      ) : (
-        <HeaderDesktop />
-      )}
+      <HeaderDesktop />
       <HeaderMobile />
-      {isHome && <Hero mode="mobile" />}
-      <main class="flex-1">
-        <div
-          class:list={[
-            'mx-auto px-4 max-w-prose text-gray-600 text-lg',
-            // The home page's h1 is hidden, so keep a gap below the hero.
-            isHome && 'pt-6',
-          ]}
-        >
-          <h1 class:list={[!title && 'sr-only']}>
-            {title ?? 'Shabbaton Choir'}
-          </h1>
+      <main class:list={['flex-1', cream && 'bg-cream']}>
+        {wide ? (
           <slot />
-        </div>
+        ) : (
+          <div class="mx-auto max-w-prose px-4 pb-16 text-lg leading-relaxed">
+            <h1 class:list={['mt-10 md:mt-14', !title && 'sr-only']}>
+              {title ?? 'Shabbaton Choir'}
+            </h1>
+            <slot />
+          </div>
+        )}
       </main>
       <Footer />
     </div>

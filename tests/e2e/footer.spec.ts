@@ -22,6 +22,8 @@ test('the footer is not on screen at the top of a long page', async ({
 test('on a short page the footer sits at the bottom of the screen', async ({
   page,
 }) => {
+  // Tall enough that the 404 page is shorter than the window.
+  await page.setViewportSize({ ...page.viewportSize()!, height: 1100 });
   await page.goto('/no-such-page');
   const footer = await footerBox(page);
   const viewport = page.viewportSize()!;

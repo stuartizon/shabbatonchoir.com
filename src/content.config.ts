@@ -9,6 +9,8 @@ const albums = defineCollection({
   schema: ({ image }) =>
     z.object({
       name: z.string(),
+      // The title in Hebrew, where the cover has one.
+      hebrewName: z.string().optional(),
       year: z.number().int(),
       cover: image(),
       description: z.string().optional(),
@@ -29,4 +31,18 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { albums, pages };
+// The Leadership page's people, one Markdown file each in
+// src/content/leaders, with their bio as the body. The page lists them by
+// order. Without a portrait, a placeholder shows until one arrives.
+const leaders = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/leaders' }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      role: z.string(),
+      order: z.number().int(),
+      portrait: image().optional(),
+    }),
+});
+
+export const collections = { albums, pages, leaders };

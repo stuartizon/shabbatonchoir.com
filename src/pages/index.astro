@@ -1,6 +1,114 @@
 ---
-import ContentPage from '../layouts/ContentPage.astro';
+import { Picture } from 'astro:assets';
+import { getCollection, getEntry, render } from 'astro:content';
+import Hero from '../components/Hero.astro';
+import Icon from '../components/Icon.astro';
+import ListenLinks from '../components/ListenLinks.astro';
+import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
+import { splitHebrew } from '../hebrew';
+import Layout from '../layouts/Layout.astro';
 import { choir } from '../structured-data';
+
+const page = await getEntry('pages', 'home');
+if (!page) throw new Error('No page text in src/content/pages/home.md');
+const { Content } = await render(page);
+
+const albums = await getCollection('albums');
+const latest = albums.sort((a, b) => b.data.year - a.data.year)[0].data;
+
+// Draft headings and one-liners for the client to confirm or replace.
+const PLACES = [
+  { heading: 'Synagogue services', photo: 'a synagogue service' },
+  { heading: 'Selichot', photo: 'Choral Midnight Selichot' },
+  {
+    heading: 'Solidarity Through Song',
+    photo: 'a Solidarity Through Song mission to Israel',
+  },
+];
 ---
 
-<ContentPage id="home" structuredData={[choir]} />
+<Layout description={page.data.description} structuredData={[choir]} wide>
+  <h1 class="sr-only">Shabbaton Choir</h1>
+
+  <Hero>
+    <p class="my-0 max-w-3xl font-heading text-[2.125rem] leading-[1.1] font-semibold text-white md:text-[3.5rem] md:leading-[1.08]">
+      [Tagline: one line from the client]
+    </p>
+    <div class="mt-4 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3 md:mt-6">
+      <a
+        href="/music"
+        class="flex min-h-12 items-center justify-center gap-2.5 rounded-full bg-white px-6 font-semibold text-navy no-underline hover:bg-primary-50 hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+      >
+        <Icon name="play" />
+        Listen
+      </a>
+      <a
+        href="/contact"
+        class="flex min-h-12 items-center justify-center rounded-full border-2 border-white px-6 font-semibold text-white no-underline hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+      >
+        Book the choir
+      </a>
+    </div>
+  </Hero>
+
+  <section class="mx-auto flex max-w-[75rem] flex-col gap-4 px-4 pt-12 pb-10 md:flex-row md:gap-14 md:px-10 md:pt-22 md:pb-18">
+    <h2 class="my-0 shrink-0 md:w-64 md:text-4xl">About the choir</h2>
+    <div class="min-w-0 flex-1 text-[1.0625rem] leading-[1.7] md:text-lg [&_p]:my-0 [&_p+p]:mt-5 [&_strong]:text-gray-900">
+      <Content />
+    </div>
+  </section>
+
+  <section class="bg-cream px-4 py-10 md:px-10 md:py-20">
+    <div class="mx-auto max-w-[70rem]">
+      <h2 class="mt-0 mb-7 md:mb-10 md:text-4xl">Where you’ll hear us</h2>
+      <ul class="grid gap-7 md:grid-cols-3">
+        {PLACES.map(({ heading, photo }) => (
+          <li class="flex flex-col gap-3 md:gap-4">
+            <PhotoPlaceholder
+              label={photo}
+              class="aspect-[16/10] md:aspect-[4/3]"
+            />
+            <h3 class="my-0 text-[1.375rem] md:text-2xl">{heading}</h3>
+            <p class="my-0 text-base">[One line from the client]</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="mx-auto flex max-w-[75rem] flex-col gap-4 px-4 py-12 md:flex-row md:items-center md:gap-14 md:px-10 md:py-22">
+    <Picture
+      src={latest.cover}
+      alt={latest.name}
+      width={720}
+      widths={[360, 720]}
+      sizes="(min-width: 768px) 360px, calc(100vw - 32px)"
+      formats={['avif', 'webp']}
+      class="aspect-square w-full rounded-2xl object-cover shadow-[0_20px_40px_-20px_rgb(15_33_96/0.45)] md:w-90 md:shrink-0"
+    />
+    <div class="flex min-w-0 flex-1 flex-col gap-4">
+      <p class="my-0 text-xs font-bold tracking-[0.14em] text-gold-ink uppercase md:text-[0.8125rem]">
+        Latest album · {latest.year}
+      </p>
+      <h2 class="my-0 text-[1.875rem] md:text-[2.5rem]">{latest.name}</h2>
+      {latest.description && (
+        <p class="my-0 text-[1.0625rem] leading-[1.7] md:text-lg">
+          {splitHebrew(latest.description).map(({ text, hebrew }) =>
+            hebrew ? (
+              <span lang="he" dir="rtl">
+                {text}
+              </span>
+            ) : (
+              text
+            ),
+          )}
+        </p>
+      )}
+      <ListenLinks {...latest} look="pills" class="hidden md:flex" />
+      <ListenLinks {...latest} look="icons" class="md:hidden" />
+      <a href="/music" class="self-start py-2.5 font-semibold">
+        All {albums.length} albums
+      </a>
+    </div>
+  </section>
+</Layout>

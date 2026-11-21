@@ -2,7 +2,7 @@
 //
 // Sources, copied in by hand so there is no icon package or runtime:
 // - Brand marks: Simple Icons 16.38.0 (https://simpleicons.org), CC0.
-// - UI icons (menu, close, envelope, chat): Heroicons 2.2.0 solid 24px
+// - UI icons (menu, close, envelope, chat, play): Heroicons 2.2.0 solid 24px
 //   (https://heroicons.com), MIT, (c) Tailwind Labs.
 // - Amazon: Simple Icons has no Amazon marks, so this is the Amazon logo
 //   from Wikimedia Commons (File:Amazon_icon.svg), made one colour.
@@ -80,6 +80,15 @@ export const ICONS = {
     paths: [
       {
         d: 'M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z',
+        evenodd: true,
+      },
+    ],
+  },
+  play: {
+    viewBox: '0 0 24 24',
+    paths: [
+      {
+        d: 'M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z',
         evenodd: true,
       },
     ],
