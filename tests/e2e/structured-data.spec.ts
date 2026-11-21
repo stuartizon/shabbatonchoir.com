@@ -53,7 +53,7 @@ test.describe('home page', () => {
       (node) => node['@id'] === CHOIR_ID,
     );
     const footerLinks = await page
-      .locator('footer a[href^="https://"]')
+      .locator('footer a[aria-label][href^="https://"]')
       .evaluateAll((links) => links.map((a) => (a as HTMLAnchorElement).href));
     expect(choir?.sameAs).toEqual(footerLinks);
     expect(footerLinks.length).toBeGreaterThan(0);

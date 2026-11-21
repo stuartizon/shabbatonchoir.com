@@ -23,7 +23,7 @@ test('the footer shows the social and streaming icons', async ({ page }) => {
   await expectIcons(
     page.locator('footer'),
     ['facebook', 'x', 'youtube', 'spotify', 'apple-music', 'amazon'],
-    32,
+    20,
   );
 });
 

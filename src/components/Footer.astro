@@ -1,17 +1,51 @@
 ---
-import IconLink from './IconLink.astro';
+import Icon from './Icon.astro';
 import { SOCIAL_LINKS } from './social';
+
+const CHARITY_REGISTER =
+  'https://register-of-charities.charitycommission.gov.uk/charity-search/-/charity-details/1058256';
 ---
 
-<footer class="flex bg-gray-100 justify-center gap-4 min-[375px]:gap-6 sm:gap-8 p-6">
-  {SOCIAL_LINKS.map(({ service, name, href }) => (
-    <IconLink
-      href={href}
-      label={`Shabbaton Choir on ${service}`}
-      name={name}
-      size="2x"
-      class="-m-1.5 p-1.5"
-      ringOffset="group-focus-visible:outline-offset-[6px]"
-    />
-  ))}
+<!--
+  Navy to the bottom of the page. Phones show only the social links, which
+  matter most there; wider screens add the logo and the charity number.
+-->
+<footer class="bg-navy text-primary-100">
+  <div class="mx-auto flex max-w-[75rem] flex-wrap items-center justify-center gap-x-12 gap-y-6 px-4 py-6 md:justify-between md:px-10 md:py-12">
+    <div class="hidden flex-col gap-2 text-sm leading-relaxed md:flex">
+      <img
+        src="/logo-white.svg"
+        alt="Shabbaton Choir"
+        width="200"
+        height="58"
+        class="mb-2"
+      />
+      <p class="my-0">
+        Registered charity in England and Wales, number{' '}
+        <a
+          href={CHARITY_REGISTER}
+          target="_blank"
+          rel="noreferrer"
+          class="text-white decoration-primary-200 underline-offset-3 hover:text-primary-100"
+        >
+          1058256
+        </a>
+      </p>
+    </div>
+    <ul class="flex flex-wrap justify-center gap-2">
+      {SOCIAL_LINKS.map(({ service, name, href }) => (
+        <li>
+          <a
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Shabbaton Choir on ${service}`}
+            class="grid size-11 place-items-center rounded-full bg-white/10 text-xl text-white no-underline hover:bg-white/20 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <Icon name={name} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
 </footer>

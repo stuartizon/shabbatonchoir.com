@@ -1,7 +1,7 @@
 import { expect, test, type Locator } from '@playwright/test';
 
 // Links that show only an icon. Each needs an accessible name, a tap
-// target big enough to hit, and a visible focus ring around its icon.
+// target big enough to hit, and a visible focus ring around it.
 // Targets are 44×44px where there's room. The album icons sit close
 // together, so theirs are 44px tall but only as wide as WCAG's 24px minimum
 // allows, to keep the spacing the client approved.
@@ -23,10 +23,15 @@ async function expectIconLinks(
     expect(box?.height).toBeGreaterThanOrEqual(TAP_TARGET);
 
     await link.focus();
-    const outline = await link.locator('svg').evaluate((el) => {
-      const style = getComputedStyle(el);
-      return { style: style.outlineStyle, width: style.outlineWidth };
-    });
+    // The ring is drawn by the link, or for a bare icon by the icon.
+    const outlines = await link.evaluate((el) =>
+      [el, el.querySelector('svg')!].map((part) => {
+        const style = getComputedStyle(part);
+        return { style: style.outlineStyle, width: style.outlineWidth };
+      }),
+    );
+    const outline =
+      outlines.find(({ style }) => style !== 'none') ?? outlines[0];
     expect(outline.style).toBe('solid');
     expect(outline.width).toBe('2px');
   }
@@ -35,7 +40,7 @@ async function expectIconLinks(
 test('the footer icon links are named and easy to tap', async ({ page }) => {
   await page.goto('/');
   await expectIconLinks(
-    page.locator('footer a'),
+    page.locator('footer a[aria-label]'),
     ['Facebook', 'X', 'YouTube', 'Spotify', 'Apple Music', 'Amazon Music'].map(
       (service) => `Shabbaton Choir on ${service}`,
     ),
