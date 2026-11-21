@@ -15,5 +15,15 @@ const { Content } = await render(page);
 ---
 
 <Layout title={page.data.title} description={page.data.description}>
-  <Content />
+  <div
+    class:list={[
+      // Photos in the text, such as a portrait beside a bio: full width on
+      // phones, and beside the text from tablet width up. Each heading
+      // starts below any photo before it.
+      '[&_img]:rounded-lg [&_h2]:clear-both',
+      'sm:[&_img]:float-right sm:[&_img]:w-1/2 sm:[&_img]:ml-6 sm:[&_img]:mb-4',
+    ]}
+  >
+    <Content />
+  </div>
 </Layout>

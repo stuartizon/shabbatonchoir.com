@@ -5,25 +5,23 @@ description: Meet the musicians who lead the Shabbaton Choir, its Musical Direct
 
 ## Musical Director
 
-Benjamin Fingerhut is a young composer and conductor with a passion for
-imaginative and adventurous approaches to music-making, encompassing new
-works and arrangements of existing compositions. As well as numerous
-collaborations with film makers, directors and choreographers, he has
-completed an array of concert works varying from a set of songs for
-mezzo-soprano Emily Kyte, a miniature for the ensemble FourSight, and a song
-without words for the Solaris String Quartet.
+![Harry Style](./harry-style.jpg)
 
-Benjamin’s journey with the Shabbaton Choir began in February 2019 when he
-accompanied them on their "Solidarity Through Song" mission to
-Israel and went on to become their Musical Director in 2020. He has enjoyed
-a life-long enthusiasm of composing and arranging for voice and choirs and
-believes the ensemble to be one of the most expressive vessels of conveying
-emotion through music.
+Surrounded by music his whole life, Harry’s passion for vocal music came
+from the great initial influence of a cappella group Jonah and the Wailers
+under the direction of his father, Simon Style. Harmonising with his family
+in the car on holidays, singing in vocal groups quickly became a regular and
+constant activity, so much so that he was singing in Woodside Park Shul
+Choir from the age of 10. Under the leadership of chazzan Stephen Robins and
+conductor Simon Appleman for the High Holidays, he was introduced to the
+Stephen Glass lexicon and the world of Jewish Choral music.
 
-Benjamin graduated from the Guildhall School of Music and Drama in 2014
-having studied classical composition under the tuition of Paul Newland.
-Since then he has enjoyed a busy and diverse career working as a music
-educator, performer and composer/arranger.
+In addition to Harry’s main focus of composing, arranging and musically
+directing in the musical theatre industry, his roots have secured his place
+in the London Jewish music scene, singing with a cappella function group The
+Ahmen Singers and also leading the Central Synagogue Choir. Harry joined the
+Shabbaton Choir as musical director in 2022 and has enjoyed leading the
+choir in a plethora of services, concerts and events in and around London.
 
 ## Conductor Laureate
 
