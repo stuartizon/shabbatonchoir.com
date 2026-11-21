@@ -54,6 +54,6 @@ test('leadership page text', async ({ page }) => {
   await expect(main).toContainText('"Solidarity Through Song" mission');
   await expect(main).toContainText("Stephen's music on his website");
   await expect(
-    main.getByRole('link', { name: 'http://www.stephenleveymusic.com' }),
-  ).toHaveAttribute('href', 'http://www.stephenleveymusic.com');
+    main.getByRole('link', { name: 'https://www.stephenleveymusic.com' }),
+  ).toHaveAttribute('href', 'https://www.stephenleveymusic.com');
 });
