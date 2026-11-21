@@ -1,5 +1,6 @@
 ---
 import Icon from '../components/Icon.astro';
+import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
 import { SOCIAL_LINKS } from '../components/social';
 import Layout from '../layouts/Layout.astro';
 
@@ -12,6 +13,7 @@ const EMAIL_OPTIONS = [
       'We rehearse on most Tuesday evenings.',
     ],
     address: 'md@shabbatonchoir.com',
+    photo: 'the choir in rehearsal',
   },
   {
     heading: 'Mailing list and bookings',
@@ -19,6 +21,7 @@ const EMAIL_OPTIONS = [
       'If you would like to be added to our mailing list or to engage us for a concert or choral Shabbaton, please contact our Chairman, Russell Kett.',
     ],
     address: 'chairman@shabbatonchoir.com',
+    photo: 'the choir in concert',
   },
 ];
 
@@ -34,51 +37,64 @@ const FOLLOW_LINKS = SOCIAL_LINKS.filter(
 <Layout
   title="Contact"
   description="Contact the Shabbaton Choir to join as a chorister, join our mailing list or book us for a concert or choral Shabbaton."
+  wide
+  cream
 >
-  <ul class="mb-12 flex flex-col gap-4">
-    {EMAIL_OPTIONS.map(({ heading, text, address }) => (
-      // The email link's ::after covers the whole card, so the card can be
-      // tapped anywhere while the link keeps a short accessible name.
-      // Hovering anywhere on the card fades the button, as links do.
-      <li class="relative rounded-lg border border-gray-200 bg-white p-4 min-[375px]:p-5 sm:p-6">
-        <h2 class="mt-0 mb-2 text-xl">{heading}</h2>
-        {text.map((line) => (
-          <p class="my-2">{line}</p>
-        ))}
-        <a
-          href={`mailto:${address}`}
-          class="mt-4 flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-primary-500 px-3 py-2 text-base font-medium sm:px-4 sm:text-lg text-white no-underline after:absolute after:inset-0 after:rounded-lg after:content-[''] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 sm:inline-flex sm:w-auto"
-        >
-          <Icon name="envelope" class="shrink-0 text-xl" />
-          <span class="min-w-0 [overflow-wrap:anywhere]">
-            <span class="sr-only">Email </span>
-            {/* If an address has to wrap on a narrow phone, wrap it after the @. */}
-            {address.split('@')[0]}@<wbr />
-            {address.split('@')[1]}
-          </span>
-        </a>
-      </li>
-    ))}
-  </ul>
+  <div class="mx-auto flex max-w-[65rem] flex-col gap-8 px-4 pt-10 pb-16 md:px-10 md:pt-16 md:pb-22">
+    <h1 class="my-0">Contact</h1>
 
-  <h2 class="mb-4 text-xl">Follow us</h2>
-  <ul class="mb-16 flex flex-col gap-2">
-    {FOLLOW_LINKS.map(({ service, name, href }) => (
-      <li>
-        <a
-          href={href}
-          target="_blank"
-          rel="noreferrer"
-          class="-mx-2 flex min-h-11 items-start gap-3 rounded-md px-2 py-2 decoration-1 focus-visible:outline-2 focus-visible:outline-primary-500"
-        >
-          {/* As tall as one line of text, so the icon centres on the first
-          line when the text wraps. */}
-          <span class="flex h-[1lh] shrink-0 items-center">
-            <Icon name={name} class="text-xl text-gray-600" />
-          </span>
-          {FOLLOW_TEXT[service]}
-        </a>
-      </li>
-    ))}
-  </ul>
+    <ul class="grid gap-6 md:grid-cols-2">
+      {EMAIL_OPTIONS.map(({ heading, text, address, photo }) => (
+        // The email link's ::after covers the whole card, so the card can be
+        // tapped anywhere while the link keeps a short accessible name.
+        <li class="relative flex flex-col overflow-hidden rounded-[1.25rem] bg-white shadow-[0_1px_2px_rgb(15_33_96/0.06),0_12px_32px_-18px_rgb(15_33_96/0.25)]">
+          <PhotoPlaceholder
+            label={photo}
+            class="aspect-[16/7] rounded-none border-0 border-b"
+          />
+          <div data-card-body class="flex flex-1 flex-col gap-3 p-5 md:p-7">
+            <h2 class="my-0 text-2xl md:text-[1.75rem]">{heading}</h2>
+            {text.map((line) => (
+              <p class="my-0 text-[1.0625rem] leading-[1.65]">{line}</p>
+            ))}
+            <a
+              href={`mailto:${address}`}
+              class="mt-auto flex min-h-12 w-full items-center justify-center gap-2.5 rounded-full bg-primary-500 px-4 py-2 font-semibold text-white no-underline after:absolute after:inset-0 after:rounded-[1.25rem] after:content-[''] hover:bg-navy hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 sm:w-auto sm:self-start sm:px-5.5"
+            >
+              <Icon name="envelope" class="shrink-0 text-xl" />
+              <span class="min-w-0 [overflow-wrap:anywhere]">
+                <span class="sr-only">Email </span>
+                {/* If an address has to wrap on a narrow phone, wrap it after the @. */}
+                {address.split('@')[0]}@<wbr />
+                {address.split('@')[1]}
+              </span>
+            </a>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <section class="flex flex-col gap-3 pt-4">
+      <h2 class="mt-0 mb-1 text-2xl md:text-[1.75rem]">Follow us</h2>
+      <ul class="flex flex-wrap gap-3">
+        {FOLLOW_LINKS.map(({ service, name, href }) => (
+          <li>
+            <a
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              class="flex min-h-13 items-start gap-3 rounded-3xl border border-cream-line bg-white py-3.5 pr-5.5 pl-4 font-semibold text-gray-900 no-underline hover:border-primary-200 hover:text-gray-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+            >
+              {/* As tall as one line of text, so the icon centres on the first
+              line when the text wraps. */}
+              <span class="flex h-[1lh] shrink-0 items-center">
+                <Icon name={name} class="text-xl text-primary-500" />
+              </span>
+              {FOLLOW_TEXT[service]}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
 </Layout>
