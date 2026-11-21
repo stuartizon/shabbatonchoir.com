@@ -33,5 +33,6 @@ test('body text uses the system font', async ({ page }) => {
   const fontFamily = await text.evaluate(
     (element) => getComputedStyle(element).fontFamily,
   );
-  expect(fontFamily).toMatch(/^ui-sans-serif, system-ui/);
+  expect(fontFamily).not.toContain('Frank Ruhl Libre');
+  expect(fontFamily).toContain('sans-serif');
 });

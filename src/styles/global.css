@@ -1,54 +1,32 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/frank-ruhl-libre';
 
 /* Code, not markup: its "filter" key would otherwise add a filter class. */
 @source not '../external-links.ts';
 
 @theme {
   /*
-    Tailwind 3.0.7's default font stack, as on the live site. San Francisco has
-    no Hebrew, so on Apple devices Hebrew falls back to Helvetica Neue or Arial.
+    Tailwind's own palette and system font stack, plus what the brand adds:
+    the logo's blue, a deep navy for the footer, a warm gold for small labels
+    and a cream for bands behind groups of cards.
   */
-  --font-sans:
-    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-
-  /*
-    Only the colours the site allows, with Tailwind 3's hex values. Tailwind
-    4's own palette is defined in OKLCH and comes out slightly different.
-  */
-  --color-*: initial;
+  --color-primary-50: #e9edf7;
   --color-primary-100: #c2cbe8;
   --color-primary-200: #8c9cd1;
   --color-primary-300: #5e74ba;
   --color-primary-400: #3751a3;
   --color-primary-500: #18348c;
+  --color-navy: #0f2160;
 
-  --color-gray-50: #f9fafb;
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-300: #d1d5db;
-  --color-gray-400: #9ca3af;
-  --color-gray-500: #6b7280;
-  --color-gray-600: #4b5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1f2937;
-  --color-gray-900: #111827;
-  --color-gray-950: #030712;
+  /* Gold for decoration; its darker ink for text, which needs the contrast. */
+  --color-gold: #c9962b;
+  --color-gold-ink: #8a5f12;
 
-  --color-white: #fff;
+  --color-cream: #faf6ee;
+  --color-cream-line: #e8dfcc;
 
-  --color-indigo-50: #eef2ff;
-  --color-indigo-100: #e0e7ff;
-  --color-indigo-200: #c7d2fe;
-  --color-indigo-300: #a5b4fc;
-  --color-indigo-400: #818cf8;
-  --color-indigo-500: #6366f1;
-  --color-indigo-600: #4f46e5;
-  --color-indigo-700: #4338ca;
-  --color-indigo-800: #3730a3;
-  --color-indigo-900: #312e81;
-  --color-indigo-950: #1e1b4b;
+  /* Covers Hebrew as well as Latin, for the Hebrew album titles. */
+  --font-heading: 'Frank Ruhl Libre Variable', Georgia, serif;
 }
 
 /*
@@ -59,19 +37,26 @@
     @apply my-6;
   }
 
+  body {
+    @apply bg-white text-gray-700;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-heading font-semibold text-gray-900;
+  }
+
   h1 {
-    @apply text-4xl font-semibold text-gray-900 my-6;
+    @apply text-4xl leading-tight my-6 sm:text-5xl;
   }
 
   h2 {
-    @apply text-2xl font-semibold text-gray-900 my-6;
+    @apply text-2xl leading-tight my-6 sm:text-3xl;
   }
 
+  /* A thin underline in the link's own blue, darkening on hover. */
   a {
-    @apply text-primary-500 underline underline-offset-4 decoration-2;
-  }
-
-  a:hover {
-    @apply opacity-75;
+    @apply text-primary-500 underline decoration-1 underline-offset-4 hover:text-navy;
   }
 }
