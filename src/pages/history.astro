@@ -1,5 +1,84 @@
 ---
-import ContentPage from '../layouts/ContentPage.astro';
+import { getEntry, render } from 'astro:content';
+import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
+import Layout from '../layouts/Layout.astro';
+
+const page = await getEntry('pages', 'history');
+if (!page) throw new Error('No page text in src/content/pages/history.md');
+const { Content, headings } = await render(page);
+const sections = headings.filter(({ depth }) => depth === 2);
+
+// Draft wording, from the history text, for the client to confirm.
+const MILESTONES = [
+  { year: 1986, text: 'First concert, at the Wigmore Hall' },
+  { year: 1988, text: 'First Choral Midnight Selichot' },
+  { year: 1990, text: 'First Choral Shabbaton, as the Shabbaton Choir' },
+  { year: 1991, text: 'Sings at Rabbi Sacks’ installation as Chief Rabbi' },
+  { year: 2003, text: 'First Solidarity Through Song mission' },
+  { year: 2022, text: 'Harry Style becomes Musical Director' },
+];
 ---
 
-<ContentPage id="history" />
+<Layout title={page.data.title} description={page.data.description} wide>
+  <section class="mx-auto flex max-w-[75rem] flex-col gap-6 px-4 pt-10 pb-10 md:gap-8 md:px-10 md:pt-14 md:pb-12">
+    <h1 class="my-0">{page.data.title}</h1>
+    <PhotoPlaceholder
+      label="an archive photo of the early choir"
+      class="aspect-[4/3] md:aspect-[21/8]"
+    />
+  </section>
+
+  <section
+    aria-labelledby="milestones"
+    class="bg-cream px-4 py-10 md:px-10 md:py-12"
+  >
+    <div class="mx-auto max-w-[70rem]">
+      <span
+        id="milestones"
+        class="block text-[0.8125rem] font-bold tracking-[0.14em] text-gold-ink uppercase"
+      >
+        Milestones
+      </span>
+      <ol class="mt-6 flex flex-col gap-4.5 border-l-2 border-cream-line pl-4.5 md:grid md:grid-cols-6 md:gap-6 md:border-t-2 md:border-l-0 md:pt-5 md:pl-0">
+        {MILESTONES.map(({ year, text }) => (
+          <li class="flex flex-col gap-1.5">
+            <span class="font-heading text-2xl font-semibold text-primary-500 md:text-[2rem]">
+              {year}
+            </span>
+            <span class="text-[0.9375rem] leading-normal">{text}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <div class="mx-auto flex max-w-[75rem] gap-16 px-4 pt-10 pb-16 md:px-10 md:pt-16 md:pb-22">
+    <nav aria-label="On this page" class="hidden w-52 shrink-0 lg:block">
+      <div class="sticky top-6 flex flex-col text-[0.9375rem]">
+        <span class="mb-2 text-xs font-bold tracking-[0.14em] text-gray-500 uppercase">
+          On this page
+        </span>
+        {sections.map(({ slug, text }) => (
+          <a
+            href={`#${slug}`}
+            class="border-l-2 border-gray-200 py-2.5 pl-3.5 text-gray-700 no-underline hover:border-primary-500 hover:text-primary-500"
+          >
+            {text}
+          </a>
+        ))}
+      </div>
+    </nav>
+
+    <article
+      class:list={[
+        'min-w-0 max-w-[45rem] flex-1 text-[1.0625rem] leading-[1.75] md:text-lg',
+        '[&_p]:my-0 [&_p]:mt-5 [&_strong]:text-gray-900',
+        '[&_h2]:mt-12 [&_h2]:mb-0 [&_h2]:scroll-mt-6',
+        // The opening paragraph leads, a little larger.
+        '[&>p:first-child]:mt-0 [&>p:first-child]:text-lg md:[&>p:first-child]:text-xl',
+      ]}
+    >
+      <Content />
+    </article>
+  </div>
+</Layout>
