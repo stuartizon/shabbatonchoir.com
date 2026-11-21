@@ -1,16 +1,31 @@
 ---
+import { getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Album from '../components/Album.astro';
 import Layout from '../layouts/Layout.astro';
+import { album } from '../structured-data';
 
 const albums = (await getCollection('albums')).sort(
   (a, b) => b.data.year - a.data.year,
+);
+
+// Search engines want each cover as a single JPEG at a full address.
+const structuredData = await Promise.all(
+  albums.map(async ({ data }) => {
+    const cover = await getImage({
+      src: data.cover,
+      width: 640,
+      format: 'jpg',
+    });
+    return album(data, new URL(cover.src, Astro.site));
+  }),
 );
 ---
 
 <Layout
   title="Music"
   description="Listen to albums by the Shabbaton Choir, from Anim Z'mirot to Selichot Live, on Spotify, Apple Music and Amazon Music: modern Jewish choral music for prayer."
+  structuredData={structuredData}
 >
   <div class="flex flex-wrap justify-evenly md:justify-between gap-x-4">
     {albums.map(({ data }) => (

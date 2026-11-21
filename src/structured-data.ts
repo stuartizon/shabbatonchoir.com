@@ -1,3 +1,4 @@
+import type { CollectionEntry } from 'astro:content';
 import { SOCIAL_LINKS } from './components/social';
 
 // JSON-LD that tells search engines about the choir and its albums, so they
@@ -7,13 +8,19 @@ type Node = Record<string, unknown>;
 
 const SITE = 'https://www.shabbatonchoir.com/';
 
-// The choir is one organisation that is both a music group and a
-// registered charity, so it gets both types rather than two separate nodes.
-export const choir: Node = {
-  '@type': ['MusicGroup', 'NGO'],
+// Enough to say who an album is by. The full description is on Home.
+const CHOIR_REF = {
+  '@type': 'MusicGroup',
   '@id': `${SITE}#choir`,
   name: 'Shabbaton Choir',
   url: SITE,
+};
+
+// The choir is one organisation that is both a music group and a
+// registered charity, so it gets both types rather than two separate nodes.
+export const choir: Node = {
+  ...CHOIR_REF,
+  '@type': ['MusicGroup', 'NGO'],
   logo: `${SITE}logo.svg`,
   foundingDate: '1990',
   identifier: {
@@ -23,6 +30,29 @@ export const choir: Node = {
   },
   sameAs: SOCIAL_LINKS.map(({ href }) => href),
 };
+
+/** An album on the Music page, with its cover at a full address. */
+export function album(
+  {
+    name,
+    year,
+    description,
+    spotify,
+    apple,
+    amazon,
+  }: CollectionEntry<'albums'>['data'],
+  cover: URL,
+): Node {
+  return {
+    '@type': 'MusicAlbum',
+    name,
+    datePublished: String(year),
+    ...(description && { description }),
+    image: cover.href,
+    byArtist: CHOIR_REF,
+    sameAs: [spotify, apple, amazon],
+  };
+}
 
 /**
  * The nodes as the body of a JSON-LD script. Escapes "<" so no text can
