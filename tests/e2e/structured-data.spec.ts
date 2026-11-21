@@ -84,13 +84,13 @@ test.describe('music page', () => {
     );
     expect(albums.length).toBeGreaterThan(0);
     for (const album of albums) {
-      const card = page.locator('main > div > div > div').filter({
+      const card = page.locator('main article').filter({
         has: page.getByRole('heading', {
           name: album.name as string,
           exact: true,
         }),
       });
-      const year = await card.locator('.font-semibold').textContent();
+      const year = await card.locator('[data-year]').textContent();
       expect(album.datePublished).toBe(year);
 
       const streaming = await card

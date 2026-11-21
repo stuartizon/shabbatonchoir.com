@@ -2,60 +2,54 @@
 import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { splitHebrew } from '../hebrew';
-import IconLink from './IconLink.astro';
+import ListenLinks from './ListenLinks.astro';
 
 type Props = CollectionEntry<'albums'>['data'];
 
-const { name, description, year, cover, spotify, apple, amazon } = Astro.props;
+const { name, hebrewName, description, year, cover } = Astro.props;
 ---
 
-<div class="bg-white rounded-lg overflow-hidden w-80 mb-8">
-  <div class="h-full w-full bg-gray-50 rounded-b-lg">
-    <Picture
-      src={cover}
-      alt={name}
-      width={640}
-      widths={[320, 640]}
-      sizes="320px"
-      formats={['avif', 'webp']}
-      class="w-full max-h-72"
-    />
-    <div class="p-4">
-      <div class="flex items-center justify-between">
-        <div class="font-semibold text-xs">{year}</div>
-        <div class="flex -my-2 -mr-1">
-          <IconLink
-            href={spotify}
-            label={`Listen to ${name} on Spotify`}
-            name="spotify"
-            class="px-1 py-[13px]"
-          />
-          <IconLink
-            href={apple}
-            label={`Listen to ${name} on Apple Music`}
-            name="apple-music"
-            class="px-1 py-[13px]"
-          />
-          <IconLink
-            href={amazon}
-            label={`Listen to ${name} on Amazon Music`}
-            name="amazon"
-            class="px-1 py-[13px]"
-          />
-        </div>
-      </div>
-      <h2 class="font-bold my-4">{name}</h2>
-      <p class="text-sm my-2">
-        {splitHebrew(description ?? '').map(({ text, hebrew }) =>
-          hebrew ? (
-            <span lang="he" dir="rtl">
-              {text}
-            </span>
-          ) : (
-            text
-          ),
-        )}
-      </p>
-    </div>
+<article class="flex flex-col gap-3.5">
+  <Picture
+    src={cover}
+    alt={name}
+    width={720}
+    widths={[360, 720]}
+    sizes="(min-width: 768px) 360px, calc(100vw - 32px)"
+    formats={['avif', 'webp']}
+    class="aspect-square w-full rounded-2xl object-cover shadow-[0_16px_32px_-18px_rgb(15_33_96/0.45)]"
+  />
+  <p
+    data-year
+    class="mt-1.5 mb-0 text-[0.8125rem] font-bold tracking-[0.14em] text-gold-ink uppercase"
+  >
+    {year}
+  </p>
+  <!-- English on the left, Hebrew on the right, on one line where they fit. -->
+  <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+    <h2 class="my-0 text-[1.75rem] leading-[1.15]">{name}</h2>
+    {hebrewName && (
+      <span
+        lang="he"
+        dir="rtl"
+        class="ml-auto font-heading text-[1.75rem] leading-[1.15] font-medium text-gray-500"
+      >
+        {hebrewName}
+      </span>
+    )}
   </div>
-</div>
+  {description && (
+    <p class="my-0 text-base leading-[1.65]">
+      {splitHebrew(description).map(({ text, hebrew }) =>
+        hebrew ? (
+          <span lang="he" dir="rtl">
+            {text}
+          </span>
+        ) : (
+          text
+        ),
+      )}
+    </p>
+  )}
+  <ListenLinks {...Astro.props} look="icons" class="pt-1" />
+</article>
